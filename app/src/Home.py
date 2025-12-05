@@ -496,7 +496,7 @@ else:
                 ss.role = "Advisor"
                 ss.user_name = selected_advisor
                 ss.user_email = advisor_users[selected_advisor]
-                st.rerun()
+                st.switch_page('pages/04_Advisor_Dashboard.py')
     
     role_col3, role_col4 = st.columns(2)
     

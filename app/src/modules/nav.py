@@ -48,10 +48,7 @@ def SideBarLinks(show_home=True):
     
     elif role == 'Advisor':
         st.sidebar.markdown("### 👨‍🏫 Advisor Portal")
-        st.sidebar.page_link("pages/20_Advisor_Home.py", label="🏠 Advisor Home")
-        st.sidebar.page_link("pages/21_Student_List.py", label="👥 My Students")
-        st.sidebar.page_link("pages/22_Reports.py", label="📋 Reports")
-        st.sidebar.page_link("pages/23_Notes.py", label="📝 Meeting Notes")
+        st.sidebar.page_link("pages/04_Advisor_Dashboard.py", label="🏠 Advisor Dashboard")
     
     elif role == 'Admin':
         st.sidebar.markdown("### ⚙️ Admin Portal")
