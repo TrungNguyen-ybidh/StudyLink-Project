@@ -521,7 +521,7 @@ else:
                 ss.role = "Data Analyst"
                 ss.user_name = selected_analyst
                 ss.user_email = analyst_users[selected_analyst]
-                st.rerun()
+                st.switch_page('pages/01_Data_Analyst_homepage.py')
     
     with role_col4:
         with st.container(border=True):
