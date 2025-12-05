@@ -1,10 +1,3 @@
-"""
-StudyLink - Main Landing Page
-Location: app/src/Home.py
-
-A smart study planner that uses data from your calendar, sleep schedule, 
-and class workload to optimize your daily study plan.
-"""
 
 import streamlit as st
 from streamlit import session_state as ss

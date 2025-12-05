@@ -8,6 +8,12 @@ from backend.db_connection import db
 from backend.simple.simple_routes import simple_routes
 from backend.ngos.ngo_routes import ngos
 
+# =========================================================================
+# DATA ANALYST BLUEPRINT IMPORTS (PERSONA 1: JORDAN LEE)
+# =========================================================================
+from backend.studylink.advisor.data_analyst.analyst_routes import analyst
+from backend.studylink.advisor.data_analyst.metric_routes import metrics
+
 def create_app():
     app = Flask(__name__)
 
@@ -50,6 +56,27 @@ def create_app():
     app.logger.info("create_app(): registering blueprints with Flask app object.")
     app.register_blueprint(simple_routes)
     app.register_blueprint(ngos, url_prefix="/ngo")
+    
+    # =========================================================================
+    # REGISTER DATA ANALYST BLUEPRINTS (PERSONA 1: JORDAN LEE)
+    # =========================================================================
+    
+    # Analyst routes: dashboard, engagement, student reports
+    # URL prefix: /analyst
+    # Example endpoints:
+    #   GET /analyst/dashboard
+    #   GET /analyst/engagement
+    #   GET /analyst/students/<id>/report
+    app.register_blueprint(analyst, url_prefix='/analyst')
+    
+    # Metrics routes: CRUD for metrics, data errors, assignments
+    # URL prefix: /data
+    # Example endpoints:
+    #   GET/POST /data/metrics
+    #   GET/PUT/DELETE /data/metrics/<id>
+    #   GET/POST/PUT /data/data-errors
+    #   GET/PUT /data/assignments
+    app.register_blueprint(metrics, url_prefix='/data')
 
     # Don't forget to return the app object
     return app
