@@ -4,12 +4,11 @@ from backend.db_connection import db
 from mysql.connector import Error
 from flask import current_app
 
-# Create a Blueprint for System Admin routes
+# Blueprint for admin route
 admin = Blueprint("admin", __name__)
 
 
 # Welcome route
-# Example: /admin/
 @admin.route("/", methods=["GET"])
 def welcome_admin():
     current_app.logger.info("GET /admin/ welcome handler")
@@ -17,7 +16,6 @@ def welcome_admin():
 
 
 # 1) Calendar connection: Get a student's calendar connection
-# Example: GET /admin/students/1/calendar
 @admin.route("/students/<int:student_id>/calendar", methods=["GET"])
 def get_calendar_connection(student_id):
     try:
@@ -47,8 +45,6 @@ def get_calendar_connection(student_id):
         return jsonify({"error": str(e)}), 500
 
 # 1) Calendar connection: Upsert calendar connection for student
-# Example: PUT /admin/students/1/calendar with JSON body
-# { "externalCalendarID": "gcal_abc123", "syncStatus": "pending" }
 @admin.route("/students/<int:student_id>/calendar", methods=["PUT"])
 def upsert_calendar_connection(student_id):
     try:
@@ -95,7 +91,6 @@ def upsert_calendar_connection(student_id):
 
 
 # 1) Calendar connection: Delete a student's calendar connection
-# Example: DELETE /admin/students/1/calendar
 @admin.route("/students/<int:student_id>/calendar", methods=["DELETE"])
 def delete_calendar_connection(student_id):
     try:
@@ -116,7 +111,6 @@ def delete_calendar_connection(student_id):
 
 
 # 2) Terms: List all terms
-# Example: GET /admin/terms
 @admin.route("/terms", methods=["GET"])
 def get_terms():
     try:
@@ -134,8 +128,6 @@ def get_terms():
 
 
 # 2) Terms: Create a term
-# Example: POST /admin/terms with JSON body
-# { "name": "Fall 2025", "startDate": "2025-09-01", "endDate": "2025-12-20" }
 @admin.route("/terms", methods=["POST"])
 def create_term():
     try:
@@ -165,7 +157,6 @@ def create_term():
 
 
 # 2) Courses: Preview all courses for a term
-# Example: GET /admin/terms/1/courses
 @admin.route("/terms/<int:term_id>/courses", methods=["GET"])
 def get_term_courses(term_id):
     try:
@@ -200,7 +191,6 @@ def get_term_courses(term_id):
 
 
 # 2) Courses: Add a course to a term
-# Example: POST /admin/terms/1/courses with JSON body
 @admin.route("/terms/<int:term_id>/courses", methods=["POST"])
 def add_course_to_term(term_id):
     try:
@@ -245,7 +235,6 @@ def add_course_to_term(term_id):
 
 
 # 2) Courses: Delete a course from a term
-# Example: DELETE /admin/terms/1/courses/10
 @admin.route("/terms/<int:term_id>/courses/<int:course_id>", methods=["DELETE"])
 def delete_course(term_id, course_id):
     try:
@@ -266,7 +255,6 @@ def delete_course(term_id, course_id):
 
 
 # 3) Import metrics + link to an importJob
-# Example: POST /admin/imports/metrics with JSON body
 @admin.route("/imports/metrics", methods=["POST"])
 def import_metrics():
     try:
@@ -338,7 +326,6 @@ def import_metrics():
 
 
 # 4) Log a data error tied to a job (ImportJobError + DataError)
-# Example: POST /admin/jobs/5/errors with JSON body
 @admin.route("/jobs/<int:job_id>/errors", methods=["POST"])
 def log_job_error(job_id):
     try:
@@ -375,7 +362,6 @@ def log_job_error(job_id):
 
 
 # 5) Rebuild a student's plan (new StudyPlan + new PlanBlocks)
-# Example: POST /admin/students/1/plans/rebuild with JSON body
 @admin.route("/students/<int:student_id>/plans/rebuild", methods=["POST"])
 def rebuild_student_plan(student_id):
     try:
@@ -432,7 +418,6 @@ def rebuild_student_plan(student_id):
 
 
 # 6) Schedule health check: find overlaps in active plan blocks
-# Example: GET /admin/students/1/health/overlaps
 @admin.route("/students/<int:student_id>/health/overlaps", methods=["GET"])
 def find_overlapping_blocks(student_id):
     try:
@@ -469,7 +454,6 @@ def find_overlapping_blocks(student_id):
 
 
 # 7) Weekly usage export (StudySummary in a date range)
-# Example: GET /admin/usage/weekly?start=2025-01-01&end=2025-01-08
 @admin.route("/usage/weekly", methods=["GET"])
 def weekly_usage():
     try:
