@@ -9,9 +9,6 @@ def SideBarLinks(show_home=True):
     Call this function at the top of each page to display consistent navigation.
     """
     
-    # Add logo (create assets folder and add your logo)
-    # st.sidebar.image("assets/logo.png", width=200)
-    
     st.sidebar.markdown("## 📚 StudyLink")
     
     # Home link
@@ -36,8 +33,10 @@ def SideBarLinks(show_home=True):
     # Role-based navigation
     if role == 'Data Analyst':
         st.sidebar.markdown("### 📊 Analytics")
-        st.sidebar.page_link("pages/01_Data_Analyst_homepage.py", label="🏠 Data Analyst Home")
-        st.sidebar.page_link("pages/02_Data_Analyst_Dashboard.py", label="📊 Dashboard & Analytics")
+        st.sidebar.page_link("pages/01_Data_Analyst_homepage.py", label="🏠 Analyst Home")
+        st.sidebar.page_link("pages/02_Data_Analyst_Dashboard.py", label="📊 Dashboard")
+        st.sidebar.page_link("pages/03_Dataset_Management.py", label="📁 Dataset Management")
+        st.sidebar.page_link("pages/05_Data_Analyst_tools.py", label="🔧 Data Quality Tools")
     
     elif role == 'Student':
         st.sidebar.markdown("### 🎓 Student Portal")
@@ -50,7 +49,7 @@ def SideBarLinks(show_home=True):
         st.sidebar.markdown("### 👨‍🏫 Advisor Portal")
         st.sidebar.page_link("pages/04_Advisor_Dashboard.py", label="🏠 Advisor Dashboard")
     
-    elif role == 'Admin':
+    elif role == 'System Admin':
         st.sidebar.markdown("### ⚙️ Admin Portal")
         st.sidebar.page_link("pages/40_Admin_Home.py", label="🏠 Admin Home")
         st.sidebar.page_link("pages/41_System_Status.py", label="📊 System Status")
