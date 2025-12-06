@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+import logging
 from backend.db_connection import db
 from mysql.connector import Error
 from flask import current_app
