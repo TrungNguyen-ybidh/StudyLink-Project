@@ -253,7 +253,7 @@ CREATE TABLE dataset (
    name VARCHAR(100) NOT NULL,
    category VARCHAR(50) NOT NULL,
    source VARCHAR(100),
-   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
@@ -556,18 +556,19 @@ INSERT INTO metric (
 
 
 
-INSERT INTO dataset (name, category, source, createdAt)
+INSERT INTO dataset (name, category, source)
 VALUES
-('Stress Data','engagement','self_reported','2025-01-01 11:54:35'),
-('Sleep Data','wellness','student_upload','2025-02-07 03:20:57'),
-('Stress Data','academic','self_reported','2025-06-26 23:38:43'),
-('Stress Data','metrics','self_reported','2025-07-28 19:43:45'),
-('Stress Data','wellness','wearable_device','2025-07-24 08:25:43'),
-('Sleep Data','wellness','student_upload','2025-05-01 16:46:42'),
-('Study Data','engagement','wearable_device','2025-11-01 10:16:09'),
-('Sleep Data','metrics','self_reported','2025-06-13 13:21:45'),
-('Sleep Data','engagement','self_reported','2025-11-08 08:57:43'),
-('Sleep Data','metrics','student_upload','2025-01-20 13:17:03');
+('Stress Data','wellness','wearable_device'),
+('Sleep Data','academic','self_reported'),
+('Study Data','wellness','wearable_device'),
+('Study Data','engagement','self_reported'),
+('Stress Data','engagement','self_reported'),
+('Study Data','academic','self_reported'),
+('Sleep Data','engagement','student_upload'),
+('Sleep Data','wellness','self_reported'),
+('Sleep Data','metrics','student_upload'),
+('Sleep Data','academic','student_upload');
+
 
 
 INSERT INTO upload (dataID, metricID, filePath)
