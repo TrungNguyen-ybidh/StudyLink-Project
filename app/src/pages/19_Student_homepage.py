@@ -63,7 +63,7 @@ st.divider()
 st.subheader("Upcoming Deadlines")
 
 try:
-    api_url = "http://localhost:4000/calendar"
+    api_url = "http://localhost:8501/calendar"
     response = requests.get(api_url, params={"studentID": st.session_state.get("studentID")})
 
     if response.status_code == 200:
