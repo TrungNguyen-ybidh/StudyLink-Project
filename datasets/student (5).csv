@@ -1,0 +1,36 @@
+fName,lName,email,enrollmentYear,advisorID,major,minor,GPA,riskFlag,enrollmentStatus,totalCredits
+Eyde,Posthill,eyde.posthill@northeastern.edu,2025,4,Data Science,Computer Science,2.92,false,Enrolled,128
+Stevena,Large,stevena.large@northeastern.edu,2023,27,Business,Data Science,2.83,true,Leave,5
+Rudolph,Comelini,rudolph.comelini@northeastern.edu,2023,26,Data Science,Computer Science,2.21,true,Active,59
+Godfry,Ackermann,godfry.ackermann@northeastern.edu,2026,5,Business,Engineering,3.15,true,Probation,87
+Wileen,Hughes,wileen.hughes@northeastern.edu,2022,15,Economics,Economics,2.21,true,Probation,114
+Melania,Heeps,melania.heeps@northeastern.edu,2025,34,Software Engineering,Software Engineering,3.37,false,Enrolled,54
+Chester,McClaurie,chester.mcclaurie@northeastern.edu,2026,3,Data Science,Business,2.11,false,Enrolled,77
+Haslett,Tabour,haslett.tabour@northeastern.edu,2024,33,Engineering,Psychology,2.67,false,Active,100
+Marcellina,Bretherick,marcellina.bretherick@northeastern.edu,2023,8,Biology,Computer Science,2.46,false,Enrolled,41
+Norbie,Matanin,norbie.matanin@northeastern.edu,2024,2,Psychology,Psychology,3.27,true,Leave,94
+Bertram,Baswall,bertram.baswall@northeastern.edu,2025,21,Economics,Business,3.89,true,Probation,84
+Ruperta,Stile,ruperta.stile@northeastern.edu,2022,12,Biology,Software Engineering,2.01,true,Active,127
+Muire,Hundall,muire.hundall@northeastern.edu,2026,11,Business,Engineering,3.84,false,Leave,90
+Emmit,Tabrett,emmit.tabrett@northeastern.edu,2022,6,Engineering,Psychology,2.6,true,Leave,124
+Rowan,Karys,rowan.karys@northeastern.edu,2022,33,Software Engineering,Software Engineering,3.21,true,Active,51
+Alleyn,Heindrich,alleyn.heindrich@northeastern.edu,2022,2,Psychology,Psychology,2.42,true,Probation,101
+Gabbie,Coulman,gabbie.coulman@northeastern.edu,2025,28,Computer Science,Software Engineering,2.43,true,Active,17
+Lori,Seid,lori.seid@northeastern.edu,2023,25,Software Engineering,Business,2.31,false,Enrolled,42
+Kara,Posvner,kara.posvner@northeastern.edu,2021,10,Software Engineering,Software Engineering,2.4,true,Leave,85
+Arlena,Webb-Bowen,arlena.webb-bowen@northeastern.edu,2023,2,Economics,Economics,2.84,false,Enrolled,80
+Hamel,Fitkin,hamel.fitkin@northeastern.edu,2025,17,Business,Economics,3.61,true,Probation,43
+Turner,Backes,turner.backes@northeastern.edu,2023,8,Data Science,Data Science,3.41,true,Active,99
+Wileen,Mintoft,wileen.mintoft@northeastern.edu,2021,19,Business,Business,2.11,true,Leave,126
+Maurizia,Fendlen,maurizia.fendlen@northeastern.edu,2023,29,Business,Software Engineering,3.54,true,Leave,6
+Aloin,Jodlowski,aloin.jodlowski@northeastern.edu,2026,17,Economics,Economics,2.51,true,Probation,76
+Dougy,Dolohunty,dougy.dolohunty@northeastern.edu,2026,29,Data Science,Data Science,3.32,false,Leave,29
+Dix,Mankor,dix.mankor@northeastern.edu,2025,15,Biology,Data Science,2.93,false,Active,46
+Melessa,Escofier,melessa.escofier@northeastern.edu,2021,4,Computer Science,Economics,2.88,true,Probation,25
+Ruperta,Everill,ruperta.everill@northeastern.edu,2024,21,Economics,Psychology,3.14,false,Probation,43
+Fey,Yashin,fey.yashin@northeastern.edu,2025,24,Psychology,Software Engineering,2.09,true,Probation,65
+Iorgos,Radin,iorgos.radin@northeastern.edu,2022,32,Software Engineering,Software Engineering,3.41,true,Probation,64
+Stacee,Sever,stacee.sever@northeastern.edu,2024,25,Economics,Software Engineering,3.83,true,Probation,68
+Zena,Faichnie,zena.faichnie@northeastern.edu,2021,23,Data Science,Engineering,3.01,true,Enrolled,47
+Rozina,Fullard,rozina.fullard@northeastern.edu,2022,35,Engineering,Psychology,2.69,true,Leave,116
+Tim,Vakhrushin,tim.vakhrushin@northeastern.edu,2021,28,Biology,Biology,2.96,true,Leave,22
