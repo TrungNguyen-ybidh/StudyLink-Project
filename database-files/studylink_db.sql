@@ -331,70 +331,10 @@ CREATE TABLE DataError (
 );
 
 
-insert into dataset (dataID, name, category, source) values (1, 'Grades Import', 'academic', 'csv');
-insert into dataset (dataID, name, category, source) values (2, 'Wellness Survey', 'wellness', 'manual');
-insert into dataset (dataID, name, category, source) values (3, 'Sleep Tracker', 'wellness', 'csv');
-insert into dataset (dataID, name, category, source) values (4, 'Sleep Tracker', 'wellness', 'csv');
-insert into dataset (dataID, name, category, source) values (5, 'Advisor Help', 'engagement', 'manual');
-insert into dataset (dataID, name, category, source) values (6, 'Sleep Tracker', 'wellness', 'api');
-insert into dataset (dataID, name, category, source) values (7, 'Wellness Survey', 'wellness', 'manual');
-insert into dataset (dataID, name, category, source) values (8, 'Advisor Help', 'engagement', 'csv');
-insert into dataset (dataID, name, category, source) values (9, 'Student Logs', 'metrics', 'api');
-insert into dataset (dataID, name, category, source) values (10, 'Sleep Tracker', 'wellness', 'manual');
-
-insert into SystemAdmin (adminID, name, DOB) values (1, 'Stavro Kubat', '1992-09-02');
-insert into SystemAdmin (adminID, name, DOB) values (2, 'Sherrie Keast', '1974-01-20');
-insert into SystemAdmin (adminID, name, DOB) values (3, 'Conant Fluit', '1997-08-21');
-insert into SystemAdmin (adminID, name, DOB) values (4, 'Gwenneth Lally', '1979-04-16');
-insert into SystemAdmin (adminID, name, DOB) values (5, 'Audie Gleave', '1994-06-17');
-insert into SystemAdmin (adminID, name, DOB) values (6, 'Brandea Wallsam', '2000-01-01');
-insert into SystemAdmin (adminID, name, DOB) values (7, 'Avrit Crippes', '1971-03-06');
-insert into SystemAdmin (adminID, name, DOB) values (8, 'Elvira Guiduzzi', '1992-04-26');
-insert into SystemAdmin (adminID, name, DOB) values (9, 'Talyah Lincoln', '1971-10-07');
-insert into SystemAdmin (adminID, name, DOB) values (10, 'Rhianna Goodhand', '1970-05-23');
-
 
 INSERT INTO importJob (errorCount, jobType, StartTime, endTime, Status, adminID)
 VALUES
-(2, 'Metric Import', NOW(), NOW(), 'Completed', 1),
-(1, 'Calendar Sync', NOW(), NOW(), 'Failed', 2),
-(0, 'Student Update', NOW(), NOW(), 'Completed', 3);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (1, 2, 'Calendar Sync', '2025-11-08 19:06:35', '2025-11-08 21:58:35', 1);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (2, 18, 'Course Import', '2025-11-22 11:41:28', '2025-11-22 13:00:28', 10);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (3, 8, 'Student Update', '2025-05-08 02:19:11', '2025-05-08 04:35:11', 1);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (4, 5, 'Course Import', '2025-11-13 15:40:36', '2025-11-13 17:18:36', 3);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (5, 16, 'Metric Import', '2025-01-18 13:17:59', '2025-01-18 15:10:59', 5);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (6, 15, 'Calendar Sync', '2025-08-21 09:45:55', '2025-08-21 10:27:55', 10);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (7, 17, 'Student Update', '2025-01-17 06:47:13', '2025-01-17 08:53:13', 6);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (8, 10, 'Student Update', '2025-08-13 17:25:00', '2025-08-13 18:28:00', 9);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (9, 17, 'Course Import', '2025-11-19 22:25:43', '2025-11-20 00:39:43', 5);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (10, 14, 'Course Import', '2025-11-05 14:19:06', '2025-11-05 16:17:06', 11);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (11, 10, 'Student Update', '2025-11-03 23:32:17', '2025-11-04 01:05:17', 11);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (12, 20, 'Student Update', '2025-12-05 10:33:29', '2025-12-05 12:33:29', 7);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (13, 19, 'Course Import', '2025-11-09 06:52:08', '2025-11-09 07:51:08', 3);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (14, 0, 'Student Update', '2025-05-04 10:53:10', '2025-05-04 12:21:10', 5);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (15, 13, 'Student Update', '2025-06-13 02:44:26', '2025-06-13 05:07:26', 6);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (16, 16, 'Calendar Sync', '2025-04-14 04:23:49', '2025-04-14 05:19:49', 9);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (17, 16, 'Metric Import', '2025-09-27 21:02:02', '2025-09-27 23:57:02', 11);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (18, 19, 'Student Update', '2024-12-10 19:15:48', '2024-12-10 19:52:48', 10);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (19, 9, 'Calendar Sync', '2025-02-16 10:02:32', '2025-02-16 12:13:32', 9);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (20, 1, 'Metric Import', '2025-09-27 03:39:06', '2025-09-27 05:01:06', 3);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (21, 20, 'Course Import', '2025-07-25 13:18:14', '2025-07-25 15:31:14', 6);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (22, 20, 'Calendar Sync', '2025-05-31 08:19:16', '2025-05-31 09:35:16', 10);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (23, 5, 'Metric Import', '2025-08-15 04:03:16', '2025-08-15 05:34:16', 2);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (24, 10, 'Student Update', '2025-07-19 04:49:14', '2025-07-19 06:49:14', 4);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (25, 3, 'Course Import', '2025-10-06 21:19:12', '2025-10-06 22:17:12', 3);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (26, 6, 'Course Import', '2025-05-18 20:02:23', '2025-05-18 21:24:23', 4);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (27, 19, 'Course Import', '2024-12-26 02:08:18', '2024-12-26 02:44:18', 3);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (28, 13, 'Course Import', '2025-07-13 15:51:34', '2025-07-13 16:27:34', 8);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (29, 6, 'Student Update', '2025-02-28 23:37:26', '2025-03-01 01:43:26', 9);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (30, 15, 'Course Import', '2025-06-01 04:50:00', '2025-06-01 06:40:00', 10);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (31, 17, 'Student Update', '2025-03-07 03:56:53', '2025-03-07 04:31:53', 4);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (32, 2, 'Student Update', '2025-09-06 22:46:43', '2025-09-07 00:26:43', 3);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (33, 8, 'Course Import', '2025-11-28 11:00:49', '2025-11-28 13:00:49', 4);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (34, 6, 'Student Update', '2025-03-23 14:14:01', '2025-03-23 15:32:01', 10);
-insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (35, 11, 'Student Update', '2025-08-10 18:35:18', '2025-08-10 21:14:18', 5);
-# Rows
+
 
 INSERT INTO ImportJobError (jobID)
 VALUES
@@ -409,80 +349,79 @@ VALUES
 (2,2),
 (3,3);
 
+INSERT INTO advisor (fname, lName, email, department) VALUES
+('Luella', 'Caghan', 'luella.caghannortheastern.edu', 'Computer Science'),
+('Foster', 'De Meyer', 'foster.de meyernortheastern.edu', 'Business'),
+('Andrea', 'McFadden', 'andrea.mcfaddennortheastern.edu', 'Psychology'),
+('Godiva', 'Thorrington', 'godiva.thorringtonnortheastern.edu', 'Business'),
+('Marco', 'Warlawe', 'marco.warlawenortheastern.edu', 'Mathematics'),
+('Hermie', 'Woollard', 'hermie.woollardnortheastern.edu', 'Psychology'),
+('Morgana', 'Orring', 'morgana.orringnortheastern.edu', 'Business'),
+('Ahmed', 'Jiroutek', 'ahmed.jirouteknortheastern.edu', 'Mathematics'),
+('Tedda', 'Rosencrantz', 'tedda.rosencrantznortheastern.edu', 'Business'),
+('Therine', 'Clemo', 'therine.clemonortheastern.edu', 'Business'),
+('Haskell', 'Malthus', 'haskell.malthusnortheastern.edu', 'Business'),
+('Ardella', 'Copeman', 'ardella.copemannortheastern.edu', 'Mathematics'),
+('Mallory', 'Pindred', 'mallory.pindrednortheastern.edu', 'Computer Science'),
+('Herbert', 'Hagger', 'herbert.haggernortheastern.edu', 'Psychology'),
+('Paquito', 'Campsall', 'paquito.campsallnortheastern.edu', 'Business'),
+('Allegra', 'Kelf', 'allegra.kelfnortheastern.edu', 'Mathematics'),
+('Gracie', 'Pycock', 'gracie.pycocknortheastern.edu', 'Engineering'),
+('Craggie', 'Espinay', 'craggie.espinaynortheastern.edu', 'Business'),
+('Brewster', 'McCuis', 'brewster.mccuisnortheastern.edu', 'Business'),
+('Terry', 'Brendel', 'terry.brendelnortheastern.edu', 'Business'),
+('Damita', 'Di Bernardo', 'damita.di bernardonortheastern.edu', 'Business'),
+('Sam', 'Hasluck', 'sam.haslucknortheastern.edu', 'Engineering'),
+('Shaun', 'Canete', 'shaun.canetenortheastern.edu', 'Psychology'),
+('Willa', 'Sweetman', 'willa.sweetmannortheastern.edu', 'Engineering'),
+('Elmo', 'Capaldo', 'elmo.capaldonortheastern.edu', 'Engineering'),
+('Judah', 'Lantoph', 'judah.lantophnortheastern.edu', 'Psychology'),
+('Woodman', 'Epple', 'woodman.epplenortheastern.edu', 'Psychology'),
+('Kit', 'Swancott', 'kit.swancottnortheastern.edu', 'Psychology'),
+('Maurita', 'Valti', 'maurita.valtinortheastern.edu', 'Psychology'),
+('Jude', 'Whines', 'jude.whinesnortheastern.edu', 'Mathematics'),
+('Randy', 'Stroder', 'randy.strodernortheastern.edu', 'Psychology'),
+('Kettie', 'Velten', 'kettie.veltennortheastern.edu', 'Computer Science'),
+('Bram', 'Monshall', 'bram.monshallnortheastern.edu', 'Business'),
+('Kalinda', 'Duiguid', 'kalinda.duiguidnortheastern.edu', 'Engineering'),
+('Kassandra', 'Corey', 'kassandra.coreynortheastern.edu', 'Engineering');
 
-insert into advisor (fname, lName, email, department) values ('Salvatore', 'Swapp', 'salvatore.swappnortheastern.edu', 'Business');
-insert into advisor (fname, lName, email, department) values ('Isidora', 'Murfin', 'isidora.murfinnortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Lindon', 'Ellul', 'lindon.ellulnortheastern.edu', 'Mathematics');
-insert into advisor (fname, lName, email, department) values ('Tally', 'Cockran', 'tally.cockrannortheastern.edu', 'Mathematics');
-insert into advisor (fname, lName, email, department) values ('Westley', 'Mattityahou', 'westley.mattityahounortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Hetti', 'Masdin', 'hetti.masdinnortheastern.edu', 'Business');
-insert into advisor (fname, lName, email, department) values ('Tracey', 'Howland', 'tracey.howlandnortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Roberto', 'Dansken', 'roberto.danskennortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Ange', 'Shervil', 'ange.shervilnortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Tori', 'Narducci', 'tori.narduccinortheastern.edu', 'Mathematics');
-insert into advisor (fname, lName, email, department) values ('Elly', 'Vango', 'elly.vangonortheastern.edu', 'Engineering');
-insert into advisor (fname, lName, email, department) values ('Angele', 'Worts', 'angele.wortsnortheastern.edu', 'Engineering');
-insert into advisor (fname, lName, email, department) values ('Adrea', 'Bassil', 'adrea.bassilnortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Krishnah', 'Bargh', 'krishnah.barghnortheastern.edu', 'Mathematics');
-insert into advisor (fname, lName, email, department) values ('Vince', 'Mound', 'vince.moundnortheastern.edu', 'Engineering');
-insert into advisor (fname, lName, email, department) values ('Burnard', 'Jeannequin', 'burnard.jeannequinnortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Alix', 'Portchmouth', 'alix.portchmouthnortheastern.edu', 'Engineering');
-insert into advisor (fname, lName, email, department) values ('Mose', 'Chisnall', 'mose.chisnallnortheastern.edu', 'Engineering');
-insert into advisor (fname, lName, email, department) values ('Amerigo', 'Elleray', 'amerigo.elleraynortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Tait', 'Witul', 'tait.witulnortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Didi', 'Lewry', 'didi.lewrynortheastern.edu', 'Business');
-insert into advisor (fname, lName, email, department) values ('Rodrique', 'Alcock', 'rodrique.alcocknortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Caritta', 'Kitching', 'caritta.kitchingnortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Tabina', 'Petrichat', 'tabina.petrichatnortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Letty', 'Callacher', 'letty.callachernortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Jard', 'Coughlan', 'jard.coughlannortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Kalindi', 'Chillingsworth', 'kalindi.chillingsworthnortheastern.edu', 'Mathematics');
-insert into advisor (fname, lName, email, department) values ('Libbie', 'Trainer', 'libbie.trainernortheastern.edu', 'Engineering');
-insert into advisor (fname, lName, email, department) values ('Bjorn', 'Cawtheray', 'bjorn.cawtheraynortheastern.edu', 'Engineering');
-insert into advisor (fname, lName, email, department) values ('Elfrida', 'Priddle', 'elfrida.priddlenortheastern.edu', 'Mathematics');
-insert into advisor (fname, lName, email, department) values ('Jannel', 'Ferrieroi', 'jannel.ferrieroinortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Chrissy', 'Depke', 'chrissy.depkenortheastern.edu', 'Computer Science');
-insert into advisor (fname, lName, email, department) values ('Lonna', 'Human', 'lonna.humannortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Rita', 'Ruslinge', 'rita.ruslingenortheastern.edu', 'Psychology');
-insert into advisor (fname, lName, email, department) values ('Averil', 'Monteaux', 'averil.monteauxnortheastern.edu', 'Engineering');
-
-
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Belva', 'Mabbett', 'belva.mabbettnortheastern.edu', 2021, 'Data Science', 'Business', 2.34, true, 123.44, 27);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Archibaldo', 'Harmes', 'archibaldo.harmesnortheastern.edu', 2022, 'Engineering', 'Software Engineering', 2.35, true, 109.55, 35);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Itch', 'Durkin', 'itch.durkinnortheastern.edu', 2021, 'Computer Science', 'Computer Science', 2.05, true, 69.56, 28);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Art', 'Cartmael', 'art.cartmaelnortheastern.edu', 2023, 'Psychology', 'Economics', 2.37, true, 113.45, 30);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Felice', 'Venton', 'felice.ventonnortheastern.edu', 2022, 'Business', 'Economics', 3.3, false, 16.25, 26);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Hadlee', 'Annets', 'hadlee.annetsnortheastern.edu', 2023, 'Engineering', 'Computer Science', 3.34, false, 58.0, 1);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Marcille', 'Gallemore', 'marcille.gallemorenortheastern.edu', 2023, 'Data Science', 'Computer Science', 3.7, true, 8.58, 8);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Cindra', 'Osmund', 'cindra.osmundnortheastern.edu', 2021, 'Engineering', 'Data Science', 3.75, false, 8.83, 2);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Harriet', 'Wason', 'harriet.wasonnortheastern.edu', 2024, 'Economics', 'Computer Science', 2.26, false, 127.92, 3);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Niles', 'Affuso', 'niles.affusonortheastern.edu', 2024, 'Business', 'Economics', 2.69, false, 21.97, 27);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Belicia', 'Ivanilov', 'belicia.ivanilovnortheastern.edu', 2024, 'Business', 'Computer Science', 3.47, false, 114.41, 1);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Elsworth', 'Crafter', 'elsworth.crafternortheastern.edu', 2021, 'Engineering', 'Economics', 2.58, true, 14.14, 17);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Garry', 'Cleverly', 'garry.cleverlynortheastern.edu', 2022, 'Engineering', 'Biology', 3.1, true, 29.63, 17);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Ronald', 'Duplan', 'ronald.duplannortheastern.edu', 2021, 'Engineering', 'Economics', 2.65, true, 7.94, 9);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Phoebe', 'St. Quintin', 'phoebe.st. quintinnortheastern.edu', 2021, 'Psychology', 'Psychology', 2.62, true, 86.66, 7);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Freddi', 'Cardillo', 'freddi.cardillonortheastern.edu', 2023, 'Software Engineering', 'Biology', 2.87, false, 75.53, 23);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Deni', 'Curtis', 'deni.curtisnortheastern.edu', 2025, 'Engineering', 'Software Engineering', 4.0, false, 64.6, 36);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Kristina', 'Upstone', 'kristina.upstonenortheastern.edu', 2025, 'Psychology', 'Data Science', 2.24, true, 86.44, 16);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Sallee', 'Shales', 'sallee.shalesnortheastern.edu', 2023, 'Software Engineering', 'Data Science', 2.91, true, 54.46, 30);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Stanislaus', 'Pritchett', 'stanislaus.pritchettnortheastern.edu', 2023, 'Psychology', 'Psychology', 2.16, true, 72.92, 25);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Averil', 'Seaward', 'averil.seawardnortheastern.edu', 2021, 'Data Science', 'Business', 3.47, false, 100.25, 35);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Riva', 'Raiman', 'riva.raimannortheastern.edu', 2024, 'Biology', 'Biology', 3.6, false, 48.37, 33);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Flora', 'Armit', 'flora.armitnortheastern.edu', 2025, 'Software Engineering', 'Business', 3.31, false, 39.27, 15);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Yard', 'Restieaux', 'yard.restieauxnortheastern.edu', 2023, 'Engineering', 'Psychology', 3.59, true, 91.29, 31);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Susann', 'Nickols', 'susann.nickolsnortheastern.edu', 2025, 'Software Engineering', 'Data Science', 2.98, false, 102.64, 33);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Mella', 'Davall', 'mella.davallnortheastern.edu', 2025, 'Business', 'Economics', 2.26, false, 120.62, 10);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Tara', 'Greason', 'tara.greasonnortheastern.edu', 2022, 'Psychology', 'Economics', 2.84, true, 112.45, 23);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Shannah', 'Wapplington', 'shannah.wapplingtonnortheastern.edu', 2026, 'Biology', 'Engineering', 3.83, false, 8.22, 20);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Justus', 'Amies', 'justus.amiesnortheastern.edu', 2021, 'Data Science', 'Software Engineering', 2.1, true, 73.68, 3);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Lowe', 'Ambrose', 'lowe.ambrosenortheastern.edu', 2024, 'Engineering', 'Data Science', 3.7, false, 18.28, 1);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Thomasin', 'Rape', 'thomasin.rapenortheastern.edu', 2026, 'Economics', 'Biology', 3.37, false, 46.37, 4);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Bette-ann', 'McGraffin', 'bette-ann.mcgraffinnortheastern.edu', 2024, 'Software Engineering', 'Economics', 2.42, true, 7.43, 15);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Franni', 'Guilder', 'franni.guildernortheastern.edu', 2024, 'Biology', 'Economics', 2.98, true, 43.98, 21);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Aubrette', 'Lefwich', 'aubrette.lefwichnortheastern.edu', 2026, 'Data Science', 'Economics', 2.73, true, 107.67, 26);
-insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Cammy', 'Steddall', 'cammy.steddallnortheastern.edu', 2025, 'Psychology', 'Software Engineering', 3.81, false, 59.15, 2);
-
+INSERT INTO student (fName, lName, email, enrollmentYear, advisorID, major, minor, GPA, riskFlag, enrollmentStatus, totalCredits) VALUES
+('Mimi', 'Bibey', 'mimi.bibeynortheastern.edu', 2024, 4, 'Data Science', 'Data Science', 3.0, false, 'Probation', 55),
+('Lolita', 'Aggis', 'lolita.aggisnortheastern.edu', 2026, 33, 'Software Engineering', 'Business', 3.48, true, 'Active', 10),
+('Percy', 'Bicknell', 'percy.bicknellnortheastern.edu', 2021, 25, 'Engineering', 'Biology', 2.41, false, 'Enrolled', 102),
+('Millard', 'Boriston', 'millard.boristonnortheastern.edu', 2023, 3, 'Economics', 'Computer Science', 3.15, true, 'Enrolled', 80),
+('Franni', 'Petracci', 'franni.petraccinortheastern.edu', 2025, 28, 'Psychology', 'Engineering', 3.8, false, 'Active', 47),
+('Xylina', 'Mayor', 'xylina.mayornortheastern.edu', 2023, 8, 'Economics', 'Psychology', 3.05, false, 'Active', 3),
+('Rahal', 'Wilce', 'rahal.wilcenortheastern.edu', 2023, 20, 'Economics', 'Biology', 2.57, false, 'Leave', 27),
+('Corny', 'Plumb', 'corny.plumbnortheastern.edu', 2023, 3, 'Engineering', 'Economics', 2.38, false, 'Leave', 127),
+('Salim', 'Burhill', 'salim.burhillnortheastern.edu', 2021, 9, 'Business', 'Business', 3.05, true, 'Leave', 107),
+('Byron', 'Fossitt', 'byron.fossittnortheastern.edu', 2025, 12, 'Biology', 'Biology', 2.81, false, 'Enrolled', 120),
+('Roxane', 'Klimek', 'roxane.klimeknortheastern.edu', 2024, 16, 'Psychology', 'Data Science', 2.62, false, 'Active', 49),
+('Adrien', 'Brownjohn', 'adrien.brownjohnnortheastern.edu', 2026, 36, 'Computer Science', 'Business', 2.94, true, 'Probation', 15),
+('Melosa', 'Beeden', 'melosa.beedennortheastern.edu', 2021, 21, 'Engineering', 'Data Science', 3.88, false, 'Active', 103),
+('Brina', 'Esome', 'brina.esomenortheastern.edu', 2025, 17, 'Engineering', 'Engineering', 3.25, false, 'Active', 56),
+('Mag', 'McKelvie', 'mag.mckelvienortheastern.edu', 2026, 4, 'Computer Science', 'Engineering', 3.45, true, 'Leave', 11),
+('Durand', 'Canto', 'durand.cantonortheastern.edu', 2022, 14, 'Software Engineering', 'Software Engineering', 2.43, true, 'Probation', 50),
+('Fax', 'Algie', 'fax.algienortheastern.edu', 2022, 25, 'Software Engineering', 'Economics', 3.08, false, 'Probation', 120),
+('Bale', 'Brandes', 'bale.brandesnortheastern.edu', 2021, 14, 'Engineering', 'Software Engineering', 2.17, true, 'Probation', 63),
+('Duff', 'Limerick', 'duff.limericknortheastern.edu', 2026, 25, 'Psychology', 'Psychology', 3.77, true, 'Leave', 47),
+('Meir', 'Verbrugge', 'meir.verbruggenortheastern.edu', 2021, 8, 'Business', 'Software Engineering', 3.58, true, 'Probation', 35),
+('Marney', 'Hulme', 'marney.hulmenortheastern.edu', 2021, 32, 'Biology', 'Economics', 3.93, true, 'Probation', 110),
+('Nathaniel', 'Cripwell', 'nathaniel.cripwellnortheastern.edu', 2023, 9, 'Economics', 'Engineering', 3.87, false, 'Enrolled', 35),
+('Cookie', 'Scrine', 'cookie.scrinenortheastern.edu', 2026, 20, 'Engineering', 'Economics', 2.84, false, 'Probation', 8),
+('Ritchie', 'Mammatt', 'ritchie.mammattnortheastern.edu', 2022, 14, 'Psychology', 'Economics', 3.18, true, 'Probation', 59),
+('Alwyn', 'Natwick', 'alwyn.natwicknortheastern.edu', 2026, 24, 'Computer Science', 'Psychology', 3.69, true, 'Enrolled', 78),
+('Bourke', 'Humpherson', 'bourke.humphersonnortheastern.edu', 2022, 10, 'Business', 'Biology', 2.12, true, 'Enrolled', 27),
+('Lorie', 'Tuny', 'lorie.tunynortheastern.edu', 2022, 19, 'Computer Science', 'Engineering', 2.6, false, 'Enrolled', 80),
+('Fredi', 'Theobold', 'fredi.theoboldnortheastern.edu', 2021, 13, 'Software Engineering', 'Engineering', 2.25, false, 'Active', 68),
+('Katya', 'Tobin', 'katya.tobinnortheastern.edu', 2026, 7, 'Software Engineering', 'Psychology', 2.05, true, 'Enrolled', 76),
+('Jim', 'Clackson', 'jim.clacksonnortheastern.edu', 2022, 21, 'Economics', 'Business', 3.29, false, 'Enrolled', 81),
+('Carine', 'Gozzard', 'carine.gozzardnortheastern.edu', 2022, 36, 'Engineering', 'Engineering', 2.55, true, 'Probation', 108),
+('Crystal', 'Scroggie', 'crystal.scroggienortheastern.edu', 2023, 18, 'Psychology', 'Business', 2.12, false, 'Probation', 40),
+('Mellie', 'Skynner', 'mellie.skynnernortheastern.edu', 2022, 26, 'Economics', 'Data Science', 3.28, true, 'Probation', 110),
+('Marice', 'Paradise', 'marice.paradisenortheastern.edu', 2025, 17, 'Software Engineering', 'Software Engineering', 3.34, false, 'Enrolled', 43),
+('Cedric', 'Collis', 'cedric.collisnortheastern.edu', 2024, 33, 'Psychology', 'Psychology', 3.87, false, 'Active', 122);
 
 INSERT INTO metric(studentID, category, privacyLevel, description, unit, metricType, metricName, metricValue)
 VALUES
