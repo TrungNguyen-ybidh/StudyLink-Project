@@ -14,6 +14,8 @@ st.set_page_config(
 
 SideBarLinks()
 
+API = "http://localhost:8501/events"
+
 
 # AUTH CHECK
 if not st.session_state.get("authenticated", False):
@@ -21,11 +23,11 @@ if not st.session_state.get("authenticated", False):
     st.stop()
 
 if st.session_state.get("role") != "Student":
-    st.warning("Access denied — Students only.")
+    st.warning("Access denied. Students only.")
     st.stop()
 
 student_id = st.session_state.get("studentID")
-API = "http://localhost:8501/events"
+student_name = st.session_state.get("user_name", "Student")
 
 
 # HELPERS TO PARSE DATE/TIME FROM API
