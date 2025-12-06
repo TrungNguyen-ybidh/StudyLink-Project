@@ -1,0 +1,36 @@
+fName,lName,email,enrollmentYear,advisorID,major,minor,GPA,riskFlag,enrollmentStatus,totalCredits
+Heidie,Bearfoot,heidie.bearfootnortheastern.edu,2024,26,Engineering,Software Engineering,3.51,true,Probation,46
+Roobbie,Annell,roobbie.annellnortheastern.edu,2021,5,Business,Engineering,2.87,false,Enrolled,12
+Odetta,Oakly,odetta.oaklynortheastern.edu,2025,8,Economics,Computer Science,2.74,false,Probation,83
+Tabby,Hatchman,tabby.hatchmannortheastern.edu,2025,22,Economics,Psychology,2.87,false,Leave,11
+Cori,Capron,cori.capronnortheastern.edu,2023,20,Data Science,Biology,3.38,false,Active,31
+Liana,LaBastida,liana.labastidanortheastern.edu,2025,10,Data Science,Engineering,3.32,false,Active,27
+Clark,McAlester,clark.mcalesternortheastern.edu,2022,15,Economics,Computer Science,2.33,true,Probation,30
+Parsifal,Bignal,parsifal.bignalnortheastern.edu,2021,9,Biology,Computer Science,3.66,false,Active,36
+Kathi,Wellard,kathi.wellardnortheastern.edu,2025,14,Computer Science,Software Engineering,2.54,false,Active,44
+Rhett,Back,rhett.backnortheastern.edu,2026,8,Data Science,Computer Science,2.16,true,Active,61
+Madlin,Benge,madlin.bengenortheastern.edu,2022,27,Software Engineering,Psychology,2.27,false,Probation,56
+Felipa,Petti,felipa.pettinortheastern.edu,2024,24,Psychology,Data Science,2.18,false,Enrolled,124
+Filia,Daveridge,filia.daveridgenortheastern.edu,2026,35,Psychology,Biology,2.28,false,Active,82
+Mellie,Colnett,mellie.colnettnortheastern.edu,2026,14,Business,Software Engineering,3.17,false,Enrolled,104
+Emanuel,Pritchard,emanuel.pritchardnortheastern.edu,2026,2,Engineering,Business,3.76,false,Active,87
+Filippa,Cours,filippa.coursnortheastern.edu,2025,18,Data Science,Business,3.76,true,Leave,122
+Randee,Seckom,randee.seckomnortheastern.edu,2023,21,Computer Science,Software Engineering,3.39,false,Enrolled,101
+Darius,Wanell,darius.wanellnortheastern.edu,2026,11,Economics,Data Science,2.24,true,Probation,120
+Arlinda,Petras,arlinda.petrasnortheastern.edu,2022,6,Biology,Psychology,3.26,false,Probation,67
+Ruperto,Mell,ruperto.mellnortheastern.edu,2021,17,Psychology,Biology,3.01,false,Active,87
+Dick,Petcher,dick.petchernortheastern.edu,2026,33,Economics,Psychology,2.57,false,Enrolled,46
+Ludovika,Hopkins,ludovika.hopkinsnortheastern.edu,2023,1,Engineering,Economics,3.48,false,Active,77
+Noam,Pavic,noam.pavicnortheastern.edu,2021,17,Biology,Biology,2.95,false,Enrolled,91
+Alair,Burdon,alair.burdonnortheastern.edu,2024,24,Economics,Software Engineering,3.69,true,Probation,122
+Lorna,Wiggins,lorna.wigginsnortheastern.edu,2026,26,Computer Science,Data Science,3.61,true,Leave,62
+Quincy,Fabb,quincy.fabbnortheastern.edu,2024,31,Software Engineering,Data Science,2.77,false,Leave,46
+Lindsey,McCloud,lindsey.mccloudnortheastern.edu,2021,11,Economics,Computer Science,3.31,false,Enrolled,66
+Zachery,Fendt,zachery.fendtnortheastern.edu,2022,1,Psychology,Data Science,3.56,false,Enrolled,4
+Faustina,Shorrock,faustina.shorrocknortheastern.edu,2025,3,Business,Engineering,2.14,true,Enrolled,32
+Ronnie,Du Barry,ronnie.du barrynortheastern.edu,2025,1,Biology,Economics,2.1,false,Probation,116
+Yoko,Dowdell,yoko.dowdellnortheastern.edu,2023,24,Computer Science,Business,2.78,false,Leave,40
+Kelwin,Tottem,kelwin.tottemnortheastern.edu,2025,35,Data Science,Business,2.99,true,Active,49
+Cherlyn,Winson,cherlyn.winsonnortheastern.edu,2021,16,Business,Biology,3.89,true,Leave,69
+Alano,Gueste,alano.guestenortheastern.edu,2024,29,Data Science,Business,3.73,true,Active,1
+Codie,Hurdedge,codie.hurdedgenortheastern.edu,2021,22,Biology,Economics,3.16,true,Leave,53
