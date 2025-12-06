@@ -544,7 +544,7 @@ else:
                 ss.role = "System Admin"
                 ss.user_name = selected_admin
                 ss.user_email = admin_users[selected_admin]
-                st.rerun()
+                st.switch_page('pages/40_Admin_Home.py')
 
 # =============================================================================
 # FOOTER
