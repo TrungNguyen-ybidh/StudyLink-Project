@@ -145,7 +145,7 @@ def create_app():
     
     # System Admin Routes
     # URL prefix: /admin
-    app.register_blueprint(admin, url_prefix='/admin')
+    app.register_blueprint(admin)
     
     # Optional: Generic demo routes (for testing/development)
     # Can be removed if not needed

@@ -40,10 +40,13 @@ def SideBarLinks(show_home=True):
     
     elif role == 'Student':
         st.sidebar.markdown("### 🎓 Student Portal")
-        st.sidebar.page_link("pages/10_Student_Home.py", label="🏠 Student Home")
-        st.sidebar.page_link("pages/11_Calendar.py", label="📅 Calendar")
-        st.sidebar.page_link("pages/12_Grades.py", label="📝 Grades")
-        st.sidebar.page_link("pages/13_Study_Plan.py", label="📚 Study Plan")
+        st.sidebar.page_link("pages/19_Student_homepage.py", label="🏠 Student Home")
+        st.sidebar.page_link("pages/20_Student_calendar.py", label="📅 Calendar")
+        st.sidebar.page_link("pages/21_Student_reminder.py", label="⏰ Reminder")
+        st.sidebar.page_link("pages/22_Student_grades.py", label="📊 Grades")
+        st.sidebar.page_link("pages/23_Student_courses.py", label="📝 Courses")
+        st.sidebar.page_link("pages/24_Student_events.py", label="🎭 Events")
+        st.sidebar.page_link("pages/25_Student_workload.py", label="📈 Workload")
     
     elif role == 'Advisor':
         st.sidebar.markdown("### 👨‍🏫 Advisor Portal")
@@ -52,9 +55,9 @@ def SideBarLinks(show_home=True):
     elif role == 'System Admin':
         st.sidebar.markdown("### ⚙️ Admin Portal")
         st.sidebar.page_link("pages/40_Admin_Home.py", label="🏠 Admin Home")
-        st.sidebar.page_link("pages/41_System_Status.py", label="📊 System Status")
-        st.sidebar.page_link("pages/42_Data_Management.py", label="📁 Data Management")
-        st.sidebar.page_link("pages/43_User_Management.py", label="👥 User Management")
+        st.sidebar.page_link("pages/41_Admin_Term_Course_Catalog.py", label="📊 Course Catalog")
+        st.sidebar.page_link("pages/42_Admin_Calendar_Sync.py", label="📁 Calendar Sync")
+        st.sidebar.page_link("pages/43_Admin_Ops_Quality_Reports.py", label="📊 Quality Reports")
     
     # Logout button at bottom
     st.sidebar.divider()

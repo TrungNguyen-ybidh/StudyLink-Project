@@ -473,7 +473,7 @@ else:
                 ss.role = "Student"
                 ss.user_name = selected_student
                 ss.user_email = student_users[selected_student]
-                st.rerun()
+                st.switch_page('pages/19_Student_homepage.py')
     
     with role_col2:
         with st.container(border=True):
@@ -544,7 +544,7 @@ else:
                 ss.role = "System Admin"
                 ss.user_name = selected_admin
                 ss.user_email = admin_users[selected_admin]
-                st.rerun()
+                st.switch_page('pages/40_Admin_Home.py')
 
 # =============================================================================
 # FOOTER

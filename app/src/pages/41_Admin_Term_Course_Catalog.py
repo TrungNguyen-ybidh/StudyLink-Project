@@ -10,11 +10,11 @@ if not st.session_state.get("authenticated", False):
     st.warning("Please log in from the Home page.")
     st.stop()
 
-if st.session_state.get("role") != "System Administrator":
+if st.session_state.get("role") != "System Admin":
     st.warning("Access denied. This page is for System Administrators only.")
     st.stop()
 
-API_BASE = os.getenv("API_BASE_URL", "http://api:4000").rstrip("/")
+API_BASE = os.getenv("API_BASE_URL", "http://web-api:4000").rstrip("/")
 
 def call_api(method, path, json_body=None, params=None):
     try:
@@ -35,7 +35,7 @@ st.subheader("Terms")
 tA, tB = st.columns(2)
 
 with tA:
-    if st.button("GET /terms", use_container_width=True):
+    if st.button("View Terms", use_container_width=True):
         code, data = call_api("GET", "/terms")
         st.write(f"Status: {code}")
         st.session_state["terms_cache"] = data if isinstance(data, list) else []
@@ -46,7 +46,7 @@ with tB:
         name = st.text_input("name", value="Spring 2026")
         start_date = st.date_input("startDate")
         end_date = st.date_input("endDate")
-        submit = st.form_submit_button("POST /terms", use_container_width=True)
+        submit = st.form_submit_button("Create New Term", use_container_width=True)
 
     if submit:
         body = {"name": name, "startDate": str(start_date), "endDate": str(end_date)}
@@ -73,7 +73,7 @@ term_id = st.selectbox("termID (load terms first if you want a dropdown)", term_
 c1, c2 = st.columns(2)
 
 with c1:
-    if st.button("GET /terms/{term_id}/courses", use_container_width=True):
+    if st.button("View Courses for Term", use_container_width=True):
         code, data = call_api("GET", f"/terms/{int(term_id)}/courses")
         st.write(f"Status: {code}")
         st.session_state["courses_cache"] = data if isinstance(data, list) else []
@@ -90,7 +90,7 @@ with c2:
         date_val = st.text_input("date (YYYY-MM-DD, optional)", value="")
         startTime = st.text_input("startTime (HH:MM:SS, optional)", value="")
         endTime = st.text_input("endTime (HH:MM:SS, optional)", value="")
-        submit_course = st.form_submit_button("POST /terms/{term_id}/courses", use_container_width=True)
+        submit_course = st.form_submit_button("Create New Course", use_container_width=True)
 
     if submit_course:
         body = {
@@ -111,7 +111,7 @@ with c2:
 st.divider()
 
 course_id = st.number_input("course_id to delete", min_value=1, step=1, value=1)
-if st.button("DELETE /terms/{term_id}/courses/{course_id}", use_container_width=True):
+if st.button("Delete Course From Term", use_container_width=True):
     code, data = call_api("DELETE", f"/terms/{int(term_id)}/courses/{int(course_id)}")
     st.write(f"Status: {code}")
     st.json(data)
