@@ -1,0 +1,36 @@
+courseID,termID,courseCode,courseName,location,instructor,department,startTime,endTime
+1,1,MATH3477,Public Speaking,Washington Hall 902,Maurita Velti,Psychology,8:09 AM,9:29 AM
+2,4,MATH6324,Introduction to Psychology,Washington Hall 902,Isiahi Zanotti,Business,2:18 PM,3:25 PM
+3,5,MATH7142,Creative Writing Workshop,Johnson Hall 402,Claire Wildbore,Psychology,12:42 PM,2:06 PM
+4,2,BUSN2565,Creative Writing Workshop,Madison Hall 707,Hewett Gurry,Psychology,1:18 PM,2:46 PM
+5,2,CS6036,Creative Writing Workshop,Johnson Hall 402,Nil Anglish,Psychology,11:39 AM,1:26 PM
+6,1,PSYC7088,Music Theory,Madison Hall 707,Bobby Dorning,Engineering,11:42 AM,1:04 PM
+7,2,PSYC3235,Music Theory,Kennedy Hall 310,Annemarie Beel,Business,10:27 AM,12:13 PM
+8,6,MATH8909,Public Speaking,Johnson Hall 402,Rickard Crookshanks,Psychology,11:03 AM,12:10 PM
+9,6,CS0294,History of Art,Kennedy Hall 310,Zane Reeves,Engineering,2:40 PM,3:45 PM
+10,6,BUSN0613,Music Theory,Robinson Hall 205,Jerry Hulls,Engineering,11:26 AM,12:40 PM
+11,1,CS0396,Creative Writing Workshop,Adams Hall 503,Anica Sansom,Computer Science,9:18 AM,10:31 AM
+12,5,MATH1034,Philosophy of Ethics,Lincoln Hall 810,Anstice Tuiller,Mathematics,8:30 AM,10:24 AM
+13,5,PSYC2034,Creative Writing Workshop,Franklin Hall 601,Timothy Despenser,Psychology,8:03 AM,9:05 AM
+14,5,CS0725,Music Theory,Jefferson Hall 1001,Fraze Handford,Mathematics,8:05 AM,9:07 AM
+15,6,MATH5939,Philosophy of Ethics,Smith Hall 101,Juli Sharpus,Business,3:33 PM,4:59 PM
+16,6,CS4970,Computer Science 101,Jefferson Hall 1001,Happy Cassimer,Computer Science,10:29 AM,12:28 PM
+17,3,PSYC3130,History of Art,Washington Hall 902,Annamarie Nelthropp,Psychology,2:55 PM,4:31 PM
+18,2,CS1739,Public Speaking,Johnson Hall 402,Inesita Bessent,Engineering,9:33 AM,10:39 AM
+19,3,CS5596,Music Theory,Franklin Hall 601,Katuscha Spiller,Psychology,2:04 PM,3:48 PM
+20,6,MATH7641,Computer Science 101,Kennedy Hall 310,Renie Charer,Computer Science,8:42 AM,9:44 AM
+21,4,PSYC4749,Chemistry Lab,Robinson Hall 205,Jerad Nasey,Psychology,2:55 PM,4:43 PM
+22,3,MATH5423,Statistics for Business,Adams Hall 503,Maxine Doidge,Engineering,1:32 PM,2:28 PM
+23,4,CS1326,Creative Writing Workshop,Smith Hall 101,Christalle Doppler,Engineering,9:50 AM,11:41 AM
+24,4,BUSN7152,History of Art,Jefferson Hall 1001,Willabella Gonzalvo,Psychology,8:59 AM,10:31 AM
+25,4,MATH7293,Statistics for Business,Washington Hall 902,Abby Miroy,Engineering,12:16 PM,1:54 PM
+26,5,PSYC7479,Creative Writing Workshop,Lincoln Hall 810,Alyce Lugsdin,Computer Science,12:41 PM,2:21 PM
+27,3,MATH7154,Philosophy of Ethics,Adams Hall 503,Alaine Steptow,Psychology,3:51 PM,5:40 PM
+28,2,PSYC9025,Public Speaking,Washington Hall 902,Darin Kern,Psychology,9:44 AM,11:15 AM
+29,4,MATH5662,Philosophy of Ethics,Robinson Hall 205,Lionello Try,Mathematics,2:15 PM,3:06 PM
+30,5,MATH5846,Public Speaking,Jefferson Hall 1001,Silvan Seabon,Psychology,8:33 AM,9:24 AM
+31,2,CS1761,Public Speaking,Lincoln Hall 810,Mendel Hearnden,Psychology,2:09 PM,4:00 PM
+32,5,PSYC5372,Creative Writing Workshop,Jefferson Hall 1001,Celia Goldes,Psychology,9:07 AM,10:04 AM
+33,2,MATH4127,Computer Science 101,Smith Hall 101,Lark Pebworth,Mathematics,11:35 AM,1:14 PM
+34,2,CS1078,Music Theory,Lincoln Hall 810,Perry Piris,Business,3:46 PM,5:16 PM
+35,4,PSYC4164,Statistics for Business,Robinson Hall 205,Dre Wilne,Business,3:35 PM,5:07 PM

@@ -333,12 +333,18 @@ CREATE TABLE DataError (
 
 
 
-INSERT INTO dataset (name, category, source)
+INSERT INTO dataset (dataID, name, category, source, createdAt,)
 VALUES
-('Student Logs', 'metrics', 'csv'),
-('Sleep Tracker', 'wellness', 'api'),
-('Grades Import', 'academic', 'csv');
-
+insert into dataset (dataID, name, category, source, createdAt) values (1, 'Student Logs', 'metrics', 'manual', '2025-11-04 14:08:40');
+insert into dataset (dataID, name, category, source, createdAt) values (2, 'Wellness Survey', 'wellness', 'manual', '2025-10-10 13:23:19');
+insert into dataset (dataID, name, category, source, createdAt) values (3, 'Advisor Help', 'engagement', 'manual', '2025-09-19 01:19:08');
+insert into dataset (dataID, name, category, source, createdAt) values (4, 'Sleep Tracker', 'wellness', 'manual', '2025-11-12 06:48:23');
+insert into dataset (dataID, name, category, source, createdAt) values (5, 'Sleep Tracker', 'wellness', 'api', '2025-07-09 13:24:32');
+insert into dataset (dataID, name, category, source, createdAt) values (6, 'Student Logs', 'metrics', 'api', '2025-03-13 12:09:20');
+insert into dataset (dataID, name, category, source, createdAt) values (7, 'Wellness Survey', 'wellness', 'csv', '2025-02-16 17:00:35');
+insert into dataset (dataID, name, category, source, createdAt) values (8, 'Grades Import', 'academic', 'api', '2025-08-11 14:19:46');
+insert into dataset (dataID, name, category, source, createdAt) values (9, 'Advisor Help', 'engagement', 'csv', '2025-07-16 10:02:48');
+insert into dataset (dataID, name, category, source, createdAt) values (10, 'Student Logs', 'metrics', 'manual', '2025-10-24 13:48:15');
 
 INSERT INTO SystemAdmin (name, DOB)
 VALUES
