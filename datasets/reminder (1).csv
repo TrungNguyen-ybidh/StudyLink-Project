@@ -1,0 +1,71 @@
+eventID,assignmentID,message,isActive,date,time
+20,1,due soon,false,2025-11-27,9:01:39
+1,22,due soon,false,2026-01-21,13:30:19
+4,35,need help,true,2024-12-06,21:31:33
+13,37,Exam tomorrow,true,2026-04-10,19:19:39
+33,61,due soon,true,2026-11-22,13:32:31
+17,56,Exam tomorrow,true,2025-05-27,20:07:54
+1,37,Study group reminder,true,2025-07-17,10:00:27
+3,13,Study group reminder,true,2026-04-04,23:09:41
+22,67,due soon,false,2025-07-18,22:00:55
+9,60,due soon,false,2025-12-29,15:33:44
+13,2,Exam tomorrow,true,2025-08-26,21:56:17
+1,31,need help,true,2025-01-27,11:51:45
+25,44,Study group reminder,true,2026-10-21,23:24:27
+16,17,due soon,false,2025-03-18,14:49:41
+6,14,Exam tomorrow,false,2026-11-10,13:21:51
+19,9,Study group reminder,true,2026-05-20,16:05:59
+30,18,due soon,true,2025-06-25,12:06:09
+24,45,Study group reminder,true,2026-04-02,17:34:23
+33,17,due soon,true,2025-10-02,9:49:57
+2,57,Study group reminder,false,2025-09-03,20:27:44
+25,57,need help,true,2025-12-16,14:58:59
+12,58,due soon,true,2025-11-29,11:39:29
+12,26,Exam tomorrow,false,2025-01-22,14:52:27
+7,1,Study group reminder,true,2025-08-12,21:51:25
+25,46,need help,false,2025-03-26,17:27:00
+13,11,Exam tomorrow,false,2025-01-16,15:08:18
+16,9,need help,true,2026-11-28,15:37:04
+5,17,Study group reminder,false,2026-08-11,21:10:33
+28,4,due soon,true,2026-03-06,10:33:57
+26,69,Exam tomorrow,true,2025-11-16,10:47:03
+8,31,Study group reminder,true,2025-04-08,14:57:27
+35,21,Study group reminder,false,2026-12-03,14:26:39
+6,12,due soon,false,2025-01-06,16:07:23
+9,18,Exam tomorrow,false,2025-07-26,19:02:10
+7,30,Study group reminder,false,2025-11-21,22:34:22
+33,9,Exam tomorrow,true,2025-01-07,21:13:40
+11,12,need help,false,2024-12-13,10:04:06
+33,50,Exam tomorrow,false,2025-05-15,18:50:53
+5,10,due soon,false,2025-12-07,10:22:38
+18,55,due soon,false,2025-05-03,21:17:41
+2,27,Exam tomorrow,true,2026-08-09,22:10:01
+17,42,Study group reminder,false,2026-10-12,19:07:39
+32,42,need help,true,2025-07-02,8:31:24
+27,34,Exam tomorrow,true,2025-09-03,20:46:54
+12,58,Study group reminder,true,2025-05-01,13:38:57
+20,26,Exam tomorrow,false,2026-01-31,9:41:25
+31,54,due soon,false,2024-12-23,21:48:10
+25,32,Exam tomorrow,true,2026-05-01,12:19:53
+5,57,due soon,true,2026-04-03,8:50:30
+8,52,due soon,false,2025-07-28,20:51:51
+12,44,Study group reminder,false,2025-02-10,17:10:46
+33,43,need help,false,2026-10-12,19:51:48
+23,35,due soon,true,2026-03-14,18:02:07
+5,9,Study group reminder,true,2025-08-28,18:48:44
+16,45,need help,true,2026-09-06,14:41:45
+19,57,Exam tomorrow,true,2025-01-19,23:51:00
+23,64,Exam tomorrow,false,2025-10-04,12:48:34
+30,40,Exam tomorrow,false,2025-05-15,16:32:08
+30,46,need help,true,2025-02-26,9:58:54
+8,43,Study group reminder,true,2025-07-10,19:41:53
+14,3,need help,true,2026-09-03,15:19:53
+14,18,due soon,true,2025-10-12,12:26:59
+26,37,Study group reminder,false,2026-02-14,9:15:19
+34,61,need help,true,2026-09-02,13:20:19
+20,14,Exam tomorrow,false,2025-02-02,19:34:19
+27,55,due soon,true,2025-04-26,21:20:24
+35,39,need help,false,2026-01-17,14:01:19
+34,54,Exam tomorrow,true,2025-11-30,13:50:06
+2,15,Exam tomorrow,true,2026-05-16,19:59:20
+31,43,Study group reminder,true,2026-02-09,17:29:05

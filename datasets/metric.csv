@@ -1,0 +1,71 @@
+studentID,courseID,category,privacyLevel,description,unit,metricType,metricName,metricValue,metricDate
+7,23,Study,high,daily study hours,percent,categorical,stress,0.5,2025-06-13 18:56:48
+25,18,Grades,high,daily study hours,hours,categorical,stress,2.8,2025-10-28 18:39:28
+20,7,Stress,medium,stress level,hours,categorical,stress,2.8,2025-03-23 23:28:05
+19,13,Grades,low,daily study hours,score,categorical,stress,1.2,2025-01-25 04:26:09
+19,13,Study,low,daily study hours,score,categorical,stress,0.8,2025-09-08 05:03:43
+14,14,Sleep,low,sleep duration,hours,categorical,stress,3.7,2025-10-21 03:46:15
+34,4,Engagement,medium,daily study hours,percent,numeric,sleep,1.2,2025-02-20 02:52:12
+6,16,Engagement,medium,stress level,hours,categorical,stress,2.0,2024-12-12 03:00:25
+14,27,Study,low,daily study hours,percent,numeric,study_hrs,4.0,2025-06-23 16:47:51
+24,29,Engagement,low,daily study hours,score,numeric,stress,3.2,2025-05-02 04:10:07
+32,20,Study,low,daily study hours,score,numeric,study_hrs,2.0,2025-09-04 11:49:23
+6,31,Sleep,medium,sleep duration,percent,numeric,sleep,3.7,2025-08-11 05:02:21
+2,14,Engagement,medium,stress level,percent,numeric,attendance_pct,3.2,2025-07-27 18:23:10
+26,24,Stress,high,stress level,hours,numeric,stress,4.0,2025-04-09 03:37:48
+4,24,Engagement,medium,stress level,score,categorical,stress,3.2,2025-10-05 20:48:02
+6,23,Engagement,high,stress level,hours,categorical,sleep,1.2,2025-10-28 13:01:32
+10,34,Grades,high,daily study hours,score,categorical,attendance_pct,1.6,2024-12-19 09:42:12
+25,17,Grades,high,daily study hours,hours,categorical,study_hrs,3.2,2025-11-18 06:57:58
+24,15,Sleep,high,sleep duration,hours,numeric,stress,4.5,2025-01-05 20:08:23
+10,27,Engagement,high,stress level,hours,numeric,attendance_pct,0.5,2025-01-13 23:22:51
+15,15,Study,low,daily study hours,percent,categorical,stress,4.0,2025-08-19 17:16:56
+24,20,Engagement,medium,stress level,hours,categorical,sleep,4.0,2025-09-14 15:07:29
+6,23,Study,high,daily study hours,hours,numeric,stress,3.7,2025-03-06 14:32:37
+22,34,Engagement,low,daily study hours,score,categorical,sleep,2.8,2025-10-07 03:15:52
+21,29,Sleep,medium,sleep duration,percent,categorical,stress,0.8,2025-06-06 20:56:18
+10,9,Engagement,high,stress level,percent,categorical,sleep,0.8,2025-02-04 08:22:16
+2,14,Grades,low,daily study hours,hours,numeric,attendance_pct,0.5,2025-01-18 20:45:22
+10,17,Sleep,high,sleep duration,percent,categorical,sleep,2.0,2025-02-06 13:30:05
+8,24,Stress,high,stress level,score,numeric,stress,2.8,2025-03-24 02:01:53
+35,17,Study,high,daily study hours,percent,categorical,study_hrs,3.7,2025-11-26 03:41:43
+12,19,Grades,high,daily study hours,percent,categorical,attendance_pct,0.5,2025-04-14 01:22:15
+21,8,Stress,low,stress level,score,numeric,stress,3.2,2024-12-20 17:22:25
+27,6,Engagement,medium,stress level,score,categorical,stress,4.5,2025-03-05 01:49:42
+21,26,Study,medium,daily study hours,percent,categorical,stress,3.2,2025-02-25 21:27:20
+18,18,Sleep,low,sleep duration,hours,categorical,sleep,2.8,2025-03-23 03:30:15
+9,2,Engagement,low,daily study hours,percent,numeric,attendance_pct,0.8,2025-03-16 03:42:46
+34,1,Grades,high,daily study hours,score,categorical,attendance_pct,0.8,2025-09-01 04:12:53
+17,30,Engagement,medium,daily study hours,hours,numeric,stress,0.5,2025-02-16 08:22:01
+35,18,Stress,low,stress level,score,numeric,stress,3.2,2025-11-11 18:35:20
+32,16,Engagement,high,daily study hours,hours,categorical,attendance_pct,4.0,2025-05-19 02:43:22
+29,26,Grades,high,daily study hours,score,numeric,attendance_pct,1.6,2025-09-20 09:01:10
+8,20,Grades,low,daily study hours,hours,categorical,attendance_pct,3.2,2025-01-07 07:46:59
+11,1,Sleep,medium,sleep duration,percent,numeric,stress,2.8,2025-02-16 02:31:46
+12,15,Study,medium,daily study hours,percent,numeric,study_hrs,2.8,2025-10-30 23:08:08
+30,16,Stress,medium,stress level,percent,categorical,stress,1.6,2025-04-03 09:14:56
+27,29,Engagement,medium,daily study hours,score,categorical,stress,3.2,2025-01-14 03:19:45
+30,26,Engagement,medium,stress level,score,categorical,sleep,1.6,2025-11-24 18:06:39
+22,19,Engagement,medium,stress level,hours,numeric,attendance_pct,4.0,2025-02-20 09:48:03
+3,27,Grades,medium,daily study hours,score,categorical,attendance_pct,2.0,2025-01-06 16:19:47
+8,8,Grades,high,daily study hours,hours,numeric,study_hrs,2.0,2025-05-11 04:06:02
+30,15,Stress,high,stress level,score,categorical,stress,3.2,2025-09-18 06:25:22
+20,4,Engagement,low,stress level,percent,categorical,attendance_pct,1.2,2025-02-25 19:19:45
+4,9,Sleep,high,sleep duration,percent,numeric,stress,4.5,2024-12-06 20:10:14
+28,10,Grades,medium,daily study hours,hours,categorical,attendance_pct,0.8,2025-09-25 13:01:04
+4,13,Engagement,high,daily study hours,percent,numeric,stress,0.5,2025-01-02 10:09:03
+29,11,Grades,high,daily study hours,score,categorical,attendance_pct,0.8,2025-07-24 12:52:42
+25,18,Stress,medium,stress level,score,categorical,stress,1.6,2025-01-13 13:55:28
+7,28,Stress,medium,stress level,score,categorical,stress,3.7,2025-10-09 01:32:17
+14,1,Sleep,high,sleep duration,percent,numeric,sleep,0.5,2025-07-23 18:38:33
+2,17,Study,medium,daily study hours,score,numeric,stress,3.2,2025-05-11 00:56:08
+29,33,Sleep,medium,sleep duration,hours,numeric,sleep,1.2,2024-12-28 17:38:49
+6,26,Study,medium,daily study hours,hours,categorical,study_hrs,1.2,2025-04-26 06:51:03
+18,33,Stress,low,stress level,hours,numeric,stress,0.5,2025-01-06 01:40:03
+14,12,Engagement,low,stress level,percent,categorical,sleep,3.2,2025-06-15 20:43:15
+11,17,Sleep,low,sleep duration,hours,numeric,stress,4.5,2025-07-03 22:05:41
+20,5,Sleep,high,sleep duration,hours,numeric,sleep,1.2,2025-04-07 07:08:36
+14,20,Study,medium,daily study hours,percent,numeric,stress,2.8,2025-04-26 06:45:01
+27,20,Grades,medium,daily study hours,hours,numeric,attendance_pct,0.5,2024-12-25 02:15:06
+21,25,Grades,low,daily study hours,percent,numeric,attendance_pct,1.6,2025-08-28 11:51:34
+8,23,Grades,low,daily study hours,score,numeric,attendance_pct,1.2,2025-07-17 05:57:27
