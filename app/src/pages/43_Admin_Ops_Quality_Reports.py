@@ -52,12 +52,22 @@ with tab1:
         "metricValue": "7.5",
     }])
 
-    edited = st.data_editor(df, num_rows="dynamic", use_container_width=True)
+    edited = st.data_editor(
+        df,
+        column_config={
+            "studentID": st.column_config.NumberColumn(min_value=1, step=1, format="%d"),
+            "courseID": st.column_config.NumberColumn(min_value=1, step=1, format="%d"),
+        },
+        num_rows="dynamic",
+        use_container_width=True,
+)
+
 
     if st.button("Run Import", use_container_width=True):
         metrics = []
-        for _, row in edited.iterrows():
+        for i, row in edited.iterrows():
             m = {k: (None if pd.isna(v) else v) for k, v in row.to_dict().items()}
+            m.pop("courseID", None)
             if m.get("studentID") is not None:
                 m["studentID"] = int(m["studentID"])
             if m.get("courseID") is not None:
