@@ -8,7 +8,7 @@ from modules.nav import SideBarLinks
 st.set_page_config(page_title="Calendar", page_icon="📅", layout="wide")
 SideBarLinks()
 
-API_URL = "http://localhost:8501/calendar"   # update this if your backend URL differs
+API = "http://localhost:8501/calendar"
 
 
 # Authentication check
@@ -16,154 +16,285 @@ if not st.session_state.get("authenticated", False):
     st.warning("Please log in first.")
     st.stop()
 
-student_id = st.session_state.get("studentID")
-if not student_id:
-    st.warning("No Student ID found. Please log in again.")
+if st.session_state.get("role") != "Student":
+    st.warning("Access denied. Students only.")
     st.stop()
 
+student_id = st.session_state.get("studentID")
+student_name = st.session_state.get("user_name", "Student")
 
-# Color Mapping for Event Types
+
+# COLORS
 COLOR_MAP = {
-    "exam": "#FF4B4B",         # red
-    "quiz": "#FFD93D",         # yellow
-    "homework": "#3F8CFF",     # blue
-    "project": "#67D17E",      # green
-    "academic": "#8A63D2",     # purple
-    "other": "#000000"         # black
+    "exam": "#FF4B4B",    
+    "quiz": "#FFD93D",
+    "homework": "#3F8CFF",
+    "project": "#67D17E",
+    "academic": "#8A63D2",
+    "other": "#000000"
 }
 
-
-# Helper: map event/assignment to color
 def get_color(item):
-    """Decide color based on assignmentType or default academic type."""
-    event_type = item.get("assignmentType", "academic").lower()
-    return COLOR_MAP.get(event_type, "#8A63D2") 
+    t = item.get("assignmentType", "academic").lower()
+    return COLOR_MAP.get(t, "#8A63D2")
 
 
-# Fetch Calendar Data from API
-def fetch_calendar():
+# API CALLS
+
+@st.cache_data(ttl=5)
+def fetch_calendar(student_id):
     try:
-        resp = requests.get(f"{API_URL}?studentID={student_id}")
-        if resp.status_code == 200:
-            return resp.json()
-        return []
+        r = requests.get(f"{API}?studentID={student_id}")
+        return r.json() if r.status_code == 200 else []
     except:
-        st.error("Failed to reach calendar API.")
         return []
 
 
-calendar_items = fetch_calendar()
+def create_calendar_item(payload):
+    return requests.post(API, json=payload)
 
 
-# Determine current week (Mon–Sun)
+def update_item(item_type, item_id, payload):
+    return requests.put(f"{API}/{item_type}/{item_id}", json=payload)
+
+
+def delete_item(item_type, item_id):
+    return requests.delete(f"{API}/{item_type}/{item_id}")
+
+
+# LOAD DATA
+calendar_items = fetch_calendar(student_id)
+
+
+# ======================================================
+# WEEKLY GRID (Guaranteed to render)
+# ======================================================
+
 today = dt.date.today()
 monday = today - dt.timedelta(days=today.weekday())
-week_days = [monday + dt.timedelta(days=i) for i in range(7)]
+labels = ["M", "T", "W", "Th", "F", "S", "Su"]
 
-day_labels = ["M", "T", "W", "Th", "F", "S", "Su"]
+events_by_day = {i: [] for i in range(7)}  # Always initialize
 
+# Add items if data exists
+if calendar_items:
+    for item in calendar_items:
+        try:
+            d = dt.datetime.strptime(item["dueDate"], "%Y-%m-%d").date()
+        except:
+            continue
 
-# Transform API data to events grouped by weekday
-events_by_day = {d: [] for d in range(7)}  # 0=Mon, 6=Sun
-
-for item in calendar_items:
-
-    # Parse date
-    try:
-        event_date = dt.datetime.strptime(item["dueDate"], "%Y-%m-%d").date()
-    except:
-        continue
-
-    # Include only events in this week
-    if monday <= event_date <= monday + dt.timedelta(days=6):
-        weekday_index = event_date.weekday()
-        events_by_day[weekday_index].append(item)
+        if monday <= d <= monday + dt.timedelta(days=6):
+            events_by_day[d.weekday()].append(item)
 
 
-# HEADER + ICONS
-colA, colB, colC, colD = st.columns([1, 10, 1, 1])
-with colA: st.markdown("👤")
-with colB: st.title("Weekly Calendar")
-with colC: st.markdown("⚙️")
-with colD: st.markdown("🔔")
+# SECTION HEADER
+st.markdown("### 📅 Weekly Calendar View")
 
-st.write("---")
+# ========== CSS to force visible grid ==========
+st.markdown("""
+<style>
+.grid-cell {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    height: 55px;
+    padding: 4px;
+    background: #fafafa;
+}
+.event-box {
+    border-radius: 4px;
+    padding: 2px 4px;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    margin-top: 2px;
+}
+.day-label {
+    text-align:center; 
+    font-weight:bold; 
+    font-size:18px;
+    margin-bottom:6px;
+}
+</style>
+""", unsafe_allow_html=True)
 
+# Day Headers
+cols_hdr = st.columns(7)
+for i, lbl in enumerate(labels):
+    cols_hdr[i].markdown(f"<div class='day-label'>{lbl}</div>", unsafe_allow_html=True)
 
-# WEEKLY CALENDAR GRID
-cols_header = st.columns(7)
+# ========== Render 6 rows always ==========
+NUM_ROWS = 6
 
-# Header row: day labels
-for i, lbl in enumerate(day_labels):
-    with cols_header[i]:
-        st.markdown(
-            f"<div style='text-align:center; font-weight:bold; "
-            f"font-size:18px;'>{lbl}</div>",
-            unsafe_allow_html=True
-        )
+for r in range(NUM_ROWS):
+    cols = st.columns(7)
+    for day in range(7):
+        with cols[day]:
 
-# Render event blocks
-max_rows = max(len(v) for v in events_by_day.values())
-max_rows = max(max_rows, 6)  # always render at least 6 rows
+            st.markdown("<div class='grid-cell'>", unsafe_allow_html=True)
 
-for r in range(max_rows):
-    row_cols = st.columns(7)
-
-    for i in range(7):
-        with row_cols[i]:
-
-            if r < len(events_by_day[i]):
-                ev = events_by_day[i][r]
+            # Event in this box?
+            if r < len(events_by_day[day]):
+                ev = events_by_day[day][r]
                 color = get_color(ev)
                 title = ev.get("assignmentTitle", "Event")
 
                 st.markdown(
-                    f"""
-                    <div style="
-                        background-color:{color};
-                        height:18px;
-                        border-radius:5px;
-                        margin:4px;
-                        text-align:center;
-                        color:white;
-                        font-size:10px;
-                    ">{title[:8]}</div>
-                    """,
+                    f"<div class='event-box' style='background:{color};'>{title[:10]}</div>",
                     unsafe_allow_html=True
                 )
+
             else:
-                st.markdown("<div style='height:22px;'></div>", unsafe_allow_html=True)
+                # empty cell stays visible due to CSS box
+                st.markdown("&nbsp;", unsafe_allow_html=True)
+
+            st.markdown("</div>", unsafe_allow_html=True)
+
+
+
+# SECTION: ADD NEW ITEM
+st.subheader("➕ Add Event or Assignment")
+
+with st.form("add_item_form"):
+    item_type = st.radio("Item Type:", ["Event", "Assignment"], horizontal=True)
+
+    if item_type == "Event":
+        name = st.text_input("Event Name")
+        event_type = st.selectbox("Event Type", ["academic", "other"])
+        date = st.date_input("Date")
+        start = st.time_input("Start Time")
+        end = st.time_input("End Time (optional)", value=None)
+        location = st.text_input("Location (optional)")
+
+        submitted = st.form_submit_button("Create Event")
+
+        if submitted:
+            payload = {
+                "type": "event",
+                "name": name,
+                "eventType": event_type,
+                "date": str(date),
+                "startTime": start.strftime("%H:%M:%S"),
+                "endTime": end.strftime("%H:%M:%S") if end else None,
+                "location": location,
+                "studentID": student_id
+            }
+            res = create_calendar_item(payload)
+            if res.status_code == 201:
+                st.success("Event created!")
+                st.cache_data.clear()
+                st.rerun()
+            else:
+                st.error(res.text)
+
+    else:
+        course_id = st.number_input("Course ID", min_value=1)
+        title = st.text_input("Assignment Title")
+        atype = st.selectbox("Assignment Type", ["homework", "quiz", "exam", "project"])
+        date = st.date_input("Due Date")
+        time = st.time_input("Due Time")
+        max_score = st.number_input("Max Score", min_value=1)
+
+        submitted = st.form_submit_button("Create Assignment")
+
+        if submitted:
+            payload = {
+                "type": "assignment",
+                "courseID": course_id,
+                "title": title,
+                "assignmentType": atype,
+                "assignmentDate": str(date),
+                "assignmentTime": time.strftime("%H:%M:%S"),
+                "maxScore": max_score
+            }
+            res = create_calendar_item(payload)
+            if res.status_code == 201:
+                st.success("Assignment created!")
+                st.cache_data.clear()
+                st.rerun()
+            else:
+                st.error(res.text)
 
 
 st.write("---")
 
 
-# EVENT DETAIL (placeholder)
-st.subheader("Event Details")
-st.info("Click an event in the grid (feature coming soon).")
+# SECTION: UPDATE ITEMS
+st.subheader("✏️ Update a Calendar Item")
+
+with st.expander("Update Item Details"):
+    update_type = st.radio("Update:", ["Event", "Assignment"], horizontal=True)
+    update_id = st.number_input("Item ID to update", step=1)
+
+    if update_type == "Event":
+        name = st.text_input("New Name (optional)")
+        etype = st.text_input("New Event Type (optional)")
+        date = st.date_input("New Date", value=None)
+        stime = st.time_input("New Start Time", value=None)
+        etime = st.time_input("New End Time", value=None)
+        loc = st.text_input("New Location")
+
+        if st.button("Update Event"):
+            payload = {}
+            if name: payload["name"] = name
+            if etype: payload["type"] = etype
+            if date: payload["date"] = str(date)
+            if stime: payload["startTime"] = stime.strftime("%H:%M:%S")
+            if etime: payload["endTime"] = etime.strftime("%H:%M:%S")
+            if loc: payload["location"] = loc
+
+            res = update_item("event", update_id, payload)
+            if res.status_code == 200:
+                st.success("Event updated!")
+                st.cache_data.clear()
+                st.rerun()
+            else:
+                st.error(res.text)
+
+    else:
+        title = st.text_input("New Assignment Title")
+        atype = st.text_input("New Assignment Type")
+        date = st.date_input("New Due Date", value=None)
+        time = st.time_input("New Due Time", value=None)
+        max_s = st.number_input("New Max Score", value=0)
+        score = st.number_input("Score Received", value=0)
+        status = st.selectbox("Status", ["pending", "completed"])
+
+        if st.button("Update Assignment"):
+            payload = {}
+            if title: payload["title"] = title
+            if atype: payload["assignmentType"] = atype
+            if date: payload["assignmentDate"] = str(date)
+            if time: payload["assignmentTime"] = time.strftime("%H:%M:%S")
+            if max_s > 0: payload["maxScore"] = max_s
+            payload["scoreReceived"] = score
+            payload["status"] = status
+
+            res = update_item("assignment", update_id, payload)
+            if res.status_code == 200:
+                st.success("Assignment updated!")
+                st.cache_data.clear()
+                st.rerun()
+            else:
+                st.error(res.text)
 
 
-# Home Button
-st.write("")
-center = st.columns([4, 2, 4])[1]
-with center:
-    st.markdown(
-        """
-        <div style="
-            text-align:center;
-            background-color:#6A5ACD;
-            color:white;
-            width:80px;
-            height:80px;
-            border-radius:50%;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:36px;
-            margin:auto;
-        ">
-            🏠
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+# SECTION: DELETE ITEMS
+st.subheader("🗑️ Delete a Calendar Item")
+
+with st.expander("Delete an Item"):
+    delete_type = st.radio("Delete:", ["Event", "Assignment"], horizontal=True)
+    item_id = st.number_input("Item ID", step=1)
+
+    if st.button("Delete Now"):
+        t = "event" if delete_type == "Event" else "assignment"
+        res = delete_item(t, item_id)
+        if res.status_code == 200:
+            st.success("Item deleted!")
+            st.cache_data.clear()
+            st.rerun()
+        else:
+            st.error(res.text)
+
+
+st.write("---")
