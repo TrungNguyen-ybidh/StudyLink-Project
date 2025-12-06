@@ -8,7 +8,7 @@ from modules.nav import SideBarLinks
 st.set_page_config(page_title="Reminders", page_icon="🔔", layout="wide")
 SideBarLinks()
 
-API_BASE = "http://localhost:8501/reminder"   
+API = "http://localhost:8501/reminder"   
 
 
 # AUTH CHECK
@@ -17,10 +17,11 @@ if not st.session_state.get("authenticated", False):
     st.stop()
 
 if st.session_state.get("role") != "Student":
-    st.warning("You do not have access to this page.")
+    st.warning("Access denied. Students only.")
     st.stop()
 
-student_name = st.session_state.get("user_name")
+student_id = st.session_state.get("studentID")
+student_name = st.session_state.get("user_name", "Student")
 
 
 # HEADER
@@ -34,7 +35,7 @@ st.divider()
 @st.cache_data(ttl=5)
 def fetch_reminders(student_id):
     try:
-        url = f"{API_BASE}/reminders?studentID={student_id}"
+        url = f"{API}/reminders?studentID={student_id}"
         response = requests.get(url)
         if response.status_code == 200:
             return response.json()
@@ -73,7 +74,7 @@ else:
                     st.rerun()
             with col2:
                 if st.button("Delete", key=f"delete_{r['reminderID']}"):
-                    requests.delete(f"{API_BASE}/reminders/{r['reminderID']}")
+                    requests.delete(f"{API}/reminders/{r['reminderID']}")
                     st.success("Reminder deleted!")
                     st.cache_data.clear()
                     st.rerun()
@@ -111,7 +112,7 @@ with st.form("add_reminder_form"):
             "eventID": event_id
         }
 
-        response = requests.post(f"{API_BASE}/reminders", json=payload)
+        response = requests.post(f"{API}/reminders", json=payload)
 
         if response.status_code == 201:
             st.success("Reminder created successfully!")
@@ -146,7 +147,7 @@ if "edit_id" in st.session_state:
             }
 
             response = requests.put(
-                f"{API_BASE}/reminders/{reminder_id}",
+                f"{API}/reminders/{reminder_id}",
                 json=payload
             )
 
