@@ -410,53 +410,78 @@ VALUES
 (3,3);
 
 
-INSERT INTO advisor (advisorID,fName, lName, department, email)
-VALUES
-('Dr. Smith', 'Andover','Computer Science', 'smith@school.edu'),
-('Dr. Johnson', 'Clinton','Math Department', 'johnson@school.edu'),
-('Dr. Patel', 'Lee','Psychology', 'patel@school.edu');
-insert into advisor (advisorID, fname, lName, email, department) values (1, 'Terri', 'Hobben', 'terri.hobben@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (2, 'Deny', 'Wimms', 'deny.wimms@northeastern.edu', 'Psychology');
-insert into advisor (advisorID, fname, lName, email, department) values (3, 'Valli', 'Berlin', 'valli.berlin@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (4, 'Janenna', 'Cloughton', 'janenna.cloughton@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (5, 'Waly', 'Lawday', 'waly.lawday@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (6, 'Angelle', 'Henric', 'angelle.henric@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (7, 'Basilio', 'Looks', 'basilio.looks@northeastern.edu', 'Business');
-insert into advisor (advisorID, fname, lName, email, department) values (8, 'Sheryl', 'Keattch', 'sheryl.keattch@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (9, 'Danie', 'Pepall', 'danie.pepall@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (10, 'Goldia', 'Linsley', 'goldia.linsley@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (11, 'Darius', 'Scahill', 'darius.scahill@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (12, 'Shaughn', 'Ethersey', 'shaughn.ethersey@northeastern.edu', 'Business');
-insert into advisor (advisorID, fname, lName, email, department) values (13, 'Torrey', 'Oag', 'torrey.oag@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (14, 'Rudolf', 'Fibben', 'rudolf.fibben@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (15, 'Thalia', 'Cattonnet', 'thalia.cattonnet@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (16, 'Wernher', 'Dimeloe', 'wernher.dimeloe@northeastern.edu', 'Business');
-insert into advisor (advisorID, fname, lName, email, department) values (17, 'Andeee', 'Cleaton', 'andeee.cleaton@northeastern.edu', 'Business');
-insert into advisor (advisorID, fname, lName, email, department) values (18, 'Clementia', 'Langtree', 'clementia.langtree@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (19, 'Luciana', 'Hoofe', 'luciana.hoofe@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (20, 'Analise', 'Bostick', 'analise.bostick@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (21, 'Allie', 'Reely', 'allie.reely@northeastern.edu', 'Business');
-insert into advisor (advisorID, fname, lName, email, department) values (22, 'Katerina', 'Bounde', 'katerina.bounde@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (23, 'Kally', 'Waldrum', 'kally.waldrum@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (24, 'Debora', 'Dermot', 'debora.dermot@northeastern.edu', 'Business');
-insert into advisor (advisorID, fname, lName, email, department) values (25, 'Emile', 'Cottage', 'emile.cottage@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (26, 'Deena', 'Dudeney', 'deena.dudeney@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (27, 'Huntington', 'Boyle', 'huntington.boyle@northeastern.edu', 'Psychology');
-insert into advisor (advisorID, fname, lName, email, department) values (28, 'Viviana', 'Skillern', 'viviana.skillern@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (29, 'Steffi', 'Henworth', 'steffi.henworth@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (30, 'Ashlee', 'Tabner', 'ashlee.tabner@northeastern.edu', 'Business');
-insert into advisor (advisorID, fname, lName, email, department) values (31, 'Delmer', 'Dene', 'delmer.dene@northeastern.edu', 'Computer Science');
-insert into advisor (advisorID, fname, lName, email, department) values (32, 'Merline', 'Disbrey', 'merline.disbrey@northeastern.edu', 'Psychology');
-insert into advisor (advisorID, fname, lName, email, department) values (33, 'Jasun', 'Alflat', 'jasun.alflat@northeastern.edu', 'Mathematics');
-insert into advisor (advisorID, fname, lName, email, department) values (34, 'Merna', 'Deverale', 'merna.deverale@northeastern.edu', 'Engineering');
-insert into advisor (advisorID, fname, lName, email, department) values (35, 'Emmott', 'Fasse', 'emmott.fasse@northeastern.edu', 'Mathematics');
+insert into advisor (fname, lName, email, department) values ('Salvatore', 'Swapp', 'salvatore.swappnortheastern.edu', 'Business');
+insert into advisor (fname, lName, email, department) values ('Isidora', 'Murfin', 'isidora.murfinnortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Lindon', 'Ellul', 'lindon.ellulnortheastern.edu', 'Mathematics');
+insert into advisor (fname, lName, email, department) values ('Tally', 'Cockran', 'tally.cockrannortheastern.edu', 'Mathematics');
+insert into advisor (fname, lName, email, department) values ('Westley', 'Mattityahou', 'westley.mattityahounortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Hetti', 'Masdin', 'hetti.masdinnortheastern.edu', 'Business');
+insert into advisor (fname, lName, email, department) values ('Tracey', 'Howland', 'tracey.howlandnortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Roberto', 'Dansken', 'roberto.danskennortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Ange', 'Shervil', 'ange.shervilnortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Tori', 'Narducci', 'tori.narduccinortheastern.edu', 'Mathematics');
+insert into advisor (fname, lName, email, department) values ('Elly', 'Vango', 'elly.vangonortheastern.edu', 'Engineering');
+insert into advisor (fname, lName, email, department) values ('Angele', 'Worts', 'angele.wortsnortheastern.edu', 'Engineering');
+insert into advisor (fname, lName, email, department) values ('Adrea', 'Bassil', 'adrea.bassilnortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Krishnah', 'Bargh', 'krishnah.barghnortheastern.edu', 'Mathematics');
+insert into advisor (fname, lName, email, department) values ('Vince', 'Mound', 'vince.moundnortheastern.edu', 'Engineering');
+insert into advisor (fname, lName, email, department) values ('Burnard', 'Jeannequin', 'burnard.jeannequinnortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Alix', 'Portchmouth', 'alix.portchmouthnortheastern.edu', 'Engineering');
+insert into advisor (fname, lName, email, department) values ('Mose', 'Chisnall', 'mose.chisnallnortheastern.edu', 'Engineering');
+insert into advisor (fname, lName, email, department) values ('Amerigo', 'Elleray', 'amerigo.elleraynortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Tait', 'Witul', 'tait.witulnortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Didi', 'Lewry', 'didi.lewrynortheastern.edu', 'Business');
+insert into advisor (fname, lName, email, department) values ('Rodrique', 'Alcock', 'rodrique.alcocknortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Caritta', 'Kitching', 'caritta.kitchingnortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Tabina', 'Petrichat', 'tabina.petrichatnortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Letty', 'Callacher', 'letty.callachernortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Jard', 'Coughlan', 'jard.coughlannortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Kalindi', 'Chillingsworth', 'kalindi.chillingsworthnortheastern.edu', 'Mathematics');
+insert into advisor (fname, lName, email, department) values ('Libbie', 'Trainer', 'libbie.trainernortheastern.edu', 'Engineering');
+insert into advisor (fname, lName, email, department) values ('Bjorn', 'Cawtheray', 'bjorn.cawtheraynortheastern.edu', 'Engineering');
+insert into advisor (fname, lName, email, department) values ('Elfrida', 'Priddle', 'elfrida.priddlenortheastern.edu', 'Mathematics');
+insert into advisor (fname, lName, email, department) values ('Jannel', 'Ferrieroi', 'jannel.ferrieroinortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Chrissy', 'Depke', 'chrissy.depkenortheastern.edu', 'Computer Science');
+insert into advisor (fname, lName, email, department) values ('Lonna', 'Human', 'lonna.humannortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Rita', 'Ruslinge', 'rita.ruslingenortheastern.edu', 'Psychology');
+insert into advisor (fname, lName, email, department) values ('Averil', 'Monteaux', 'averil.monteauxnortheastern.edu', 'Engineering');
 
-INSERT INTO student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, enrollmentStatus, totalCredits, advisorID)
-VALUES
-('John', 'Doe','john@example.com', 2022, 'CS', 'Math', 3.50, 0, 'Active', 45, 1),
-('Jane', 'Lee','jane@example.com', 2023, 'Biology', 'Chemistry', 3.80, 0, 'Active', 30, 2),
-('Mark', 'Chan','mark@example.com', 2022, 'Business', 'Finance', 3.20, 1, 'Probation', 20, 3),
-('Maya', 'Johnson', 'maya.j@northeastern.edu', 2024, 'CS','Math', 3.75, 0, 'Active', 32, 2);
+
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Belva', 'Mabbett', 'belva.mabbettnortheastern.edu', 2021, 'Data Science', 'Business', 2.34, true, 123.44, 27);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Archibaldo', 'Harmes', 'archibaldo.harmesnortheastern.edu', 2022, 'Engineering', 'Software Engineering', 2.35, true, 109.55, 35);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Itch', 'Durkin', 'itch.durkinnortheastern.edu', 2021, 'Computer Science', 'Computer Science', 2.05, true, 69.56, 28);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Art', 'Cartmael', 'art.cartmaelnortheastern.edu', 2023, 'Psychology', 'Economics', 2.37, true, 113.45, 30);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Felice', 'Venton', 'felice.ventonnortheastern.edu', 2022, 'Business', 'Economics', 3.3, false, 16.25, 26);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Hadlee', 'Annets', 'hadlee.annetsnortheastern.edu', 2023, 'Engineering', 'Computer Science', 3.34, false, 58.0, 1);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Marcille', 'Gallemore', 'marcille.gallemorenortheastern.edu', 2023, 'Data Science', 'Computer Science', 3.7, true, 8.58, 8);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Cindra', 'Osmund', 'cindra.osmundnortheastern.edu', 2021, 'Engineering', 'Data Science', 3.75, false, 8.83, 2);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Harriet', 'Wason', 'harriet.wasonnortheastern.edu', 2024, 'Economics', 'Computer Science', 2.26, false, 127.92, 3);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Niles', 'Affuso', 'niles.affusonortheastern.edu', 2024, 'Business', 'Economics', 2.69, false, 21.97, 27);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Belicia', 'Ivanilov', 'belicia.ivanilovnortheastern.edu', 2024, 'Business', 'Computer Science', 3.47, false, 114.41, 1);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Elsworth', 'Crafter', 'elsworth.crafternortheastern.edu', 2021, 'Engineering', 'Economics', 2.58, true, 14.14, 17);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Garry', 'Cleverly', 'garry.cleverlynortheastern.edu', 2022, 'Engineering', 'Biology', 3.1, true, 29.63, 17);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Ronald', 'Duplan', 'ronald.duplannortheastern.edu', 2021, 'Engineering', 'Economics', 2.65, true, 7.94, 9);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Phoebe', 'St. Quintin', 'phoebe.st. quintinnortheastern.edu', 2021, 'Psychology', 'Psychology', 2.62, true, 86.66, 7);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Freddi', 'Cardillo', 'freddi.cardillonortheastern.edu', 2023, 'Software Engineering', 'Biology', 2.87, false, 75.53, 23);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Deni', 'Curtis', 'deni.curtisnortheastern.edu', 2025, 'Engineering', 'Software Engineering', 4.0, false, 64.6, 36);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Kristina', 'Upstone', 'kristina.upstonenortheastern.edu', 2025, 'Psychology', 'Data Science', 2.24, true, 86.44, 16);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Sallee', 'Shales', 'sallee.shalesnortheastern.edu', 2023, 'Software Engineering', 'Data Science', 2.91, true, 54.46, 30);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Stanislaus', 'Pritchett', 'stanislaus.pritchettnortheastern.edu', 2023, 'Psychology', 'Psychology', 2.16, true, 72.92, 25);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Averil', 'Seaward', 'averil.seawardnortheastern.edu', 2021, 'Data Science', 'Business', 3.47, false, 100.25, 35);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Riva', 'Raiman', 'riva.raimannortheastern.edu', 2024, 'Biology', 'Biology', 3.6, false, 48.37, 33);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Flora', 'Armit', 'flora.armitnortheastern.edu', 2025, 'Software Engineering', 'Business', 3.31, false, 39.27, 15);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Yard', 'Restieaux', 'yard.restieauxnortheastern.edu', 2023, 'Engineering', 'Psychology', 3.59, true, 91.29, 31);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Susann', 'Nickols', 'susann.nickolsnortheastern.edu', 2025, 'Software Engineering', 'Data Science', 2.98, false, 102.64, 33);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Mella', 'Davall', 'mella.davallnortheastern.edu', 2025, 'Business', 'Economics', 2.26, false, 120.62, 10);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Tara', 'Greason', 'tara.greasonnortheastern.edu', 2022, 'Psychology', 'Economics', 2.84, true, 112.45, 23);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Shannah', 'Wapplington', 'shannah.wapplingtonnortheastern.edu', 2026, 'Biology', 'Engineering', 3.83, false, 8.22, 20);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Justus', 'Amies', 'justus.amiesnortheastern.edu', 2021, 'Data Science', 'Software Engineering', 2.1, true, 73.68, 3);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Lowe', 'Ambrose', 'lowe.ambrosenortheastern.edu', 2024, 'Engineering', 'Data Science', 3.7, false, 18.28, 1);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Thomasin', 'Rape', 'thomasin.rapenortheastern.edu', 2026, 'Economics', 'Biology', 3.37, false, 46.37, 4);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Bette-ann', 'McGraffin', 'bette-ann.mcgraffinnortheastern.edu', 2024, 'Software Engineering', 'Economics', 2.42, true, 7.43, 15);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Franni', 'Guilder', 'franni.guildernortheastern.edu', 2024, 'Biology', 'Economics', 2.98, true, 43.98, 21);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Aubrette', 'Lefwich', 'aubrette.lefwichnortheastern.edu', 2026, 'Data Science', 'Economics', 2.73, true, 107.67, 26);
+insert into student (fName, lName, email, enrollmentYear, major, minor, GPA, riskFlag, totalCredits, advisorID) values ('Cammy', 'Steddall', 'cammy.steddallnortheastern.edu', 2025, 'Psychology', 'Software Engineering', 3.81, false, 59.15, 2);
 
 
 INSERT INTO metric(studentID, category, privacyLevel, description, unit, metricType, metricName, metricValue)

@@ -1,0 +1,36 @@
+fName,lName,email,enrollmentYear,major,minor,GPA,riskFlag,totalCredits,advisorID
+Celka,Barti,celka.bartinortheastern.edu,2025,Biology,Psychology,2.47,false,85.27,5
+Tine,Broxup,tine.broxupnortheastern.edu,2026,Psychology,Data Science,3.84,true,34.15,15
+Red,Vitler,red.vitlernortheastern.edu,2021,Engineering,Engineering,2.77,false,86.27,17
+Bastien,Oakenfall,bastien.oakenfallnortheastern.edu,2022,Computer Science,Software Engineering,3.2,true,84.01,36
+Alejoa,Kynder,alejoa.kyndernortheastern.edu,2024,Engineering,Psychology,3.67,false,90.89,5
+Natka,Bullin,natka.bullinnortheastern.edu,2024,Business,Computer Science,2.89,true,79.91,33
+Shirlee,Wieprecht,shirlee.wieprechtnortheastern.edu,2021,Software Engineering,Business,3.53,false,68.24,24
+Eugen,Havers,eugen.haversnortheastern.edu,2023,Psychology,Software Engineering,3.89,false,77.29,13
+Kristan,Thynne,kristan.thynnenortheastern.edu,2022,Software Engineering,Economics,2.62,false,80.33,28
+Dorie,Trippitt,dorie.trippittnortheastern.edu,2026,Computer Science,Economics,2.54,false,3.87,21
+Ira,Tressler,ira.tresslernortheastern.edu,2024,Biology,Software Engineering,2.46,false,92.72,32
+Thacher,Robuchon,thacher.robuchonnortheastern.edu,2021,Business,Computer Science,2.64,false,9.88,25
+Brandy,Tanman,brandy.tanmannortheastern.edu,2025,Engineering,Business,3.39,true,84.99,5
+Dalia,Kreber,dalia.krebernortheastern.edu,2022,Economics,Economics,3.64,false,66.62,5
+Walt,Amsden,walt.amsdennortheastern.edu,2023,Data Science,Software Engineering,2.88,false,81.38,29
+Mil,Keays,mil.keaysnortheastern.edu,2023,Psychology,Business,3.44,true,84.42,7
+Harrie,Willacot,harrie.willacotnortheastern.edu,2022,Psychology,Biology,3.28,false,63.4,18
+Tore,Darrow,tore.darrownortheastern.edu,2024,Psychology,Economics,2.19,false,14.28,28
+Tamarra,Hemshall,tamarra.hemshallnortheastern.edu,2023,Economics,Computer Science,2.98,false,3.87,27
+Nerita,Passe,nerita.passenortheastern.edu,2024,Data Science,Software Engineering,2.92,true,3.13,14
+Cynthy,Tallquist,cynthy.tallquistnortheastern.edu,2022,Engineering,Psychology,2.71,true,58.72,21
+Brennan,Mumberson,brennan.mumbersonnortheastern.edu,2022,Engineering,Psychology,3.64,true,124.16,10
+Bordie,Bengtson,bordie.bengtsonnortheastern.edu,2022,Computer Science,Economics,2.58,false,101.58,24
+Laurianne,Gillimgham,laurianne.gillimghamnortheastern.edu,2024,Computer Science,Psychology,2.12,true,126.82,18
+Alicia,Paynter,alicia.paynternortheastern.edu,2023,Data Science,Data Science,2.72,true,53.51,11
+Ashlen,Burchmore,ashlen.burchmorenortheastern.edu,2025,Psychology,Economics,3.17,false,33.91,23
+Kirby,Amdohr,kirby.amdohrnortheastern.edu,2023,Software Engineering,Data Science,2.11,false,54.84,17
+Bernette,Boatwright,bernette.boatwrightnortheastern.edu,2026,Psychology,Data Science,3.9,false,104.99,18
+Robinet,Dosdill,robinet.dosdillnortheastern.edu,2024,Biology,Data Science,2.17,true,40.14,11
+Morie,Drain,morie.drainnortheastern.edu,2023,Biology,Economics,3.57,true,86.73,7
+Tana,Exposito,tana.expositonortheastern.edu,2024,Data Science,Software Engineering,2.94,true,42.29,19
+Shirlee,Durek,shirlee.dureknortheastern.edu,2023,Data Science,Software Engineering,2.52,false,42.26,33
+Reba,Weblin,reba.weblinnortheastern.edu,2024,Software Engineering,Business,2.36,false,60.51,25
+Abbe,Bockmann,abbe.bockmannnortheastern.edu,2022,Engineering,Psychology,2.01,false,40.98,15
+Spence,Strettle,spence.strettlenortheastern.edu,2026,Biology,Engineering,2.31,false,18.36,29
