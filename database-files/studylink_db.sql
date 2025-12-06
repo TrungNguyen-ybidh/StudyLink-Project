@@ -646,7 +646,7 @@ VALUES
 
 
 
-INSERT INTO JobMetric (jobID, metricID)
+INSERT INTO ImportJob_Metric (jobID, metricID)
 VALUES
 (2,46),
 (17,51),
