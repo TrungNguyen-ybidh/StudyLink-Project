@@ -8,7 +8,7 @@ from modules.nav import SideBarLinks
 st.set_page_config(page_title="Calendar", page_icon="📅", layout="wide")
 SideBarLinks()
 
-API_URL = "http://localhost:4000/calendar"   # update this if your backend URL differs
+API_URL = "http://localhost:8501/calendar"   # update this if your backend URL differs
 
 
 # Authentication check
