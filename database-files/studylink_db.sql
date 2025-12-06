@@ -359,7 +359,42 @@ VALUES
 (2, 'Metric Import', NOW(), NOW(), 'Completed', 1),
 (1, 'Calendar Sync', NOW(), NOW(), 'Failed', 2),
 (0, 'Student Update', NOW(), NOW(), 'Completed', 3);
-
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (1, 2, 'Calendar Sync', '2025-11-08 19:06:35', '2025-11-08 21:58:35', 1);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (2, 18, 'Course Import', '2025-11-22 11:41:28', '2025-11-22 13:00:28', 10);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (3, 8, 'Student Update', '2025-05-08 02:19:11', '2025-05-08 04:35:11', 1);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (4, 5, 'Course Import', '2025-11-13 15:40:36', '2025-11-13 17:18:36', 3);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (5, 16, 'Metric Import', '2025-01-18 13:17:59', '2025-01-18 15:10:59', 5);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (6, 15, 'Calendar Sync', '2025-08-21 09:45:55', '2025-08-21 10:27:55', 10);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (7, 17, 'Student Update', '2025-01-17 06:47:13', '2025-01-17 08:53:13', 6);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (8, 10, 'Student Update', '2025-08-13 17:25:00', '2025-08-13 18:28:00', 9);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (9, 17, 'Course Import', '2025-11-19 22:25:43', '2025-11-20 00:39:43', 5);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (10, 14, 'Course Import', '2025-11-05 14:19:06', '2025-11-05 16:17:06', 11);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (11, 10, 'Student Update', '2025-11-03 23:32:17', '2025-11-04 01:05:17', 11);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (12, 20, 'Student Update', '2025-12-05 10:33:29', '2025-12-05 12:33:29', 7);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (13, 19, 'Course Import', '2025-11-09 06:52:08', '2025-11-09 07:51:08', 3);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (14, 0, 'Student Update', '2025-05-04 10:53:10', '2025-05-04 12:21:10', 5);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (15, 13, 'Student Update', '2025-06-13 02:44:26', '2025-06-13 05:07:26', 6);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (16, 16, 'Calendar Sync', '2025-04-14 04:23:49', '2025-04-14 05:19:49', 9);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (17, 16, 'Metric Import', '2025-09-27 21:02:02', '2025-09-27 23:57:02', 11);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (18, 19, 'Student Update', '2024-12-10 19:15:48', '2024-12-10 19:52:48', 10);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (19, 9, 'Calendar Sync', '2025-02-16 10:02:32', '2025-02-16 12:13:32', 9);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (20, 1, 'Metric Import', '2025-09-27 03:39:06', '2025-09-27 05:01:06', 3);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (21, 20, 'Course Import', '2025-07-25 13:18:14', '2025-07-25 15:31:14', 6);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (22, 20, 'Calendar Sync', '2025-05-31 08:19:16', '2025-05-31 09:35:16', 10);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (23, 5, 'Metric Import', '2025-08-15 04:03:16', '2025-08-15 05:34:16', 2);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (24, 10, 'Student Update', '2025-07-19 04:49:14', '2025-07-19 06:49:14', 4);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (25, 3, 'Course Import', '2025-10-06 21:19:12', '2025-10-06 22:17:12', 3);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (26, 6, 'Course Import', '2025-05-18 20:02:23', '2025-05-18 21:24:23', 4);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (27, 19, 'Course Import', '2024-12-26 02:08:18', '2024-12-26 02:44:18', 3);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (28, 13, 'Course Import', '2025-07-13 15:51:34', '2025-07-13 16:27:34', 8);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (29, 6, 'Student Update', '2025-02-28 23:37:26', '2025-03-01 01:43:26', 9);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (30, 15, 'Course Import', '2025-06-01 04:50:00', '2025-06-01 06:40:00', 10);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (31, 17, 'Student Update', '2025-03-07 03:56:53', '2025-03-07 04:31:53', 4);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (32, 2, 'Student Update', '2025-09-06 22:46:43', '2025-09-07 00:26:43', 3);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (33, 8, 'Course Import', '2025-11-28 11:00:49', '2025-11-28 13:00:49', 4);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (34, 6, 'Student Update', '2025-03-23 14:14:01', '2025-03-23 15:32:01', 10);
+insert into importJob (jobID, errorCount, jobType, startTime, endTime, adminID) values (35, 11, 'Student Update', '2025-08-10 18:35:18', '2025-08-10 21:14:18', 5);
+# Rows
 
 INSERT INTO ImportJobError (jobID)
 VALUES
@@ -377,9 +412,9 @@ VALUES
 
 INSERT INTO advisor (advisorID,fName, lName, department, email)
 VALUES
-(38,'Dr. Smith', 'Andover','Computer Science', 'smith@school.edu'),
-(37,'Dr. Johnson', 'Clinton','Math Department', 'johnson@school.edu'),
-(39,'Dr. Patel', 'Lee','Psychology', 'patel@school.edu');
+('Dr. Smith', 'Andover','Computer Science', 'smith@school.edu'),
+('Dr. Johnson', 'Clinton','Math Department', 'johnson@school.edu'),
+('Dr. Patel', 'Lee','Psychology', 'patel@school.edu');
 insert into advisor (advisorID, fname, lName, email, department) values (1, 'Terri', 'Hobben', 'terri.hobben@northeastern.edu', 'Computer Science');
 insert into advisor (advisorID, fname, lName, email, department) values (2, 'Deny', 'Wimms', 'deny.wimms@northeastern.edu', 'Psychology');
 insert into advisor (advisorID, fname, lName, email, department) values (3, 'Valli', 'Berlin', 'valli.berlin@northeastern.edu', 'Engineering');
