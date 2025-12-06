@@ -40,10 +40,10 @@ def SideBarLinks(show_home=True):
     
     elif role == 'Student':
         st.sidebar.markdown("### 🎓 Student Portal")
-        st.sidebar.page_link("pages/10_Student_Home.py", label="🏠 Student Home")
-        st.sidebar.page_link("pages/11_Calendar.py", label="📅 Calendar")
-        st.sidebar.page_link("pages/12_Grades.py", label="📝 Grades")
-        st.sidebar.page_link("pages/13_Study_Plan.py", label="📚 Study Plan")
+        st.sidebar.page_link("pages/19_Student_homepage.py", label="🏠 Student Home")
+        st.sidebar.page_link("pages/20_Student_calendar.py", label="📅 Calendar")
+        st.sidebar.page_link("pages/21_Student_Grades.py", label="📝 Grades")
+        st.sidebar.page_link("pages/22_Study_Plan.py", label="📚 Study Plan")
     
     elif role == 'Advisor':
         st.sidebar.markdown("### 👨‍🏫 Advisor Portal")
