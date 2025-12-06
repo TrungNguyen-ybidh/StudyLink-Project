@@ -1,4 +1,4 @@
-courseID,title,scoreRecieved,weight,status,assignmentDate,assignmentTime,maxScore
+courseID,title,scoreReceived,weight,status,assignmentDate,assignmentTime,maxScore
 4,Lab,56,2.4,reviewing,2025-10-18,5:47 AM,100
 16,Lab,67,2.4,submitted,2025-10-02,1:08 AM,100
 33,Quiz,42,1.9,submitted,2025-10-25,12:28 AM,100

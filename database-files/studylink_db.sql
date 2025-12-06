@@ -707,7 +707,7 @@ INSERT INTO CourseSelection (termID, courseCode, courseName, location, credits, 
 (4, 1077, 'Computer Science 101', 'Lincoln Hall 810', 4, 'Cordie Rehorek', 'Computer Science', '2026-07-20', '16:11:08', '17:24:08');
 
 
-INSERT INTO assignment (courseID, title, scoreRecieved, weight, status, assignmentDate, assignmentTime, maxScore) VALUES
+INSERT INTO assignment (courseID, title, scoreReceived, weight, status, assignmentDate, assignmentTime, maxScore) VALUES
 (4, 'Lab', 56, 2.4, 'reviewing', '2025-10-18', '5:47 AM', 100),
 (16, 'Lab', 67, 2.4, 'submitted', '2025-10-02', '1:08 AM', 100),
 (33, 'Quiz', 42, 1.9, 'submitted', '2025-10-25', '12:28 AM', 100),
