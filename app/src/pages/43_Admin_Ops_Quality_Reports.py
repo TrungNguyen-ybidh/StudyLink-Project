@@ -65,8 +65,9 @@ with tab1:
 
     if st.button("Run Import", use_container_width=True):
         metrics = []
-        for _, row in edited.iterrows():
+        for i, row in edited.iterrows():
             m = {k: (None if pd.isna(v) else v) for k, v in row.to_dict().items()}
+            m.pop("courseID", None)
             if m.get("studentID") is not None:
                 m["studentID"] = int(m["studentID"])
             if m.get("courseID") is not None:
