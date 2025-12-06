@@ -379,7 +379,8 @@ INSERT INTO student (fName, lName, email, enrollmentYear, major, minor, GPA, ris
 VALUES
 ('John', 'Doe','john@example.com', 2022, 'CS', 'Math', 3.50, 0, 'Active', 45, 1),
 ('Jane', 'Lee','jane@example.com', 2023, 'Biology', 'Chemistry', 3.80, 0, 'Active', 30, 2),
-('Mark', 'Chan','mark@example.com', 2022, 'Business', 'Finance', 3.20, 1, 'Probation', 20, 3);
+('Mark', 'Chan','mark@example.com', 2022, 'Business', 'Finance', 3.20, 1, 'Probation', 20, 3)
+('Maya', 'Johnson', 'maya.j@northeastern.edu', 2024, 'CS', , 3.75, 0, 'Active', 32, 2);
 
 
 INSERT INTO metric(studentID, category, privacyLevel, description, unit, metricType, metricName, metricValue)
