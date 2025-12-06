@@ -14,7 +14,7 @@ if not st.session_state.get("authenticated", False):
     st.warning("Please log in from the Home page.")
     st.stop()
 
-if st.session_state.get("role") != "System Administrator":
+if st.session_state.get("role") != "System Admin":
     st.warning("Access denied. This page is for System Administrators only.")
     st.stop()
 
@@ -58,21 +58,21 @@ with c1:
     st.write("Connect and verify student calendar sync status.")
     st.caption("Covers User Story 2.1")
     if st.button("Open Calendar Sync", use_container_width=True):
-        st.switch_page("pages/08_Admin_Calendar_Sync.py")
+        st.switch_page("pages/42_Admin_Calendar_Sync.py")
 
 with c2:
     st.markdown("### 🗂️ Term & Course Catalog")
     st.write("Create terms, upload courses, and preview the catalog.")
     st.caption("Covers User Story 2.2")
     if st.button("Open Term/Course Catalog", use_container_width=True):
-        st.switch_page("pages/09_Admin_Term_Course_Catalog.py")
+        st.switch_page("pages/41_Admin_Term_Course_Catalog.py")
 
 with c3:
     st.markdown("### 🧹 Data Quality & Plan Rebuild")
     st.write("Log data issues and rebuild selected student study plans.")
     st.caption("Covers User Story 2.4")
     if st.button("Open Data Quality", use_container_width=True):
-        st.switch_page("pages/10_Admin_Data_Quality_and_Rebuild.py")
+        st.switch_page("pages/43_Admin_Ops_Quality_Reports.py")
 
 st.divider()
 

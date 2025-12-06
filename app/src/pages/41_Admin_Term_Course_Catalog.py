@@ -10,11 +10,11 @@ if not st.session_state.get("authenticated", False):
     st.warning("Please log in from the Home page.")
     st.stop()
 
-if st.session_state.get("role") != "System Administrator":
+if st.session_state.get("role") != "System Admin":
     st.warning("Access denied. This page is for System Administrators only.")
     st.stop()
 
-API_BASE = os.getenv("API_BASE_URL", "http://api:4000").rstrip("/")
+API_BASE = os.getenv("API_BASE_URL", "http://web-api:4000").rstrip("/")
 
 def call_api(method, path, json_body=None, params=None):
     try:
