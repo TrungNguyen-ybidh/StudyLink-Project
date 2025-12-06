@@ -14,7 +14,7 @@ if st.session_state.get("role") != "System Admin":
     st.warning("Access denied. This page is for System Administrators only.")
     st.stop()
 
-API_BASE = os.getenv("API_BASE_URL", "http://web-api:4000").rstrip("/")
+API_BASE = os.getenv("API_BASE_URL", "http://localhost:4000").rstrip("/")
 
 def call_api(method, path, json_body = None, params=None):
     try:
