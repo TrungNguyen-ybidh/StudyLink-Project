@@ -330,6 +330,7 @@ CREATE TABLE DataError (
        ON UPDATE CASCADE
 );
 
+
 insert into dataset (dataID, name, category, source) values (1, 'Grades Import', 'academic', 'csv');
 insert into dataset (dataID, name, category, source) values (2, 'Wellness Survey', 'wellness', 'manual');
 insert into dataset (dataID, name, category, source) values (3, 'Sleep Tracker', 'wellness', 'csv');
@@ -341,11 +342,16 @@ insert into dataset (dataID, name, category, source) values (8, 'Advisor Help', 
 insert into dataset (dataID, name, category, source) values (9, 'Student Logs', 'metrics', 'api');
 insert into dataset (dataID, name, category, source) values (10, 'Sleep Tracker', 'wellness', 'manual');
 
-INSERT INTO SystemAdmin (name, DOB)
-VALUES
-('Alice Admin', '1980-05-12'),
-('Bob Supervisor', '1975-03-20'),
-('Charlie Manager', '1990-08-15');
+insert into SystemAdmin (adminID, name, DOB) values (1, 'Stavro Kubat', '1992-09-02');
+insert into SystemAdmin (adminID, name, DOB) values (2, 'Sherrie Keast', '1974-01-20');
+insert into SystemAdmin (adminID, name, DOB) values (3, 'Conant Fluit', '1997-08-21');
+insert into SystemAdmin (adminID, name, DOB) values (4, 'Gwenneth Lally', '1979-04-16');
+insert into SystemAdmin (adminID, name, DOB) values (5, 'Audie Gleave', '1994-06-17');
+insert into SystemAdmin (adminID, name, DOB) values (6, 'Brandea Wallsam', '2000-01-01');
+insert into SystemAdmin (adminID, name, DOB) values (7, 'Avrit Crippes', '1971-03-06');
+insert into SystemAdmin (adminID, name, DOB) values (8, 'Elvira Guiduzzi', '1992-04-26');
+insert into SystemAdmin (adminID, name, DOB) values (9, 'Talyah Lincoln', '1971-10-07');
+insert into SystemAdmin (adminID, name, DOB) values (10, 'Rhianna Goodhand', '1970-05-23');
 
 
 INSERT INTO importJob (errorCount, jobType, StartTime, endTime, Status, adminID)
@@ -415,7 +421,7 @@ VALUES
 ('John', 'Doe','john@example.com', 2022, 'CS', 'Math', 3.50, 0, 'Active', 45, 1),
 ('Jane', 'Lee','jane@example.com', 2023, 'Biology', 'Chemistry', 3.80, 0, 'Active', 30, 2),
 ('Mark', 'Chan','mark@example.com', 2022, 'Business', 'Finance', 3.20, 1, 'Probation', 20, 3),
-('Maya', 'Johnson', 'maya.j@northeastern.edu', 2024, 'CS','Math' , 3.75, 0, 'Active', 32, 2);
+('Maya', 'Johnson', 'maya.j@northeastern.edu', 2024, 'CS','Math', 3.75, 0, 'Active', 32, 2);
 
 
 INSERT INTO metric(studentID, category, privacyLevel, description, unit, metricType, metricName, metricValue)
