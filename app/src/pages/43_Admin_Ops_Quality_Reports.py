@@ -29,7 +29,7 @@ def call_api(method, path, json_body=None, params=None):
         return 0, {"error": str(e)}
 
 st.markdown("## 🧹 Admin Ops (Imports - Quality - Health- Usage)")
-st.caption("Covers User Stories 2.3–2.6 and uses all remaining endpoints")
+st.caption("Covers User Stories 2.3–2.6")
 
 tab1, tab2, tab3, tab4 = st.tabs(
     ["2.3 Import Metrics", "2.4 Log Error and Rebuild", "2.5 Overlaps", "2.6 Weekly Usage"]
