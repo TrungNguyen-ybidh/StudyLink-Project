@@ -616,7 +616,7 @@ def get_workload():
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-4: Get study summary for a student
+# Maya-4: Get workload summary for a student
 @workload.route("/workload/summary", methods=["GET"])
 def get_study_summary():
     """Get study summary including study hours and sleep data."""

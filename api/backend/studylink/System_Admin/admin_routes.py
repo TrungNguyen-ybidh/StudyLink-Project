@@ -8,13 +8,6 @@ from flask import current_app
 admin = Blueprint("admin", __name__)
 
 
-# Welcome route
-@admin.route("/", methods=["GET"])
-def welcome_admin():
-    current_app.logger.info("GET /admin/ welcome handler")
-    return "<h1>StudyLink System Admin REST API</h1>", 200
-
-
 # 1) Calendar connection: Get a student's calendar connection
 @admin.route("/students/<int:student_id>/calendar", methods=["GET"])
 def get_calendar_connection(student_id):
