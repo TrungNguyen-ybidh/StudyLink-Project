@@ -127,6 +127,7 @@ def create_app():
     #   GET /api/advisor/
     app.register_blueprint(advisor_bp)
     
+    app.register_blueprint(admin, url_prefix="/admin")
     # Student Routes (Maya)
     # URL prefix: /student
     # Example endpoints:
