@@ -330,21 +330,16 @@ CREATE TABLE DataError (
        ON UPDATE CASCADE
 );
 
-
-
-
-INSERT INTO dataset (dataID, name, category, source, createdAt,)
-VALUES
-insert into dataset (dataID, name, category, source, createdAt) values (1, 'Student Logs', 'metrics', 'manual', '2025-11-04 14:08:40');
-insert into dataset (dataID, name, category, source, createdAt) values (2, 'Wellness Survey', 'wellness', 'manual', '2025-10-10 13:23:19');
-insert into dataset (dataID, name, category, source, createdAt) values (3, 'Advisor Help', 'engagement', 'manual', '2025-09-19 01:19:08');
-insert into dataset (dataID, name, category, source, createdAt) values (4, 'Sleep Tracker', 'wellness', 'manual', '2025-11-12 06:48:23');
-insert into dataset (dataID, name, category, source, createdAt) values (5, 'Sleep Tracker', 'wellness', 'api', '2025-07-09 13:24:32');
-insert into dataset (dataID, name, category, source, createdAt) values (6, 'Student Logs', 'metrics', 'api', '2025-03-13 12:09:20');
-insert into dataset (dataID, name, category, source, createdAt) values (7, 'Wellness Survey', 'wellness', 'csv', '2025-02-16 17:00:35');
-insert into dataset (dataID, name, category, source, createdAt) values (8, 'Grades Import', 'academic', 'api', '2025-08-11 14:19:46');
-insert into dataset (dataID, name, category, source, createdAt) values (9, 'Advisor Help', 'engagement', 'csv', '2025-07-16 10:02:48');
-insert into dataset (dataID, name, category, source, createdAt) values (10, 'Student Logs', 'metrics', 'manual', '2025-10-24 13:48:15');
+insert into dataset (dataID, name, category, source) values (1, 'Grades Import', 'academic', 'csv');
+insert into dataset (dataID, name, category, source) values (2, 'Wellness Survey', 'wellness', 'manual');
+insert into dataset (dataID, name, category, source) values (3, 'Sleep Tracker', 'wellness', 'csv');
+insert into dataset (dataID, name, category, source) values (4, 'Sleep Tracker', 'wellness', 'csv');
+insert into dataset (dataID, name, category, source) values (5, 'Advisor Help', 'engagement', 'manual');
+insert into dataset (dataID, name, category, source) values (6, 'Sleep Tracker', 'wellness', 'api');
+insert into dataset (dataID, name, category, source) values (7, 'Wellness Survey', 'wellness', 'manual');
+insert into dataset (dataID, name, category, source) values (8, 'Advisor Help', 'engagement', 'csv');
+insert into dataset (dataID, name, category, source) values (9, 'Student Logs', 'metrics', 'api');
+insert into dataset (dataID, name, category, source) values (10, 'Sleep Tracker', 'wellness', 'manual');
 
 INSERT INTO SystemAdmin (name, DOB)
 VALUES
@@ -419,8 +414,8 @@ INSERT INTO student (fName, lName, email, enrollmentYear, major, minor, GPA, ris
 VALUES
 ('John', 'Doe','john@example.com', 2022, 'CS', 'Math', 3.50, 0, 'Active', 45, 1),
 ('Jane', 'Lee','jane@example.com', 2023, 'Biology', 'Chemistry', 3.80, 0, 'Active', 30, 2),
-('Mark', 'Chan','mark@example.com', 2022, 'Business', 'Finance', 3.20, 1, 'Probation', 20, 3)
-('Maya', 'Johnson', 'maya.j@northeastern.edu', 2024, 'CS', , 3.75, 0, 'Active', 32, 2);
+('Mark', 'Chan','mark@example.com', 2022, 'Business', 'Finance', 3.20, 1, 'Probation', 20, 3),
+('Maya', 'Johnson', 'maya.j@northeastern.edu', 2024, 'CS','Math' , 3.75, 0, 'Active', 32, 2);
 
 
 INSERT INTO metric(studentID, category, privacyLevel, description, unit, metricType, metricName, metricValue)
