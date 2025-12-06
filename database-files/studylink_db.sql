@@ -334,8 +334,11 @@ CREATE TABLE DataError (
 
 INSERT INTO importJob (errorCount, jobType, StartTime, endTime, Status, adminID)
 VALUES
+(2, 'Metric Import', '2025-01-01 10:00:00', '2025-01-01 10:30:00', 'Completed', 1),
+(0, 'Student Data Import', '2025-01-02 11:00:00', '2025-01-02 11:20:00', 'Completed', 2),
+(1, 'Course Data Import', '2025-01-03 09:30:00', '2025-01-03 10:00:00', 'Failed', 3);
 
-    
+
 INSERT INTO ImportJobError (jobID)
 VALUES
 (1),
