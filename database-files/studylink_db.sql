@@ -335,7 +335,7 @@ CREATE TABLE DataError (
 INSERT INTO importJob (errorCount, jobType, StartTime, endTime, Status, adminID)
 VALUES
 
-
+    
 INSERT INTO ImportJobError (jobID)
 VALUES
 (1),
