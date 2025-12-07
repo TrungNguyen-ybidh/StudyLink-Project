@@ -463,10 +463,14 @@ else:
             - 😴 Get workload analysis with rest suggestions
             """)        
             student_users = {
-                "Maya Johnson": "maya.j@northeastern.edu",
+                "Maya Johnson": {
+                    "email": "maya.j@northeastern.edu",
+                    "studentID": 1
+                }
             }
-            
-            selected_student = st.selectbox("Select Student:", list(student_users.keys()), key="student_select")
+
+            selected_student = st.selectbox("Select Student:", student_users.keys())
+
             
             if st.button("Login as Student", type="primary", key="student_btn", use_container_width=True):
                 ss.authenticated = True
