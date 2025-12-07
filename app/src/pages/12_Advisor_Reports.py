@@ -83,14 +83,6 @@ if selected_student_id:
         del st.session_state["selected_student_name"]
         st.rerun()
 
-# Debug expander
-with st.expander("🔧 Debug Info"):
-    st.write(f"Advisor ID: {advisor_id}")
-    st.write(f"Total reports: {len(reports)}")
-    st.write(f"Students available: {len(students)}")
-    if reports:
-        st.json(reports[:2])
-
 st.divider()
 
 

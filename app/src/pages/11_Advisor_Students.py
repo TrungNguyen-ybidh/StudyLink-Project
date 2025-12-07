@@ -74,21 +74,6 @@ students = result["data"]
 st.title(f"👥 My Students — {advisor_name}")
 st.write("View and manage students assigned to you.")
 
-# Debug expander
-with st.expander("🔧 Debug Info", expanded=True):
-    st.write(f"**Advisor ID:** {advisor_id}")
-    st.write(f"**API URL:** {result['url']}")
-    st.write(f"**API Status:** {result['status']}")
-    st.write(f"**Total students:** {len(students)}")
-    if result['error']:
-        st.error(f"**Error:** {result['error']}")
-    if students:
-        st.json(students[:2])
-    else:
-        st.warning("No students returned from API")
-    st.write("**Full Session State:**")
-    st.json(dict(st.session_state))
-
 st.divider()
 
 

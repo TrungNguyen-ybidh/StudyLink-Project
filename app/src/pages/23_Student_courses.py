@@ -71,14 +71,6 @@ enrolled_course_ids = [c.get('courseID') for c in student_courses]
 st.title(f"📘 Course Management for {student_name}")
 st.write("View enrolled courses, add new ones, or remove them from your plan.")
 
-# Debug expander
-with st.expander("🔧 Debug Info"):
-    st.write(f"Student ID: {student_id}")
-    st.write(f"Enrolled courses: {len(student_courses)}")
-    st.write(f"Catalog courses: {len(catalog)}")
-    if student_courses:
-        st.json(student_courses[:2])
-
 st.divider()
 
 

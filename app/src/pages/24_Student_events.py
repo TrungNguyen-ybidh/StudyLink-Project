@@ -105,13 +105,6 @@ def get_event_style(event_type):
 st.title(f"🎭 Events for {student_name}")
 st.write("Manage your personal, club, work, and academic events.")
 
-# Debug expander
-with st.expander("🔧 Debug Info"):
-    st.write(f"Student ID: {student_id}")
-    st.write(f"Total events: {len(events)}")
-    if events:
-        st.json(events[:2])
-
 st.divider()
 
 

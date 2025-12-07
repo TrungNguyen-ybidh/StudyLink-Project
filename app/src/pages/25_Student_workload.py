@@ -61,14 +61,6 @@ summary = fetch_summary(student_id)
 st.title(f"📈 Workload Analysis for {student_name}")
 st.write("Understand your weekly workload and study patterns to plan better.")
 
-# Debug expander
-with st.expander("🔧 Debug Info"):
-    st.write(f"Student ID: {student_id}")
-    st.write(f"Workload data points: {len(workload)}")
-    st.write(f"Summary records: {len(summary)}")
-    if workload:
-        st.json(workload[:2])
-
 st.divider()
 
 

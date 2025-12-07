@@ -58,11 +58,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Debug info
-with st.expander("🔧 Debug Info"):
-    st.write(f"Admin ID: {admin_id}")
-    st.write(f"Session State: {dict(st.session_state)}")
-
 st.divider()
 
 # Quick Stats

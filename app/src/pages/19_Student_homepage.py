@@ -34,12 +34,6 @@ st.subheader(f"Welcome back, {student_name}!")
 
 st.write("Use this dashboard to manage your assignments, reminders, events, grades, and workload insights.")
 
-# Display current student ID for debugging
-with st.expander("Session Info (Debug)"):
-    st.write(f"Student ID: {student_id}")
-    st.write(f"Student Name: {student_name}")
-    st.write(f"Role: {st.session_state.get('role')}")
-
 st.divider()
 
 # Quick Stats Section

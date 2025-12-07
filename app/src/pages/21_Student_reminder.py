@@ -75,15 +75,6 @@ calendar_items = fetch_calendar_items(student_id)
 assignments = [i for i in calendar_items if i.get("itemType") == "assignment"]
 events = [i for i in calendar_items if i.get("itemType") == "event"]
 
-# Debug expander
-with st.expander("🔧 Debug Info"):
-    st.write(f"Student ID: {student_id}")
-    st.write(f"Total reminders: {len(reminders)}")
-    st.write(f"Assignments available: {len(assignments)}")
-    st.write(f"Events available: {len(events)}")
-    if reminders:
-        st.json(reminders[:2])
-
 st.divider()
 
 

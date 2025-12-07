@@ -70,14 +70,6 @@ def safe_float(value, default=0.0):
 grades = fetch_grades(student_id)
 summary = fetch_grade_summary(student_id)
 
-# Debug expander
-with st.expander("🔧 Debug Info"):
-    st.write(f"Student ID: {student_id}")
-    st.write(f"Total grade records: {len(grades)}")
-    st.write(f"Course summaries: {len(summary)}")
-    if grades:
-        st.json(grades[:2])
-
 st.divider()
 
 

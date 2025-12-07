@@ -71,14 +71,6 @@ def delete_item(item_type, item_id):
 # LOAD DATA
 calendar_items = fetch_calendar(student_id)
 
-# Debug expander
-with st.expander("🔧 Debug Info"):
-    st.write(f"Student ID: {student_id}")
-    st.write(f"Total items fetched: {len(calendar_items)}")
-    if calendar_items:
-        st.json(calendar_items[:2])
-
-
 # ============================================
 # WEEKLY GRID VIEW
 # ============================================
