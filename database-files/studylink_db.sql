@@ -569,7 +569,7 @@ INSERT INTO advisor (fname, lName, email, department) VALUES
 ('Tome', 'Berardt', 'tome.berardt@northeastern.edu', 'Psychology'),
 
 INSERT INTO student (fName, lName, email, enrollmentYear, advisorID, major, minor, GPA, riskFlag, enrollmentStatus, totalCredits) VALUES
-('Eyde', 'Posthill', 'eyde.posthill@northeastern.edu', 2025, 4, 'Data Science', 'Computer Science', 2.92, false, 'Enrolled', 128),
+('Maya', 'Johnson', 'maya.j@northeastern.edu', 2025, 4, 'Computer Science', 3.75, false, 'Enrolled', 32),
 ('Stevena', 'Large', 'stevena.large@northeastern.edu', 2023, 27, 'Business', 'Data Science', 2.83, true, 'Leave', 5),
 ('Rudolph', 'Comelini', 'rudolph.comelini@northeastern.edu', 2023, 26, 'Data Science', 'Computer Science', 2.21, true, 'Active', 59),
 ('Godfry', 'Ackermann', 'godfry.ackermann@northeastern.edu', 2026, 5, 'Business', 'Engineering', 3.15, true, 'Probation', 87),
@@ -1115,7 +1115,7 @@ VALUES
 (11,'2025-01-06 02:55:36','pending'),
 (33,'2025-04-18 23:08:02','pending'),
 (13,'2025-01-16 06:45:56','failed'),
-(6,'2025-09-30 16:51:54','pending'),
+(1,'2025-09-30 16:51:54','pending'),
 (25,'2024-12-20 20:46:50','synced'),
 (23,'2025-06-02 20:55:10','synced'),
 (8,'2024-12-11 12:14:01','pending'),
