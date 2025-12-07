@@ -35,9 +35,9 @@ def get_student_calendar():
             FROM student s
             JOIN CourseSelectionStudent css ON s.studentID = css.studentID
             JOIN CourseSelection cs ON css.courseID = cs.courseID
-            JOIN assignment a ON cs.courseID = a.courseID
+            LEFT JOIN assignment a ON cs.courseID = a.courseID
 
-            UNION
+            UNION ALL
 
             SELECT s.studentID,
                 CONCAT(s.fName, ' ', s.lName) AS studentName,
@@ -51,8 +51,8 @@ def get_student_calendar():
                 NULL AS status,
                 NULL AS maxScore
             FROM student s
-            JOIN attEvent ae ON s.studentID = ae.studentID
-            JOIN event e ON ae.eventID = e.eventID
+            LEFT JOIN attEvent ae ON s.studentID = ae.studentID
+            LEFT JOIN event e ON ae.eventID = e.eventID;
         """
         
         if student_id:
