@@ -21,8 +21,7 @@ if st.session_state.get("role") != "Student":
     st.stop()
 
 student_id = st.session_state.get("studentID")
-st.write("DEBUG student_id:", student_id)
-
+student_name = st.session_state.get("studentName", "Student")
 st.title(f"📅 Calendar for {student_name}")
 
 # COLORS for different assignment types
