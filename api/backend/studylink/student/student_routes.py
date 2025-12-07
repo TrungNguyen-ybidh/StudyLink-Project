@@ -13,7 +13,7 @@ calendar = Blueprint("calendar", __name__)
 def get_student_calendar():
     """Get calendar items for a specific student or all students."""
     try:
-        cursor = db.get_db().cursor()
+        cursor = db.get_db().cursor(dictionary=True)
         student_id = request.args.get('studentID')
 
         # Base query for assignments
@@ -60,7 +60,14 @@ def get_student_calendar():
             assignment_query += f" AND s.studentID = {int(student_id)}"
             event_query += f" WHERE s.studentID = {int(student_id)}"
         
-        full_query = f"({assignment_query}) UNION ALL ({event_query}) ORDER BY dueDate, dueTime"
+        full_query = f"""
+                SELECT * FROM (
+                    {assignment_query}
+                    UNION ALL
+                    {event_query}
+                ) AS combined
+                ORDER BY dueDate, dueTime
+                """
         
         cursor.execute(full_query)
         results = cursor.fetchall()
@@ -581,7 +588,7 @@ def get_workload():
             WHERE s.studentID = %s
               AND a.assignmentDate >= CURDATE()
               AND a.assignmentDate <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)
-            GROUP BY DAYNAME(a.assignmentDate), DAYOFWEEK(a.assignmentDate)
+            GROUP BY DAYNAME(a.assignmentDate), DAYOFWEEK(a.assignmentDate)A
         """
         
         cursor.execute(assignment_query, (student_id,))
