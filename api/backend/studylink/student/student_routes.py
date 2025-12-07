@@ -22,20 +22,37 @@ def get_student_calendar():
 
         query = """
             SELECT s.studentID,
-                   CONCAT(s.fName, ' ', s.lName) AS studentName,
-                   cs.courseCode,
-                   cs.courseName,
-                   a.assignmentID,
-                   a.assignmentType,
-                   a.title AS assignmentTitle,
-                   a.assignmentDate AS dueDate,
-                   a.assignmentTime AS dueTime,
-                   a.status,
-                   a.maxScore
+                CONCAT(s.fName, ' ', s.lName) AS studentName,
+                cs.courseCode,
+                cs.courseName,
+                a.assignmentID,
+                a.assignmentType,
+                a.title AS assignmentTitle,
+                a.assignmentDate AS dueDate,
+                a.assignmentTime AS dueTime,
+                a.status,
+                a.maxScore
             FROM student s
             JOIN CourseSelectionStudent css ON s.studentID = css.studentID
             JOIN CourseSelection cs ON css.courseID = cs.courseID
             JOIN assignment a ON cs.courseID = a.courseID
+
+            UNION
+
+            SELECT s.studentID,
+                CONCAT(s.fName, ' ', s.lName) AS studentName,
+                NULL AS courseCode,
+                NULL AS courseName,
+                e.eventID AS assignmentID,
+                e.type AS assignmentType,
+                e.name AS assignmentTitle,
+                e.date AS dueDate,
+                e.startTime AS dueTime,
+                NULL AS status,
+                NULL AS maxScore
+            FROM student s
+            JOIN attEvent ae ON s.studentID = ae.studentID
+            JOIN event e ON ae.eventID = e.eventID
         """
         
         if student_id:
