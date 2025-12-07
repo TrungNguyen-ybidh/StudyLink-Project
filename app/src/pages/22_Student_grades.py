@@ -8,7 +8,7 @@ from modules.nav import SideBarLinks
 st.set_page_config(page_title="Grades", page_icon="📘", layout="wide")
 SideBarLinks()
 
-API = "http://localhost:4000/grades" 
+API = "http://localhost:4000/student/grades"
 
 
 # AUTH CHECK

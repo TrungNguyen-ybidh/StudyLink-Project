@@ -12,7 +12,7 @@ st.set_page_config(
 
 SideBarLinks()
 
-API = "http://localhost:4000/courses"    
+API = "http://localhost:4000/student/courses"   
 
 # Auth checks
 if not st.session_state.get("authenticated", False):
@@ -39,7 +39,7 @@ def fetch_student_courses(student_id):
 @st.cache_data(ttl=5)
 def fetch_course_catalog():
     try:
-        res = requests.get(f"{API}/catalog")
+        res = requests.get("http://localhost:4000/student/courses/catalog")
         return res.json() if res.status_code == 200 else []
     except:
         return []
