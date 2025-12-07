@@ -531,6 +531,7 @@ VALUES
 
 
 INSERT INTO advisor (fname, lName, email, department) VALUES
+('Jack', 'Crash', 'jack.crash@northeastern.edu', 'Computer Science')
 ('Layne', 'Maile', 'layne.maile@northeastern.edu', 'Mathematics'),
 ('Georgena', 'Ashdown', 'georgena.ashdown@northeastern.edu', 'Engineering'),
 ('Cosetta', 'Krout', 'cosetta.krout@northeastern.edu', 'Business'),
@@ -565,8 +566,7 @@ INSERT INTO advisor (fname, lName, email, department) VALUES
 ('Cornelia', 'Deeney', 'cornelia.deeney@northeastern.edu', 'Business'),
 ('Theressa', 'Mangon', 'theressa.mangon@northeastern.edu', 'Psychology'),
 ('Saunder', 'Tweddle', 'saunder.tweddle@northeastern.edu', 'Psychology'),
-('Tome', 'Berardt', 'tome.berardt@northeastern.edu', 'Psychology');
-
+('Tome', 'Berardt', 'tome.berardt@northeastern.edu', 'Psychology'),
 
 INSERT INTO student (fName, lName, email, enrollmentYear, advisorID, major, minor, GPA, riskFlag, enrollmentStatus, totalCredits) VALUES
 ('Eyde', 'Posthill', 'eyde.posthill@northeastern.edu', 2025, 4, 'Data Science', 'Computer Science', 2.92, false, 'Enrolled', 128),

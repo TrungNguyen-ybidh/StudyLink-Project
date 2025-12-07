@@ -4,6 +4,7 @@ from backend.db_connection import db
 from mysql.connector import Error
 from flask import current_app
 
+
 logger = logging.getLogger(__name__)
 
 advisor_bp = Blueprint('advisor', __name__, url_prefix='/api/advisor')
@@ -51,6 +52,33 @@ def get_advisor_reports(advisor_id):
     reports = cursor.fetchall()
     return jsonify(reports), 200
 
+@advisor_bp.route("/lookup/<path:email>", methods=["GET"])
+def lookup_advisor(email):
+    """Return advisor info by email."""
+    conn = db.get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT advisorID, fName, lName, email, department
+        FROM advisor
+        WHERE email = %s
+    """, (email,))
+
+    row = cursor.fetchone()
+
+    if not row:
+        return jsonify({"error": "Advisor not found"}), 404
+
+    advisor = {
+        "advisorID": row[0],
+        "fName": row[1],
+        "lName": row[2],
+        "email": row[3],
+        "department": row[4],
+    }
+
+    return jsonify(advisor), 200
+
 #POST /advisor/<advisor_id>/reports
 @advisor_bp.route("/<int:advisor_id>/reports", methods=["POST"])
 def create_advisor_report(advisor_id):
@@ -64,19 +92,23 @@ def create_advisor_report(advisor_id):
     conn = db.get_db()
     cursor = conn.cursor()
 
+    # INSERT new report
     cursor.execute("""
         INSERT INTO report (title, content, created_at)
         VALUES (%s, %s, NOW())
-        RETURNING reportID
     """, (title, content))
-    report_id = cursor.fetchone()['reportID']
 
+    # Get MySQL auto-increment ID
+    report_id = cursor.lastrowid
+
+    # Link advisor to report
     cursor.execute("""
         INSERT INTO advisor_report (advisorID, reportID)
         VALUES (%s, %s)
     """, (advisor_id, report_id))
 
     conn.commit()
+
     return jsonify({"message": "Report created", "reportID": report_id}), 201
 
 #PUT /advisor/reports/<report_id>
