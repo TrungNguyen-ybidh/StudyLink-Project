@@ -36,7 +36,7 @@ CREATE TABLE advisor (
    fname VARCHAR(100) NOT NULL,
    lName VARCHAR(100) NOT NULL,
    department VARCHAR(100) NOT NULL,
-   email VARCHAR(100) NOT NULL
+   email VARCHAR(100) NOT NULL UNIQUE
 );
 
 
@@ -65,7 +65,6 @@ CREATE TABLE advisorReport (
    advisorID INT,
    reportDesc TEXT,
    dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
-   timestamps DATETIME,
    filePath VARCHAR(255),
    type VARCHAR(50),
    description longtext,
@@ -198,8 +197,8 @@ CREATE TABLE assignment (
 
 CREATE TABLE reminder (
    reminderID INT AUTO_INCREMENT PRIMARY KEY,
-   eventID INT NOT NULL,
-   assignmentID INT NOT NULL,
+   eventID INT NULL,
+   assignmentID INT NULL,
    message TEXT,
    isActive BOOLEAN NOT NULL,
    date DATE NOT NULL,
@@ -237,7 +236,7 @@ CREATE TABLE metric (
    unit VARCHAR(50),
    metricType VARCHAR(100),
    metricName VARCHAR(100),
-   metricValue VARCHAR(100),
+   metricValue DECIMAL(10,2),
    metricDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    FOREIGN KEY (studentID) REFERENCES student(studentID)
        ON DELETE CASCADE
@@ -329,6 +328,36 @@ CREATE TABLE DataError (
        ON DELETE CASCADE
        ON UPDATE CASCADE
 );
+
+-- Create indexes for foreign keys
+CREATE INDEX idx_student_advisor ON student(advisorID);
+CREATE INDEX idx_metric_student ON metric(studentID);
+CREATE INDEX idx_metric_course ON metric(courseID);
+CREATE INDEX idx_assignment_course ON assignment(courseID);
+CREATE INDEX idx_studyplan_student ON StudyPlan(studentID);
+CREATE INDEX idx_planblock_plan ON PlanBlock(planID);
+
+
+-- Create triggers for reminder table validation
+DELIMITER //
+CREATE TRIGGER reminder_insert_check
+BEFORE INSERT ON reminder
+FOR EACH ROW
+BEGIN
+   IF NEW.eventID IS NULL AND NEW.assignmentID IS NULL THEN
+       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Either eventID or assignmentID must be provided';
+   END IF;
+END//
+
+CREATE TRIGGER reminder_update_check
+BEFORE UPDATE ON reminder
+FOR EACH ROW
+BEGIN
+   IF NEW.eventID IS NULL AND NEW.assignmentID IS NULL THEN
+       SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Either eventID or assignmentID must be provided';
+   END IF;
+END//
+DELIMITER ;
 
 
 INSERT INTO SystemAdmin (adminID, name, DOB) VALUES
@@ -569,7 +598,7 @@ INSERT INTO advisor (fname, lName, email, department) VALUES
 ('Tome', 'Berardt', 'tome.berardt@northeastern.edu', 'Psychology');
 
 INSERT INTO student (fName, lName, email, enrollmentYear, advisorID, major, minor, GPA, riskFlag, enrollmentStatus, totalCredits) VALUES
-('Maya', 'Johnson', 'maya.j@northeastern.edu', 2025, 4, 'Computer Science', 3.75, false, 'Enrolled', 32),
+('Maya', 'Johnson', 'maya.j@northeastern.edu', 2025, 4, 'Computer Science', NULL, 3.75, false, 'Enrolled', 32),
 ('Stevena', 'Large', 'stevena.large@northeastern.edu', 2023, 27, 'Business', 'Data Science', 2.83, true, 'Leave', 5),
 ('Rudolph', 'Comelini', 'rudolph.comelini@northeastern.edu', 2023, 26, 'Data Science', 'Computer Science', 2.21, true, 'Active', 59),
 ('Godfry', 'Ackermann', 'godfry.ackermann@northeastern.edu', 2026, 5, 'Business', 'Engineering', 3.15, true, 'Probation', 87),
@@ -706,76 +735,76 @@ VALUES
 
 INSERT INTO upload (dataID, metricID, filePath)
 VALUES
-(5,31,'/files/study61.cvs'),
-(2,33,'/files/study63.cvs'),
-(8,9,'/files/study22.cvs'),
-(5,48,'/files/study56.cvs'),
-(7,9,'/files/study11.cvs'),
-(2,43,'/files/study44.cvs'),
-(2,8,'/files/study4.cvs'),
-(7,19,'/files/study8.cvs'),
-(5,55,'/files/study5.cvs'),
-(5,58,'/files/study11.cvs'),
-(1,25,'/files/study29.cvs'),
-(5,9,'/files/study4.cvs'),
-(7,46,'/files/study53.cvs'),
-(2,13,'/files/study35.cvs'),
-(4,22,'/files/study44.cvs'),
-(7,27,'/files/study51.cvs'),
-(2,27,'/files/study4.cvs'),
-(5,35,'/files/study59.cvs'),
-(5,29,'/files/study53.cvs'),
-(3,33,'/files/study34.cvs'),
-(1,12,'/files/study58.cvs'),
-(2,58,'/files/study45.cvs'),
-(7,34,'/files/study40.cvs'),
-(2,47,'/files/study12.cvs'),
-(3,68,'/files/study14.cvs'),
-(5,66,'/files/study41.cvs'),
-(5,17,'/files/study46.cvs'),
-(7,30,'/files/study36.cvs'),
-(4,38,'/files/study14.cvs'),
-(10,52,'/files/study27.cvs'),
-(2,67,'/files/study39.cvs'),
-(1,4,'/files/study58.cvs'),
-(1,29,'/files/study18.cvs'),
-(7,39,'/files/study11.cvs'),
-(10,23,'/files/study8.cvs'),
-(4,6,'/files/study7.cvs'),
-(1,50,'/files/study68.cvs'),
-(9,17,'/files/study42.cvs'),
-(4,34,'/files/study26.cvs'),
-(4,65,'/files/study63.cvs'),
-(2,53,'/files/study60.cvs'),
-(9,69,'/files/study15.cvs'),
-(6,32,'/files/study55.cvs'),
-(1,62,'/files/study65.cvs'),
-(9,44,'/files/study53.cvs'),
-(7,15,'/files/study34.cvs'),
-(1,47,'/files/study13.cvs'),
-(7,65,'/files/study42.cvs'),
-(1,15,'/files/study13.cvs'),
-(10,17,'/files/study58.cvs'),
-(1,53,'/files/study36.cvs'),
-(7,43,'/files/study25.cvs'),
-(1,42,'/files/study46.cvs'),
-(6,20,'/files/study37.cvs'),
-(9,21,'/files/study35.cvs'),
-(8,54,'/files/study42.cvs'),
-(3,43,'/files/study15.cvs'),
-(6,36,'/files/study30.cvs'),
-(8,22,'/files/study48.cvs'),
-(1,24,'/files/study9.cvs'),
-(3,24,'/files/study47.cvs'),
-(8,38,'/files/study30.cvs'),
-(2,49,'/files/study54.cvs'),
-(8,45,'/files/study46.cvs'),
-(9,42,'/files/study38.cvs'),
-(6,12,'/files/study47.cvs'),
-(7,21,'/files/study5.cvs'),
-(3,57,'/files/study62.cvs'),
-(5,29,'/files/study31.cvs'),
-(7,56,'/files/study6.cvs');
+(5,31,'/files/study61.csv'),
+(2,33,'/files/study63.csv'),
+(8,9,'/files/study22.csv'),
+(5,48,'/files/study56.csv'),
+(7,9,'/files/study11.csv'),
+(2,43,'/files/study44.csv'),
+(2,8,'/files/study4.csv'),
+(7,19,'/files/study8.csv'),
+(5,55,'/files/study5.csv'),
+(5,58,'/files/study11.csv'),
+(1,25,'/files/study29.csv'),
+(5,9,'/files/study4.csv'),
+(7,46,'/files/study53.csv'),
+(2,13,'/files/study35.csv'),
+(4,22,'/files/study44.csv'),
+(7,27,'/files/study51.csv'),
+(2,27,'/files/study4.csv'),
+(5,35,'/files/study59.csv'),
+(5,29,'/files/study53.csv'),
+(3,33,'/files/study34.csv'),
+(1,12,'/files/study58.csv'),
+(2,58,'/files/study45.csv'),
+(7,34,'/files/study40.csv'),
+(2,47,'/files/study12.csv'),
+(3,68,'/files/study14.csv'),
+(5,66,'/files/study41.csv'),
+(5,17,'/files/study46.csv'),
+(7,30,'/files/study36.csv'),
+(4,38,'/files/study14.csv'),
+(10,52,'/files/study27.csv'),
+(2,67,'/files/study39.csv'),
+(1,4,'/files/study58.csv'),
+(1,29,'/files/study18.csv'),
+(7,39,'/files/study11.csv'),
+(10,23,'/files/study8.csv'),
+(4,6,'/files/study7.csv'),
+(1,50,'/files/study68.csv'),
+(9,17,'/files/study42.csv'),
+(4,34,'/files/study26.csv'),
+(4,65,'/files/study63.csv'),
+(2,53,'/files/study60.csv'),
+(9,69,'/files/study15.csv'),
+(6,32,'/files/study55.csv'),
+(1,62,'/files/study65.csv'),
+(9,44,'/files/study53.csv'),
+(7,15,'/files/study34.csv'),
+(1,47,'/files/study13.csv'),
+(7,65,'/files/study42.csv'),
+(1,15,'/files/study13.csv'),
+(10,17,'/files/study58.csv'),
+(1,53,'/files/study36.csv'),
+(7,43,'/files/study25.csv'),
+(1,42,'/files/study46.csv'),
+(6,20,'/files/study37.csv'),
+(9,21,'/files/study35.csv'),
+(8,54,'/files/study42.csv'),
+(3,43,'/files/study15.csv'),
+(6,36,'/files/study30.csv'),
+(8,22,'/files/study48.csv'),
+(1,24,'/files/study9.csv'),
+(3,24,'/files/study47.csv'),
+(8,38,'/files/study30.csv'),
+(2,49,'/files/study54.csv'),
+(8,45,'/files/study46.csv'),
+(9,42,'/files/study38.csv'),
+(6,12,'/files/study47.csv'),
+(7,21,'/files/study5.csv'),
+(3,57,'/files/study62.csv'),
+(5,29,'/files/study31.csv'),
+(7,56,'/files/study6.csv');
 
 
 
@@ -1131,7 +1160,7 @@ VALUES
 (12,'2025-04-08 11:56:44','pending');
 
 
-INSERT INTO advisorReport (studentID, advisorID, reportDesc, timestamps, filePath, type) VALUES
+INSERT INTO advisorReport (studentID, advisorID, reportDesc, dateCreated, filePath, type) VALUES
 (12, 24, 'Progress Improving', '2026-01-23 13:15:57', '/reports/r10.pdf', 'meeting_note'),
 (13, 25, 'Progress Improving', '2026-10-03 20:22:48', '/reports/r1.pdf', 'academic'),
 (27, 8, 'Needs Support', '2027-10-27 12:09:09', '/reports/r26.pdf', 'risk'),
