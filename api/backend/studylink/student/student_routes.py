@@ -1,6 +1,5 @@
 from flask import Blueprint, jsonify, request
 from backend.db_connection import db
-from mysql.connector import Error
 from flask import current_app
 
 
@@ -10,17 +9,15 @@ from flask import current_app
 calendar = Blueprint("calendar", __name__)
 
 
-# Maya-1: Return all assignments, exams, and projects with due dates and times for each student
 @calendar.route("/calendar", methods=["GET"])
 def get_student_calendar():
     """Get calendar items for a specific student or all students."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
-        # Optional filter by studentID
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
 
-        query = """
+        # Base query for assignments
+        assignment_query = """
             SELECT s.studentID,
                 CONCAT(s.fName, ' ', s.lName) AS studentName,
                 cs.courseCode,
@@ -31,14 +28,17 @@ def get_student_calendar():
                 a.assignmentDate AS dueDate,
                 a.assignmentTime AS dueTime,
                 a.status,
-                a.maxScore
+                a.maxScore,
+                'assignment' as itemType
             FROM student s
             JOIN CourseSelectionStudent css ON s.studentID = css.studentID
             JOIN CourseSelection cs ON css.courseID = cs.courseID
             LEFT JOIN assignment a ON cs.courseID = a.courseID
-
-            UNION ALL
-
+            WHERE a.assignmentID IS NOT NULL
+        """
+        
+        # Base query for events
+        event_query = """
             SELECT s.studentID,
                 CONCAT(s.fName, ' ', s.lName) AS studentName,
                 NULL AS courseCode,
@@ -49,30 +49,37 @@ def get_student_calendar():
                 e.date AS dueDate,
                 e.startTime AS dueTime,
                 NULL AS status,
-                NULL AS maxScore
+                NULL AS maxScore,
+                'event' as itemType
             FROM student s
-            LEFT JOIN attEvent ae ON s.studentID = ae.studentID
-            LEFT JOIN event e ON ae.eventID = e.eventID;
+            JOIN attEvent ae ON s.studentID = ae.studentID
+            JOIN event e ON ae.eventID = e.eventID
         """
         
         if student_id:
-            query += " WHERE s.studentID = %s"
-            query += " ORDER BY a.assignmentDate, a.assignmentTime"
-            cursor.execute(query, (student_id,))
-        else:
-            query += " ORDER BY s.studentID, a.assignmentDate, a.assignmentTime"
-            cursor.execute(query)
-
+            assignment_query += f" AND s.studentID = {int(student_id)}"
+            event_query += f" WHERE s.studentID = {int(student_id)}"
+        
+        full_query = f"({assignment_query}) UNION ALL ({event_query}) ORDER BY dueDate, dueTime"
+        
+        cursor.execute(full_query)
         results = cursor.fetchall()
         cursor.close()
+        
+        # Convert date/time objects to strings for JSON serialization
+        for row in results:
+            if row.get('dueDate'):
+                row['dueDate'] = str(row['dueDate'])
+            if row.get('dueTime'):
+                row['dueTime'] = str(row['dueTime'])
+        
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-1: Add new event or assignment to the centralized calendar
 @calendar.route("/calendar", methods=["POST"])
 def add_calendar_item():
     """Add a new event or assignment to the calendar."""
@@ -83,7 +90,6 @@ def add_calendar_item():
         if not data or "type" not in data:
             return jsonify({"error": "Missing field: type"}), 400
 
-        # INSERT EVENT
         if data["type"] == "event":
             required = ["name", "date", "startTime", "studentID"]
             for f in required:
@@ -104,7 +110,6 @@ def add_calendar_item():
 
             event_id = cursor.lastrowid
 
-            # Link event to student
             cursor.execute("""
                 INSERT INTO attEvent (studentID, eventID)
                 VALUES (%s, %s)
@@ -118,7 +123,6 @@ def add_calendar_item():
                 "eventID": event_id
             }), 201
 
-        # INSERT ASSIGNMENT
         elif data["type"] == "assignment":
             required = ["courseID", "title", "assignmentDate", "assignmentTime", "maxScore"]
             for f in required:
@@ -151,12 +155,11 @@ def add_calendar_item():
         else:
             return jsonify({"error": "Invalid type. Must be 'event' or 'assignment'"}), 400
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-1: Update event or assignment details
 @calendar.route("/calendar/<string:item_type>/<int:item_id>", methods=["PUT"])
 def update_calendar(item_type, item_id):
     """Update an existing event or assignment."""
@@ -164,10 +167,8 @@ def update_calendar(item_type, item_id):
         data = request.get_json()
         cursor = db.get_db().cursor()
 
-        # UPDATE EVENT
         if item_type == "event":
             allowed = ["name", "type", "date", "startTime", "endTime", "location"]
-
             update_fields = []
             params = []
 
@@ -191,11 +192,9 @@ def update_calendar(item_type, item_id):
             cursor.close()
             return jsonify({"message": "Event updated successfully"}), 200
 
-        # UPDATE ASSIGNMENT
         elif item_type == "assignment":
             allowed = ["courseID", "assignmentType", "title", "assignmentDate", 
                       "assignmentTime", "status", "scoreReceived", "maxScore", "weight"]
-
             update_fields = []
             params = []
 
@@ -222,40 +221,38 @@ def update_calendar(item_type, item_id):
         else:
             return jsonify({"error": "item_type must be 'event' or 'assignment'"}), 400
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-1: Remove outdated events or assignments
 @calendar.route("/calendar/<string:item_type>/<int:item_id>", methods=["DELETE"])
 def delete_calendar(item_type, item_id):
     """Delete an event or assignment from the calendar."""
     try:
         cursor = db.get_db().cursor()
 
-        # DELETE EVENT
         if item_type == "event":
             cursor.execute("SELECT * FROM event WHERE eventID = %s", (item_id,))
             if not cursor.fetchone():
                 cursor.close()
                 return jsonify({"error": "Event not found"}), 404
 
-            # Delete from attEvent first (foreign key)
             cursor.execute("DELETE FROM attEvent WHERE eventID = %s", (item_id,))
+            cursor.execute("DELETE FROM reminder WHERE eventID = %s", (item_id,))
             cursor.execute("DELETE FROM event WHERE eventID = %s", (item_id,))
             
             db.get_db().commit()
             cursor.close()
             return jsonify({"message": "Event deleted successfully"}), 200
 
-        # DELETE ASSIGNMENT
         elif item_type == "assignment":
             cursor.execute("SELECT * FROM assignment WHERE assignmentID = %s", (item_id,))
             if not cursor.fetchone():
                 cursor.close()
                 return jsonify({"error": "Assignment not found"}), 404
 
+            cursor.execute("DELETE FROM reminder WHERE assignmentID = %s", (item_id,))
             cursor.execute("DELETE FROM assignment WHERE assignmentID = %s", (item_id,))
             db.get_db().commit()
             cursor.close()
@@ -264,7 +261,7 @@ def delete_calendar(item_type, item_id):
         else:
             return jsonify({"error": "item_type must be 'event' or 'assignment'"}), 400
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
@@ -275,36 +272,38 @@ def delete_calendar(item_type, item_id):
 reminder = Blueprint("reminder", __name__)
 
 
-# Maya-2: Return all active reminders for a student
 @reminder.route("/reminders", methods=["GET"])
 def get_reminders():
     """Get all active reminders for upcoming events or assignments."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
 
-        query = """
-            SELECT r.reminderID,
-                   r.message AS reminderMessage,
-                   r.date AS reminderDate,
-                   r.time AS reminderTime,
-                   r.isActive,
-                   a.title AS assignmentTitle,
-                   a.assignmentDate,
-                   a.assignmentTime,
-                   e.name AS eventName,
-                   e.date AS eventDate,
-                   e.startTime AS eventTime
-            FROM reminder r
-            LEFT JOIN assignment a ON r.assignmentID = a.assignmentID
-            LEFT JOIN event e ON r.eventID = e.eventID
-            WHERE r.isActive = TRUE
-              AND r.date >= CURDATE()
-        """
-        
         if student_id:
-            # Get reminders for events the student is attending
+            query = """
+                SELECT DISTINCT r.reminderID,
+                       r.message AS reminderMessage,
+                       r.date AS reminderDate,
+                       r.time AS reminderTime,
+                       r.isActive,
+                       a.title AS assignmentTitle,
+                       a.assignmentDate,
+                       a.assignmentTime,
+                       e.name AS eventName,
+                       e.date AS eventDate,
+                       e.startTime AS eventTime
+                FROM reminder r
+                LEFT JOIN assignment a ON r.assignmentID = a.assignmentID
+                LEFT JOIN event e ON r.eventID = e.eventID
+                LEFT JOIN attEvent ae ON e.eventID = ae.eventID
+                LEFT JOIN CourseSelectionStudent css ON a.courseID = css.courseID
+                WHERE r.isActive = TRUE
+                  AND r.date >= CURDATE()
+                  AND (ae.studentID = %s OR css.studentID = %s)
+                ORDER BY r.date, r.time
+            """
+            cursor.execute(query, (student_id, student_id))
+        else:
             query = """
                 SELECT r.reminderID,
                        r.message AS reminderMessage,
@@ -318,28 +317,31 @@ def get_reminders():
                 FROM reminder r
                 LEFT JOIN assignment a ON r.assignmentID = a.assignmentID
                 LEFT JOIN event e ON r.eventID = e.eventID
-                LEFT JOIN attEvent ae ON e.eventID = ae.eventID
-                LEFT JOIN CourseSelectionStudent css ON a.courseID = css.courseID
                 WHERE r.isActive = TRUE
                   AND r.date >= CURDATE()
-                  AND (ae.studentID = %s OR css.studentID = %s)
                 ORDER BY r.date, r.time
             """
-            cursor.execute(query, (student_id, student_id))
-        else:
-            query += " ORDER BY r.date, r.time"
             cursor.execute(query)
 
         results = cursor.fetchall()
         cursor.close()
+        
+        # Convert date/time objects to strings
+        for row in results:
+            for key in ['reminderDate', 'assignmentDate', 'eventDate']:
+                if row.get(key):
+                    row[key] = str(row[key])
+            for key in ['reminderTime', 'assignmentTime', 'eventTime']:
+                if row.get(key):
+                    row[key] = str(row[key])
+        
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-2: Add a new reminder
 @reminder.route("/reminders", methods=["POST"])
 def add_reminder():
     """Create a new reminder for an event or assignment."""
@@ -347,13 +349,11 @@ def add_reminder():
         data = request.get_json()
         cursor = db.get_db().cursor()
 
-        # Validate required fields
         required_fields = ["message", "date", "time"]
         for field in required_fields:
             if field not in data:
                 return jsonify({"error": f"Missing required field: {field}"}), 400
 
-        # Must specify EITHER eventID or assignmentID
         event_id = data.get("eventID")
         assignment_id = data.get("assignmentID")
 
@@ -367,7 +367,6 @@ def add_reminder():
                 "error": "A reminder can only be linked to ONE item: eventID OR assignmentID, not both."
             }), 400
 
-        # Insert reminder
         cursor.execute("""
             INSERT INTO reminder (eventID, assignmentID, message, date, time, isActive)
             VALUES (%s, %s, %s, %s, %s, TRUE)
@@ -388,12 +387,11 @@ def add_reminder():
             "reminderID": reminder_id
         }), 201
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-2: Update an existing reminder
 @reminder.route("/reminders/<int:reminder_id>", methods=["PUT"])
 def update_reminder(reminder_id):
     """Update a reminder's message, status, or time."""
@@ -401,9 +399,7 @@ def update_reminder(reminder_id):
         data = request.get_json()
         cursor = db.get_db().cursor()
 
-        # Allowed fields to update
         allowed_fields = ["message", "date", "time", "isActive"]
-
         update_fields = []
         params = []
 
@@ -417,7 +413,6 @@ def update_reminder(reminder_id):
 
         params.append(reminder_id)
 
-        # Check reminder exists
         cursor.execute("SELECT * FROM reminder WHERE reminderID = %s", (reminder_id,))
         if not cursor.fetchone():
             cursor.close()
@@ -433,19 +428,17 @@ def update_reminder(reminder_id):
         cursor.close()
         return jsonify({"message": "Reminder updated successfully"}), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-2: Delete a reminder
 @reminder.route("/reminders/<int:reminder_id>", methods=["DELETE"])
 def delete_reminder(reminder_id):
     """Delete a reminder."""
     try:
         cursor = db.get_db().cursor()
 
-        # Check reminder exists
         cursor.execute("SELECT * FROM reminder WHERE reminderID = %s", (reminder_id,))
         if not cursor.fetchone():
             cursor.close()
@@ -457,7 +450,7 @@ def delete_reminder(reminder_id):
 
         return jsonify({"message": "Reminder deleted successfully"}), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
@@ -468,13 +461,11 @@ def delete_reminder(reminder_id):
 grades = Blueprint("grades", __name__)
 
 
-# Maya-3: Retrieve all grades, assignment weights, and calculated outcomes
 @grades.route("/grades", methods=["GET"])
 def get_grades():
     """Get grades and calculate weighted scores for a student."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
 
         query = """
@@ -504,32 +495,30 @@ def get_grades():
             JOIN CourseSelectionStudent css ON s.studentID = css.studentID
             JOIN CourseSelection cs ON css.courseID = cs.courseID
             LEFT JOIN assignment a ON cs.courseID = a.courseID
+            WHERE a.assignmentID IS NOT NULL
         """
 
         if student_id:
-            query += " WHERE s.studentID = %s"
+            query += f" AND s.studentID = {int(student_id)}"
             query += " ORDER BY cs.courseName, a.assignmentDate"
-            cursor.execute(query, (student_id,))
         else:
             query += " ORDER BY s.studentID, cs.courseName, a.assignmentDate"
-            cursor.execute(query)
-
+        
+        cursor.execute(query)
         results = cursor.fetchall()
         cursor.close()
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-3: Get course grade summary
 @grades.route("/grades/summary", methods=["GET"])
 def get_grade_summary():
     """Get aggregated grade summary by course for a student."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
         
         if not student_id:
@@ -545,9 +534,7 @@ def get_grade_summary():
                        WHEN a.scoreReceived IS NOT NULL AND a.maxScore > 0 
                        THEN (a.scoreReceived / a.maxScore) * 100 
                        ELSE NULL 
-                   END), 2) AS averageScore,
-                   SUM(CASE WHEN a.weight IS NOT NULL THEN a.weight ELSE 0 END) AS totalWeightGraded,
-                   ROUND(100 - SUM(CASE WHEN a.status = 'graded' AND a.weight IS NOT NULL THEN a.weight ELSE 0 END), 2) AS remainingWeight
+                   END), 2) AS averageScore
             FROM student s
             JOIN CourseSelectionStudent css ON s.studentID = css.studentID
             JOIN CourseSelection cs ON css.courseID = cs.courseID
@@ -562,7 +549,7 @@ def get_grade_summary():
         cursor.close()
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
@@ -573,73 +560,99 @@ def get_grade_summary():
 workload = Blueprint("workload", __name__)
 
 
-# Maya-4: Analyze workload intensity per weekday
 @workload.route("/workload", methods=["GET"])
 def get_workload():
     """Analyze total study hours, assignments, and events to suggest workload intensity."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
         
         if not student_id:
             return jsonify({"error": "studentID is required"}), 400
 
-        query = """
-            SELECT s.studentID,
-                   CONCAT(s.fName, ' ', s.lName) AS studentName,
-                   DAYNAME(a.assignmentDate) AS weekday,
+        # Get assignments per day
+        assignment_query = """
+            SELECT DAYNAME(a.assignmentDate) AS weekday,
                    DAYOFWEEK(a.assignmentDate) AS dayNum,
-                   COUNT(DISTINCT a.assignmentID) AS totalAssignments,
+                   COUNT(DISTINCT a.assignmentID) AS totalAssignments
+            FROM student s
+            JOIN CourseSelectionStudent css ON s.studentID = css.studentID
+            JOIN assignment a ON css.courseID = a.courseID
+            WHERE s.studentID = %s
+              AND a.assignmentDate >= CURDATE()
+              AND a.assignmentDate <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)
+            GROUP BY DAYNAME(a.assignmentDate), DAYOFWEEK(a.assignmentDate)
+        """
+        
+        cursor.execute(assignment_query, (student_id,))
+        assignment_data = {row['dayNum']: row for row in cursor.fetchall()}
+        
+        # Get events per day
+        event_query = """
+            SELECT DAYNAME(e.date) AS weekday,
+                   DAYOFWEEK(e.date) AS dayNum,
                    COUNT(DISTINCT e.eventID) AS totalEvents
             FROM student s
-            LEFT JOIN CourseSelectionStudent css ON s.studentID = css.studentID
-            LEFT JOIN assignment a ON css.courseID = a.courseID
-                AND a.assignmentDate >= CURDATE()
-                AND a.assignmentDate <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)
-            LEFT JOIN attEvent ae ON s.studentID = ae.studentID
-            LEFT JOIN event e ON ae.eventID = e.eventID
-                AND e.date >= CURDATE()
-                AND e.date <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)
+            JOIN attEvent ae ON s.studentID = ae.studentID
+            JOIN event e ON ae.eventID = e.eventID
             WHERE s.studentID = %s
-            GROUP BY s.studentID, s.fName, s.lName, DAYNAME(a.assignmentDate), DAYOFWEEK(a.assignmentDate)
-            ORDER BY dayNum
+              AND e.date >= CURDATE()
+              AND e.date <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)
+            GROUP BY DAYNAME(e.date), DAYOFWEEK(e.date)
         """
-
-        cursor.execute(query, (student_id,))
-        results = cursor.fetchall()
         
-        # Add workload category
-        for row in results:
-            assignments = row.get('totalAssignments', 0) or 0
-            events = row.get('totalEvents', 0) or 0
+        cursor.execute(event_query, (student_id,))
+        event_data = {row['dayNum']: row for row in cursor.fetchall()}
+        
+        # Get student info
+        cursor.execute("SELECT CONCAT(fName, ' ', lName) AS studentName FROM student WHERE studentID = %s", (student_id,))
+        student_info = cursor.fetchone()
+        student_name = student_info['studentName'] if student_info else 'Unknown'
+        
+        cursor.close()
+        
+        # Combine results
+        days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        results = []
+        
+        for day_num in range(1, 8):
+            assignments = assignment_data.get(day_num, {}).get('totalAssignments', 0)
+            events = event_data.get(day_num, {}).get('totalEvents', 0)
             total = assignments + events
             
             if total <= 1:
-                row['workloadCategory'] = 'Low-intensity'
-                row['suggestedAction'] = 'Good day for rest or catching up'
+                category = 'Low-intensity'
+                suggestion = 'Good day for rest or catching up'
             elif total <= 3:
-                row['workloadCategory'] = 'Moderate'
-                row['suggestedAction'] = 'Normal workload day'
+                category = 'Moderate'
+                suggestion = 'Normal workload day'
             else:
-                row['workloadCategory'] = 'High-intensity'
-                row['suggestedAction'] = 'Heavy day - plan study time carefully'
+                category = 'High-intensity'
+                suggestion = 'Heavy day - plan study time carefully'
+            
+            results.append({
+                'studentID': student_id,
+                'studentName': student_name,
+                'weekday': days[day_num - 1],
+                'dayNum': day_num,
+                'totalAssignments': assignments,
+                'totalEvents': events,
+                'workloadCategory': category,
+                'suggestedAction': suggestion
+            })
         
-        cursor.close()
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-4: Get workload summary for a student
 @workload.route("/workload/summary", methods=["GET"])
 def get_study_summary():
     """Get study summary including study hours and sleep data."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
         
         if not student_id:
@@ -665,9 +678,19 @@ def get_study_summary():
         cursor.execute(query, (student_id,))
         results = cursor.fetchall()
         cursor.close()
+        
+        # Convert datetime objects to strings
+        for row in results:
+            if row.get('periodStart'):
+                row['periodStart'] = str(row['periodStart'])
+            if row.get('periodEnd'):
+                row['periodEnd'] = str(row['periodEnd'])
+            if row.get('GPA'):
+                row['GPA'] = float(row['GPA'])
+        
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
@@ -678,15 +701,13 @@ def get_study_summary():
 events = Blueprint("events", __name__)
 
 
-# Maya-5: Retrieve all personal events (clubs, work shifts, personal)
 @events.route("/events", methods=["GET"])
 def get_events():
     """Get all events for a student, optionally filtered by type."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
-        event_type = request.args.get('type')  # club, work, personal, academic
+        event_type = request.args.get('type')
 
         query = """
             SELECT e.eventID,
@@ -716,14 +737,23 @@ def get_events():
         cursor.execute(query, params)
         results = cursor.fetchall()
         cursor.close()
+        
+        # Convert date/time objects to strings
+        for row in results:
+            if row.get('date'):
+                row['date'] = str(row['date'])
+            if row.get('startTime'):
+                row['startTime'] = str(row['startTime'])
+            if row.get('endTime'):
+                row['endTime'] = str(row['endTime'])
+        
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-5: Add new personal/club/work event
 @events.route("/events", methods=["POST"])
 def add_event():
     """Create a new personal, club, or work event."""
@@ -736,12 +766,10 @@ def add_event():
             if f not in data:
                 return jsonify({"error": f"Missing required field: {f}"}), 400
 
-        # Validate type
         valid_types = ["club", "work", "personal", "academic"]
         if data["type"] not in valid_types:
             return jsonify({"error": f"type must be one of: {', '.join(valid_types)}"}), 400
 
-        # Insert event
         cursor.execute("""
             INSERT INTO event (name, type, date, startTime, endTime, location)
             VALUES (%s, %s, %s, %s, %s, %s)
@@ -756,7 +784,6 @@ def add_event():
 
         event_id = cursor.lastrowid
 
-        # Link event to student
         cursor.execute("""
             INSERT INTO attEvent (studentID, eventID)
             VALUES (%s, %s)
@@ -770,12 +797,11 @@ def add_event():
             "eventID": event_id
         }), 201
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-5: Update event details
 @events.route("/events/<int:event_id>", methods=["PUT"])
 def update_event(event_id):
     """Update an existing event."""
@@ -784,7 +810,6 @@ def update_event(event_id):
         cursor = db.get_db().cursor()
 
         allowed_fields = ["name", "type", "date", "startTime", "endTime", "location"]
-
         update_fields = []
         params = []
 
@@ -798,7 +823,6 @@ def update_event(event_id):
 
         params.append(event_id)
 
-        # Check event exists
         cursor.execute("SELECT * FROM event WHERE eventID = %s", (event_id,))
         if not cursor.fetchone():
             cursor.close()
@@ -814,29 +838,24 @@ def update_event(event_id):
         cursor.close()
         return jsonify({"message": "Event updated successfully"}), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-5: Delete an event
 @events.route("/events/<int:event_id>", methods=["DELETE"])
 def delete_event(event_id):
     """Delete an event from the planner."""
     try:
         cursor = db.get_db().cursor()
 
-        # Check if event exists
         cursor.execute("SELECT * FROM event WHERE eventID = %s", (event_id,))
         if not cursor.fetchone():
             cursor.close()
             return jsonify({"error": "Event not found"}), 404
 
-        # Delete from attEvent first (foreign key constraint)
         cursor.execute("DELETE FROM attEvent WHERE eventID = %s", (event_id,))
-        # Delete from reminder if linked
         cursor.execute("DELETE FROM reminder WHERE eventID = %s", (event_id,))
-        # Delete event
         cursor.execute("DELETE FROM event WHERE eventID = %s", (event_id,))
         
         db.get_db().commit()
@@ -844,7 +863,7 @@ def delete_event(event_id):
 
         return jsonify({"message": "Event deleted successfully"}), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
@@ -855,13 +874,11 @@ def delete_event(event_id):
 courses = Blueprint("courses", __name__)
 
 
-# Maya-6: Retrieve current and planned courses with prerequisite status
 @courses.route("/courses", methods=["GET"])
 def get_courses():
     """Get all courses for a student with prerequisite status."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
 
         query = """
@@ -884,23 +901,29 @@ def get_courses():
         """
 
         if student_id:
-            query += " WHERE s.studentID = %s"
+            query += f" WHERE s.studentID = {int(student_id)}"
             query += " ORDER BY t.startDate, cs.courseCode"
-            cursor.execute(query, (student_id,))
         else:
             query += " ORDER BY s.studentID, t.startDate, cs.courseCode"
-            cursor.execute(query)
-
+        
+        cursor.execute(query)
         results = cursor.fetchall()
         cursor.close()
+        
+        # Convert date objects to strings
+        for row in results:
+            if row.get('termStart'):
+                row['termStart'] = str(row['termStart'])
+            if row.get('termEnd'):
+                row['termEnd'] = str(row['termEnd'])
+        
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-6: Add a course to student's plan
 @courses.route("/courses", methods=["POST"])
 def add_course():
     """Add a course to a student's plan."""
@@ -913,7 +936,6 @@ def add_course():
             if f not in data:
                 return jsonify({"error": f"Missing required field: {f}"}), 400
 
-        # Check if already enrolled
         cursor.execute("""
             SELECT * FROM CourseSelectionStudent
             WHERE studentID = %s AND courseID = %s
@@ -923,7 +945,6 @@ def add_course():
             cursor.close()
             return jsonify({"error": "Student is already enrolled in this course"}), 400
 
-        # Insert course selection
         cursor.execute("""
             INSERT INTO CourseSelectionStudent (studentID, courseID)
             VALUES (%s, %s)
@@ -933,19 +954,17 @@ def add_course():
         cursor.close()
         return jsonify({"message": "Course added to student plan successfully"}), 201
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-6: Remove a course from student's plan
 @courses.route("/courses/<int:student_id>/<int:course_id>", methods=["DELETE"])
 def delete_course(student_id, course_id):
     """Remove a course from a student's plan."""
     try:
         cursor = db.get_db().cursor()
 
-        # Check existence
         cursor.execute("""
             SELECT * FROM CourseSelectionStudent
             WHERE studentID = %s AND courseID = %s
@@ -955,7 +974,6 @@ def delete_course(student_id, course_id):
             cursor.close()
             return jsonify({"error": "Course selection not found"}), 404
 
-        # Delete
         cursor.execute("""
             DELETE FROM CourseSelectionStudent
             WHERE studentID = %s AND courseID = %s
@@ -966,18 +984,16 @@ def delete_course(student_id, course_id):
 
         return jsonify({"message": "Course removed from student plan"}), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 
-# Maya-6: Get available courses (course catalog)
 @courses.route("/courses/catalog", methods=["GET"])
 def get_course_catalog():
     """Get all available courses in the catalog."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
-        
+        cursor = db.get_db().cursor()
         term_id = request.args.get('termID')
         department = request.args.get('department')
 
@@ -1013,8 +1029,18 @@ def get_course_catalog():
         cursor.execute(query, params)
         results = cursor.fetchall()
         cursor.close()
+        
+        # Convert date/time objects to strings
+        for row in results:
+            if row.get('date'):
+                row['date'] = str(row['date'])
+            if row.get('startTime'):
+                row['startTime'] = str(row['startTime'])
+            if row.get('endTime'):
+                row['endTime'] = str(row['endTime'])
+        
         return jsonify(results), 200
 
-    except Error as e:
+    except Exception as e:
         current_app.logger.error(f"Database error: {str(e)}")
         return jsonify({"error": str(e)}), 500

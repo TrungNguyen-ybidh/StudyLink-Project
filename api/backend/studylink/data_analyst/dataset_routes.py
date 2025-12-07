@@ -1,8 +1,6 @@
 """
 Dataset Routes (Persona 1: Jordan Lee)
 Location: api/backend/studylink/data_analyst/dataset_routes.py
-
-Routes for dataset management, uploads, and archiving
 User Stories: 1.3, 1.5
 """
 
@@ -21,7 +19,6 @@ datasets = Blueprint('datasets', __name__)
 def get_all_datasets():
     """
     1.3/1.5 - Retrieve list of all datasets with metadata
-    Supports filtering by category and archive status
     """
     current_app.logger.info('GET /datasets route')
     cursor = db.get_db().cursor()
@@ -37,9 +34,7 @@ def get_all_datasets():
             d.source,
             d.created_at,
             COUNT(DISTINCT u.uploadID) AS total_uploads,
-            COUNT(DISTINCT u.metricID) AS metrics_affected,
-            MIN(u.uploadDate) AS first_upload,
-            MAX(u.uploadDate) AS last_upload
+            COUNT(DISTINCT u.metricID) AS metrics_affected
         FROM dataset d
         LEFT JOIN upload u ON d.dataID = u.dataID
         WHERE 1=1
@@ -51,7 +46,7 @@ def get_all_datasets():
     elif archived == 'false':
         query += " AND d.category NOT LIKE 'ARCHIVED_%%'"
         
-    if category:
+    if category and category != 'All':
         query += " AND (d.category = %s OR d.category = CONCAT('ARCHIVED_', %s))"
         params.extend([category, category])
         
@@ -63,16 +58,13 @@ def get_all_datasets():
     cursor.execute(query, params)
     theData = cursor.fetchall()
     
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+    current_app.logger.info(f'Datasets returned {len(theData)} records')
+    return make_response(jsonify(theData), 200)
 
 
 @datasets.route('/datasets/<int:data_id>', methods=['GET'])
 def get_dataset(data_id):
-    """
-    Get a specific dataset by ID
-    """
+    """Get a specific dataset by ID"""
     current_app.logger.info(f'GET /datasets/{data_id} route')
     cursor = db.get_db().cursor()
     
@@ -93,30 +85,21 @@ def get_dataset(data_id):
     theData = cursor.fetchone()
     
     if not theData:
-        response = make_response(jsonify({"error": "Dataset not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Dataset not found"}), 404)
     
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+    return make_response(jsonify(theData), 200)
 
 
 @datasets.route('/datasets', methods=['POST'])
 def create_dataset():
-    """
-    1.3 - Create a new dataset record when uploading a new CSV file
-    """
+    """1.3 - Create a new dataset record"""
     current_app.logger.info('POST /datasets route')
     
     data = request.json
     current_app.logger.info(f'Received data: {data}')
     
-    # Validate required fields
     if not data or 'name' not in data or 'category' not in data:
-        response = make_response(jsonify({"error": "Missing required fields: name, category"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "Missing required fields: name, category"}), 400)
     
     name = data['name']
     category = data['category']
@@ -132,29 +115,20 @@ def create_dataset():
     db.get_db().commit()
     
     new_id = cursor.lastrowid
-    
-    response = make_response(jsonify({"message": "Dataset created", "dataID": new_id}))
-    response.status_code = 201
-    return response
+    return make_response(jsonify({"message": "Dataset created", "dataID": new_id}), 201)
 
 
 @datasets.route('/datasets/<int:data_id>', methods=['PUT'])
 def update_dataset(data_id):
-    """
-    1.5 - Update dataset metadata
-    """
+    """1.5 - Update dataset metadata"""
     current_app.logger.info(f'PUT /datasets/{data_id} route')
     
     data = request.json
-    
     if not data:
-        response = make_response(jsonify({"error": "No data provided"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "No data provided"}), 400)
     
     cursor = db.get_db().cursor()
     
-    # Build dynamic update query
     updates = []
     params = []
     
@@ -169,9 +143,7 @@ def update_dataset(data_id):
         params.append(data['source'])
         
     if not updates:
-        response = make_response(jsonify({"error": "No valid fields to update"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "No valid fields to update"}), 400)
         
     params.append(data_id)
     query = f"UPDATE dataset SET {', '.join(updates)} WHERE dataID = %s"
@@ -180,20 +152,14 @@ def update_dataset(data_id):
     db.get_db().commit()
     
     if cursor.rowcount == 0:
-        response = make_response(jsonify({"error": "Dataset not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Dataset not found"}), 404)
     
-    response = make_response(jsonify({"message": "Dataset updated"}))
-    response.status_code = 200
-    return response
+    return make_response(jsonify({"message": "Dataset updated"}), 200)
 
 
 @datasets.route('/datasets/<int:data_id>/archive', methods=['PUT'])
 def archive_dataset(data_id):
-    """
-    1.5 - Archive a dataset by updating its category and name
-    """
+    """1.5 - Archive a dataset"""
     current_app.logger.info(f'PUT /datasets/{data_id}/archive route')
     cursor = db.get_db().cursor()
     
@@ -208,46 +174,30 @@ def archive_dataset(data_id):
     db.get_db().commit()
     
     if cursor.rowcount == 0:
-        response = make_response(jsonify({"error": "Dataset not found or already archived"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Dataset not found or already archived"}), 404)
     
-    response = make_response(jsonify({"message": "Dataset archived"}))
-    response.status_code = 200
-    return response
+    return make_response(jsonify({"message": "Dataset archived"}), 200)
 
 
 @datasets.route('/datasets/<int:data_id>', methods=['DELETE'])
 def delete_dataset(data_id):
-    """
-    1.5 - Permanently remove archived datasets
-    """
+    """1.5 - Permanently remove archived datasets"""
     current_app.logger.info(f'DELETE /datasets/{data_id} route')
     cursor = db.get_db().cursor()
     
-    # First check if it exists and is archived
-    check_query = "SELECT category FROM dataset WHERE dataID = %s"
-    cursor.execute(check_query, (data_id,))
+    cursor.execute("SELECT category FROM dataset WHERE dataID = %s", (data_id,))
     result = cursor.fetchone()
     
     if not result:
-        response = make_response(jsonify({"error": "Dataset not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Dataset not found"}), 404)
         
-    # Only allow deletion of archived datasets
     if not result['category'].startswith('ARCHIVED_'):
-        response = make_response(jsonify({"error": "Only archived datasets can be deleted. Archive first."}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "Only archived datasets can be deleted. Archive first."}), 400)
     
-    delete_query = "DELETE FROM dataset WHERE dataID = %s"
-    cursor.execute(delete_query, (data_id,))
+    cursor.execute("DELETE FROM dataset WHERE dataID = %s", (data_id,))
     db.get_db().commit()
     
-    response = make_response(jsonify({"message": "Dataset deleted"}))
-    response.status_code = 200
-    return response
+    return make_response(jsonify({"message": "Dataset deleted"}), 200)
 
 
 # ============================================================================
@@ -256,9 +206,7 @@ def delete_dataset(data_id):
 
 @datasets.route('/datasets/<int:data_id>/uploads', methods=['GET'])
 def get_dataset_uploads(data_id):
-    """
-    1.3 - Retrieve all upload records for a specific dataset
-    """
+    """1.3 - Retrieve all upload records for a specific dataset"""
     current_app.logger.info(f'GET /datasets/{data_id}/uploads route')
     cursor = db.get_db().cursor()
     
@@ -279,34 +227,24 @@ def get_dataset_uploads(data_id):
     cursor.execute(query, (data_id,))
     theData = cursor.fetchall()
     
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+    return make_response(jsonify(theData), 200)
 
 
 @datasets.route('/datasets/<int:data_id>/uploads', methods=['POST'])
 def create_upload(data_id):
-    """
-    1.3 - Create new upload records linking a dataset to metrics
-    """
+    """1.3 - Create new upload records"""
     current_app.logger.info(f'POST /datasets/{data_id}/uploads route')
     
     data = request.json
     
     if not data or 'metricID' not in data or 'filePath' not in data:
-        response = make_response(jsonify({"error": "Missing required fields: metricID, filePath"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "Missing required fields: metricID, filePath"}), 400)
     
     cursor = db.get_db().cursor()
     
-    # Verify dataset exists
-    check_query = "SELECT dataID FROM dataset WHERE dataID = %s"
-    cursor.execute(check_query, (data_id,))
+    cursor.execute("SELECT dataID FROM dataset WHERE dataID = %s", (data_id,))
     if not cursor.fetchone():
-        response = make_response(jsonify({"error": "Dataset not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Dataset not found"}), 404)
     
     query = '''
         INSERT INTO upload (dataID, metricID, filePath, uploadDate)
@@ -316,7 +254,4 @@ def create_upload(data_id):
     db.get_db().commit()
     
     new_id = cursor.lastrowid
-    
-    response = make_response(jsonify({"message": "Upload created", "uploadID": new_id}))
-    response.status_code = 201
-    return response
+    return make_response(jsonify({"message": "Upload created", "uploadID": new_id}), 201)
