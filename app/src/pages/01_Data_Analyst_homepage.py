@@ -21,7 +21,7 @@ if st.session_state.get('role') != 'Data Analyst':
     st.stop()
 
 # API base URL
-API_BASE = "http://web-api:8501"
+API_BASE = "http://web-api:4000"
 
 # Header with custom styling
 st.markdown("""
