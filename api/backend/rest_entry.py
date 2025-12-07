@@ -74,6 +74,10 @@ def create_app():
     app.config["MYSQL_DATABASE_PORT"] = int(get_env_var("DB_PORT"))
     app.config["MYSQL_DATABASE_DB"] = get_env_var("DB_NAME")
 
+    # DEBUG: Print what we're actually using
+    app.logger.info(f"DB_HOST = {app.config['MYSQL_DATABASE_HOST']}")
+    app.logger.info(f"DB_PORT = {app.config['MYSQL_DATABASE_PORT']}")
+
     # Initialize the database
     app.logger.info("current_app(): starting the database connection")
     db.init_app(app)
