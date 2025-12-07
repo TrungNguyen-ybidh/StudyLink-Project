@@ -7,7 +7,7 @@ from flask import current_app
 # ============================================
 # CALENDAR BLUEPRINT - Maya User Story 1
 # ============================================
-calendar = Blueprint("calendar", __name__)
+calendar = Blueprint("calendar", __name__, url_prefix="/student")
 
 
 # Maya-1: Return all assignments, exams, and projects with due dates and times for each student
