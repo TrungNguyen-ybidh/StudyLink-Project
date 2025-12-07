@@ -8,7 +8,7 @@ from modules.nav import SideBarLinks
 st.set_page_config(page_title="Reminders", page_icon="🔔", layout="wide")
 SideBarLinks()
 
-API = "http://localhost:8501/reminder"   
+API = "http://localhost:4000/reminder"  
 
 
 # AUTH CHECK

@@ -22,8 +22,8 @@ if st.session_state.get("role") != "Student":
     st.warning("Access denied — Students only.")
     st.stop()
 
-API_WORKLOAD = "http://localhost:8501/workload"
-API_SUMMARY = "http://localhost:8501/workload/summary"
+API_WORKLOAD = "http://localhost:4000/workload"
+API_SUMMARY = "http://localhost:4000/workload/summary"
 
 
 # FETCH FUNCTIONS

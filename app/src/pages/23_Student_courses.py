@@ -12,7 +12,7 @@ st.set_page_config(
 
 SideBarLinks()
 
-API = "http://localhost:8501/courses"    
+API = "http://localhost:4000/courses"    
 
 # Auth checks
 if not st.session_state.get("authenticated", False):

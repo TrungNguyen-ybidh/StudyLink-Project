@@ -14,7 +14,7 @@ st.set_page_config(
 
 SideBarLinks()
 
-API = "http://localhost:8501/events"
+API = "http://localhost:4000/events"
 
 
 # AUTH CHECK
