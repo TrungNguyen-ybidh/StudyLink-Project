@@ -473,11 +473,13 @@ else:
 
             
             if st.button("Login as Student", type="primary", key="student_btn", use_container_width=True):
-                ss.authenticated = True
-                ss.role = "Student"
-                ss.user_name = selected_student
-                ss.user_email = student_users[selected_student]
-                st.switch_page('pages/19_Student_homepage.py')
+                st.session_state.authenticated = True
+                st.session_state.role = "Student"
+                st.session_state.user_name = selected_student
+                st.session_state.user_email = student_users[selected_student]["email"]
+                st.session_state.studentID = student_users[selected_student]["studentID"]  
+                st.switch_page("pages/19_Student_homepage.py")
+
     
     with role_col2:
         with st.container(border=True):
