@@ -64,6 +64,7 @@ def delete_item(item_type, item_id):
 
 # LOAD DATA
 calendar_items = fetch_calendar(student_id)
+st.write("DEBUG calendar_items:", calendar_items)
 
 
 # ======================================================
