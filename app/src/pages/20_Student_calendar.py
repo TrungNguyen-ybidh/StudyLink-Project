@@ -80,7 +80,7 @@ events_by_day = {i: [] for i in range(7)}  # Always initialize
 if calendar_items:
     for item in calendar_items:
         try:
-            d = dt.datetime.strptime(item["dueDate"], "%Y-%m-%d").date()
+            d = dt.datetime.fromisoformat(str(item["dueDate"])).date()
         except:
             continue
 
