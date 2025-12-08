@@ -71,7 +71,7 @@ students = result["data"]
 
 
 # PAGE HEADER
-st.title(f"👥 My Students — {advisor_name}")
+st.title(f"My Students — {advisor_name}")
 st.write("View and manage students assigned to you.")
 
 st.divider()
@@ -148,7 +148,7 @@ st.divider()
 # ============================================
 # DISPLAY STUDENTS
 # ============================================
-st.subheader("📋 Student List")
+st.subheader("Student List")
 
 if not filtered_students:
     st.info("No students found matching your filters.")

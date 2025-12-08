@@ -113,7 +113,7 @@ st.divider()
 # ============================================
 # DISPLAY REPORTS
 # ============================================
-st.subheader("📋 All Reports")
+st.subheader("All Reports")
 
 # Filter options
 col1, col2 = st.columns(2)
@@ -203,7 +203,7 @@ else:
                         st.session_state["edit_report_data"] = report
                         st.rerun()
                 with btn_col2:
-                    if st.button("🗑️", key=f"delete_{report_id}", help="Delete report"):
+                    if st.button("Delete", key=f"delete_{report_id}", help="Delete report"):
                         res = delete_report(report_id)
                         if res.status_code == 200:
                             st.success("Report deleted!")
@@ -238,9 +238,9 @@ if "edit_report_id" in st.session_state:
         
         col1, col2 = st.columns(2)
         with col1:
-            save_btn = st.form_submit_button("💾 Save Changes", type="primary")
+            save_btn = st.form_submit_button("Save Changes", type="primary")
         with col2:
-            cancel_btn = st.form_submit_button("❌ Cancel")
+            cancel_btn = st.form_submit_button("Cancel")
         
         if save_btn:
             payload = {
@@ -271,7 +271,7 @@ if "edit_report_id" in st.session_state:
 # ============================================
 # CREATE NEW REPORT
 # ============================================
-st.subheader("➕ Create New Report")
+st.subheader("Create New Report")
 
 with st.form("create_report_form"):
     # Student selection
@@ -299,7 +299,7 @@ with st.form("create_report_form"):
         height=150
     )
     
-    submitted = st.form_submit_button("📝 Create Report", type="primary")
+    submitted = st.form_submit_button("Create Report", type="primary")
     
     if submitted:
         if not new_desc:

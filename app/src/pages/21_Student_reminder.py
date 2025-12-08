@@ -24,7 +24,7 @@ student_id = st.session_state.get("studentID", 1)
 student_name = st.session_state.get("name", "Student")
 
 # HEADER
-st.title(f"🔔 Reminders for {student_name}")
+st.title(f"Reminders for {student_name}")
 st.write("Stay on top of deadlines and upcoming events!")
 
 
@@ -81,7 +81,7 @@ st.divider()
 # ============================================
 # DISPLAY REMINDERS
 # ============================================
-st.subheader("📋 Active Reminders")
+st.subheader("Active Reminders")
 
 if not reminders:
     st.info("No upcoming reminders. Add one below!")
@@ -110,10 +110,10 @@ else:
         linked_to = ""
         linked_date = ""
         if r.get('assignmentTitle'):
-            linked_to = f"📝 {r['assignmentTitle']}"
+            linked_to = f"{r['assignmentTitle']}"
             linked_date = r.get('assignmentDate', '')
         elif r.get('eventName'):
-            linked_to = f"📅 {r['eventName']}"
+            linked_to = f"{r['eventName']}"
             linked_date = r.get('eventDate', '')
         
         with st.container():
@@ -130,8 +130,8 @@ else:
                         <strong style="font-size:16px;">{status_icon} {message}</strong>
                     </div>
                     <div style="margin-top:8px; color:#666;">
-                        <span>📆 Reminder: {reminder_date}</span>
-                        <span style="margin-left:15px;">⏰ {str(reminder_time)[:5] if reminder_time else 'N/A'}</span>
+                        <span>Reminder: {reminder_date}</span>
+                        <span style="margin-left:15px;">{str(reminder_time)[:5] if reminder_time else 'N/A'}</span>
                     </div>
                     <div style="margin-top:5px; color:#888; font-size:13px;">
                         Linked to: {linked_to or 'Not linked'} {f'(Due: {linked_date})' if linked_date else ''}
@@ -148,7 +148,7 @@ else:
                         st.session_state["edit_reminder_data"] = r
                         st.rerun()
                 with btn_col2:
-                    if st.button("🗑️", key=f"delete_{reminder_id}", help="Delete reminder"):
+                    if st.button("Delete", key=f"delete_{reminder_id}", help="Delete reminder"):
                         res = delete_reminder(reminder_id)
                         if res.status_code == 200:
                             st.success("Reminder deleted!")
@@ -195,9 +195,9 @@ if "edit_reminder_id" in st.session_state:
         
         col1, col2 = st.columns(2)
         with col1:
-            save_btn = st.form_submit_button("💾 Save Changes", type="primary")
+            save_btn = st.form_submit_button("Save Changes", type="primary")
         with col2:
-            cancel_btn = st.form_submit_button("❌ Cancel")
+            cancel_btn = st.form_submit_button("Cancel")
         
         if save_btn:
             payload = {
@@ -229,7 +229,7 @@ if "edit_reminder_id" in st.session_state:
 # ============================================
 # ADD NEW REMINDER
 # ============================================
-st.subheader("➕ Add New Reminder")
+st.subheader("Add New Reminder")
 
 with st.form("add_reminder_form"):
     message = st.text_input("Reminder Message", placeholder="e.g., Study for midterm exam")
@@ -269,7 +269,7 @@ with st.form("add_reminder_form"):
             st.warning("No events found. Create one in the Calendar or Events page first, or enter ID manually.")
             event_id = st.number_input("Event ID:", min_value=1, step=1, key="manual_event_id")
     
-    submitted = st.form_submit_button("➕ Add Reminder", type="primary")
+    submitted = st.form_submit_button("Add Reminder", type="primary")
     
     if submitted:
         # Validation

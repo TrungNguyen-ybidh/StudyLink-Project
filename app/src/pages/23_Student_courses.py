@@ -68,7 +68,7 @@ enrolled_course_ids = [c.get('courseID') for c in student_courses]
 
 
 # PAGE HEADER
-st.title(f"📘 Course Management for {student_name}")
+st.title(f"Course Management for {student_name}")
 st.write("View enrolled courses, add new ones, or remove them from your plan.")
 
 st.divider()
@@ -110,7 +110,7 @@ else:
         terms[term].append(c)
     
     for term_name, courses in terms.items():
-        st.markdown(f"#### 📅 {term_name}")
+        st.markdown(f"#### {term_name}")
         
         for c in courses:
             course_id = c.get('courseID')
@@ -143,7 +143,7 @@ else:
                             <div>
                                 <h4 style="margin:0; color:#333;">{course_code} - {course_name}</h4>
                                 <p style="margin:5px 0; color:#666; font-size:14px;">
-                                    🏛️ {department} • 📊 {credits} credits
+                                    {department} • {credits} credits
                                 </p>
                                 <p style="margin:0; color:#888; font-size:13px;">
                                     👨‍🏫 {instructor} • 📍 {location}
@@ -155,7 +155,7 @@ else:
                 
                 with col2:
                     st.write("")  # Spacing
-                    if st.button("🗑️ Drop", key=f"drop_{course_id}", help="Remove from your courses"):
+                    if st.button("Drop", key=f"drop_{course_id}", help="Remove from your courses"):
                         res = remove_course(student_id, course_id)
                         if res.status_code == 200:
                             st.success(f"Dropped {course_code}!")
@@ -172,7 +172,7 @@ st.divider()
 # ============================================
 # ADD COURSES FROM CATALOG
 # ============================================
-st.subheader("➕ Add Course from Catalog")
+st.subheader("Add Course from Catalog")
 
 if not catalog:
     st.info("No courses available in the catalog.")
@@ -228,7 +228,7 @@ else:
                     """, unsafe_allow_html=True)
                 
                 with col2:
-                    if st.button("➕ Add", key=f"add_{course_id}", type="primary"):
+                    if st.button("Add", key=f"add_{course_id}", type="primary"):
                         res = add_course(student_id, course_id)
                         if res.status_code == 201:
                             st.success(f"Added {course_code}!")

@@ -22,7 +22,7 @@ if st.session_state.get("role") != "Student":
 
 student_id = st.session_state.get("studentID")
 student_name = st.session_state.get("studentName", "Student")
-st.title(f"📅 Calendar for {student_name}")
+st.title(f"Calendar for {student_name}")
 
 # COLORS for different assignment types
 COLOR_MAP = {
@@ -72,7 +72,7 @@ calendar_items = fetch_calendar(student_id)
 # ============================================
 # WEEKLY GRID VIEW
 # ============================================
-st.markdown("### 📅 Weekly Calendar View")
+st.markdown("### Weekly Calendar View")
 
 today = dt.date.today()
 monday = today - dt.timedelta(days=today.weekday())
@@ -138,7 +138,7 @@ st.divider()
 # ============================================
 # LIST VIEW OF ALL ITEMS
 # ============================================
-st.markdown("### 📋 All Calendar Items")
+st.markdown("### All Calendar Items")
 
 if not calendar_items:
     st.info("No calendar items found.")
@@ -171,7 +171,6 @@ else:
         with st.container():
             col1, col2, col3 = st.columns([5, 2, 1])
             with col1:
-                icon = "📝" if item_type == "assignment" else "📅"
                 st.markdown(f"""
                 <div style="border-left:4px solid {color}; padding-left:10px;">
                     <strong>{icon} {title}</strong><br>
@@ -185,7 +184,7 @@ else:
             with col2:
                 st.caption(f"Type: {item.get('assignmentType', 'N/A')}")
             with col3:
-                if st.button("🗑️", key=f"del_{item_type}_{item_id}"):
+                if st.button("Delete", key=f"del_{item_type}_{item_id}"):
                     res = delete_item(item_type, item_id)
                     if res.status_code == 200:
                         st.success("Deleted!")
@@ -201,7 +200,7 @@ st.divider()
 # ============================================
 # ADD NEW ITEM
 # ============================================
-st.markdown("### ➕ Add New Item")
+st.markdown("### Add New Item")
 
 tab1, tab2 = st.tabs(["Add Event", "Add Assignment"])
 

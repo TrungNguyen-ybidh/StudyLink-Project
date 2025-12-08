@@ -102,7 +102,7 @@ def get_event_style(event_type):
 
 
 # PAGE HEADER
-st.title(f"🎭 Events for {student_name}")
+st.title(f"Events for {student_name}")
 st.write("Manage your personal, club, work, and academic events.")
 
 st.divider()
@@ -135,7 +135,7 @@ st.divider()
 # ============================================
 # DISPLAY EVENTS
 # ============================================
-st.subheader("📋 Your Events")
+st.subheader("Your Events")
 
 # Filter options
 col1, col2 = st.columns(2)
@@ -191,9 +191,9 @@ else:
                         <div>
                             <h4 style="margin:0; color:#333;">{event_name}</h4>
                             <p style="margin:5px 0 0 0; color:#666; font-size:13px;">
-                                📆 {event_date} • ⏰ {str(event_start)[:5] if event_start else 'TBA'}
+                                {event_date} • {str(event_start)[:5] if event_start else 'TBA'}
                                 {f" - {str(event_end)[:5]}" if event_end else ""}
-                                {f" • 📍 {event_location}" if event_location else ""}
+                                {f" • {event_location}" if event_location else ""}
                             </p>
                         </div>
                     </div>
@@ -219,7 +219,7 @@ else:
                         st.session_state["edit_event_data"] = event
                         st.rerun()
                 with btn_col2:
-                    if st.button("🗑️", key=f"delete_{event_id}", help="Delete event"):
+                    if st.button("Delete", key=f"delete_{event_id}", help="Delete event"):
                         res = delete_event(event_id)
                         if res.status_code == 200:
                             st.success("Event deleted!")
@@ -262,9 +262,9 @@ if "edit_event_id" in st.session_state:
         
         col1, col2 = st.columns(2)
         with col1:
-            save_btn = st.form_submit_button("💾 Save Changes", type="primary")
+            save_btn = st.form_submit_button("Save Changes", type="primary")
         with col2:
-            cancel_btn = st.form_submit_button("❌ Cancel")
+            cancel_btn = st.form_submit_button("Cancel")
         
         if save_btn:
             payload = {
@@ -298,7 +298,7 @@ if "edit_event_id" in st.session_state:
 # ============================================
 # ADD NEW EVENT
 # ============================================
-st.subheader("➕ Add New Event")
+st.subheader("Add New Event")
 
 with st.form("add_event_form"):
     name = st.text_input("Event Name", placeholder="e.g., Team Meeting, Study Group, Gym")
@@ -316,7 +316,7 @@ with st.form("add_event_form"):
         location = st.text_input("Location (optional)", placeholder="e.g., Room 101, Online")
         end_time = st.time_input("End Time (optional)", value=time(10, 0))
     
-    submitted = st.form_submit_button("➕ Create Event", type="primary")
+    submitted = st.form_submit_button("Create Event", type="primary")
     
     if submitted:
         if not name:

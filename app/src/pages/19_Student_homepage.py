@@ -29,7 +29,7 @@ student_id = st.session_state.get('studentID', 1)
 student_name = st.session_state.get('name', 'Student')
 
 # Page Content
-st.title("🎓 Student Dashboard")
+st.title("Student Dashboard")
 st.subheader(f"Welcome back, {student_name}!")
 
 st.write("Use this dashboard to manage your assignments, reminders, events, grades, and workload insights.")
@@ -37,7 +37,7 @@ st.write("Use this dashboard to manage your assignments, reminders, events, grad
 st.divider()
 
 # Quick Stats Section
-st.subheader("📊 Quick Overview")
+st.subheader("Quick Overview")
 
 API_BASE = "http://web-api:4000"  # Use Docker service name
 
@@ -82,47 +82,46 @@ except Exception as e:
 st.divider()
 
 # Quick Navigation Buttons
-st.subheader("🚀 Quick Navigation")
+st.subheader("Quick Navigation")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    if st.button("📅 View Calendar", use_container_width=True):
+    if st.button("View Calendar", use_container_width=True):
         st.switch_page("pages/20_Student_calendar.py")
 
-    if st.button("⏰ Reminders", use_container_width=True):
+    if st.button("Reminders", use_container_width=True):
         st.switch_page("pages/21_Student_reminder.py")
 
 with col2:
-    if st.button("📊 Grades", use_container_width=True):
+    if st.button("Grades", use_container_width=True):
         st.switch_page("pages/22_Student_grades.py")
 
-    if st.button("📘 Courses", use_container_width=True):
+    if st.button("Courses", use_container_width=True):
         st.switch_page("pages/23_Student_courses.py")
 
 with col3:
-    if st.button("🎭 Events", use_container_width=True):
+    if st.button("Events", use_container_width=True):
         st.switch_page("pages/24_Student_events.py")
 
-    if st.button("📈 Workload Insights", use_container_width=True):
+    if st.button("Workload Insights", use_container_width=True):
         st.switch_page("pages/25_Student_workload.py")
 
 st.divider()
 
 # Recent Activity Preview
-st.subheader("📋 Recent Calendar Items")
+st.subheader("Recent Calendar Items")
 
 try:
     if calendar_items:
         for item in calendar_items[:5]:  # Show first 5 items
-            item_type = "📝" if item.get('itemType') == 'assignment' else "📅"
             title = item.get('assignmentTitle', 'Unknown')
             due_date = item.get('dueDate', 'N/A')
             status = item.get('status', '')
             
             st.markdown(f"""
             <div style="padding:10px; border-radius:8px; background:#f8f9fa; margin-bottom:8px; border-left:4px solid #3498db;">
-                <strong>{item_type} {title}</strong><br>
+                <strong>{title}</strong><br>
                 <span style="color:#666;">Due: {due_date} {f'• Status: {status}' if status else ''}</span>
             </div>
             """, unsafe_allow_html=True)

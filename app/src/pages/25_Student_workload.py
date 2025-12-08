@@ -58,7 +58,7 @@ summary = fetch_summary(student_id)
 
 
 # PAGE HEADER
-st.title(f"📈 Workload Analysis for {student_name}")
+st.title(f"Workload Analysis for {student_name}")
 st.write("Understand your weekly workload and study patterns to plan better.")
 
 st.divider()
@@ -67,7 +67,7 @@ st.divider()
 # ============================================
 # WEEKLY WORKLOAD OVERVIEW
 # ============================================
-st.subheader("📅 This Week's Workload Forecast")
+st.subheader("This Week's Workload Forecast")
 
 # Workload intensity colors
 INTENSITY_STYLES = {
@@ -99,7 +99,7 @@ else:
     st.write("")
     
     # Weekly grid view
-    st.markdown("#### 📊 Daily Breakdown")
+    st.markdown("#### Daily Breakdown")
     
     # Create 7 columns for days
     cols = st.columns(7)
@@ -124,8 +124,8 @@ else:
                     <h4 style="margin:0; color:#333;">{weekday[:3]}</h4>
                     <div style="font-size:30px; margin:10px 0;">{style['emoji']}</div>
                     <p style="margin:5px 0; font-size:13px; color:#666;">
-                        📝 {assignments} assignments<br>
-                        📅 {events} events
+                        {assignments} assignments<br>
+                        {events} events
                     </p>
                     <span style="background:{style['color']}; color:{'#333' if category != 'High-intensity' else '#fff'}; 
                                 padding:3px 8px; border-radius:10px; font-size:11px;">
@@ -137,7 +137,7 @@ else:
     st.write("")
     
     # Detailed daily breakdown
-    st.markdown("#### 📋 Detailed Daily View")
+    st.markdown("#### Detailed Daily View")
     
     for day_data in sorted_workload:
         weekday = day_data.get('weekday', 'Unknown')
@@ -175,7 +175,7 @@ else:
                         {category}
                     </span>
                     <p style="margin:10px 0 0 0; color:#888; font-size:12px; font-style:italic;">
-                        💡 {suggestion}
+                        {suggestion}
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -186,7 +186,7 @@ st.divider()
 # ============================================
 # STUDY SUMMARY HISTORY
 # ============================================
-st.subheader("📘 Study Summary History")
+st.subheader("Study Summary History")
 
 if not summary:
     st.info("No study summary data available yet.")
@@ -195,7 +195,7 @@ else:
     if len(summary) > 0:
         latest = summary[0]
         
-        st.markdown("#### 📊 Latest Period Summary")
+        st.markdown("#### Latest Period Summary")
         
         col1, col2, col3, col4 = st.columns(4)
         
@@ -215,7 +215,7 @@ else:
         st.write("")
     
     # Historical data
-    st.markdown("#### 📈 Historical Summary")
+    st.markdown("#### Historical Summary")
     
     for s in summary:
         period_start = s.get('periodStart', 'N/A')
@@ -241,7 +241,7 @@ else:
                         border-left:4px solid {color}; margin-bottom:10px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <strong style="font-size:14px;">📆 {str(period_start)[:10]} → {str(period_end)[:10]}</strong>
+                        <strong style="font-size:14px;">{str(period_start)[:10]} → {str(period_end)[:10]}</strong>
                     </div>
                     <div style="text-align:right;">
                         <span style="background:{color}; color:white; padding:3px 10px; border-radius:10px; font-size:12px;">
@@ -250,9 +250,9 @@ else:
                     </div>
                 </div>
                 <div style="margin-top:10px; display:flex; gap:30px; color:#666; font-size:13px;">
-                    <span>📚 Total: {total_hrs:.1f} hrs</span>
-                    <span>😴 Sleep: {avg_sleep:.1f} hrs</span>
-                    <span>🎓 GPA: {gpa:.2f}</span>
+                    <span>Total: {total_hrs:.1f} hrs</span>
+                    <span>Sleep: {avg_sleep:.1f} hrs</span>
+                    <span>GPA: {gpa:.2f}</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -263,38 +263,38 @@ st.divider()
 # ============================================
 # TIPS SECTION
 # ============================================
-st.subheader("💡 Productivity Tips")
+st.subheader("Productivity Tips")
 
 with st.expander("View Study Tips"):
     st.markdown("""
     ### Based on your workload analysis:
     
     **For High-Intensity Days:**
-    - 🎯 Prioritize the most important tasks first
-    - ⏰ Use the Pomodoro technique (25 min work, 5 min break)
-    - 📵 Minimize distractions during study blocks
-    - 🍎 Stay hydrated and take short walks
+    - Prioritize the most important tasks first
+    - Use the Pomodoro technique (25 min work, 5 min break)
+    - Minimize distractions during study blocks
+    - Stay hydrated and take short walks
     
     **For Moderate Days:**
-    - 📝 Review and organize notes from recent classes
-    - 📚 Start on upcoming assignments to stay ahead
-    - 🤝 Schedule study groups or office hours
+    - Review and organize notes from recent classes
+    - Start on upcoming assignments to stay ahead
+    - Schedule study groups or office hours
     
     **For Low-Intensity Days:**
-    - 😴 Catch up on rest if needed
-    - 📖 Do light review or reading
-    - 🎯 Plan ahead for busy days coming up
-    - 🏃 Exercise and self-care activities
+    - Catch up on rest if needed
+    - Do light review or reading
+    - Plan ahead for busy days coming up
+    - Exercise and self-care activities
     
     **General Tips:**
-    - 🛏️ Aim for 7-8 hours of sleep
-    - 📅 Review your calendar every morning
-    - ✅ Break large tasks into smaller chunks
-    - 🏆 Celebrate completing difficult tasks
+    - Aim for 7-8 hours of sleep
+    - Review your calendar every morning
+    - Break large tasks into smaller chunks
+    - Celebrate completing difficult tasks
     """)
 
 # Refresh button
 st.divider()
-if st.button("🔄 Refresh Workload Data"):
+if st.button("Refresh Workload Data"):
     st.cache_data.clear()
     st.rerun()

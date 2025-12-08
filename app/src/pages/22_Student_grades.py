@@ -24,7 +24,7 @@ student_id = st.session_state.get("studentID", 1)
 student_name = st.session_state.get("name", "Student")
 
 # HEADER
-st.title(f"📊 Grades Overview for {student_name}")
+st.title(f"Grades Overview for {student_name}")
 st.write("Track your grades, assignment progress, and estimated GPA.")
 
 
@@ -76,7 +76,7 @@ st.divider()
 # ============================================
 # OVERALL STATS
 # ============================================
-st.subheader("📈 Overall Performance")
+st.subheader("Overall Performance")
 
 if grades:
     df = pd.DataFrame(grades)
@@ -199,7 +199,7 @@ st.divider()
 # ============================================
 # DETAILED GRADES TABLE
 # ============================================
-st.subheader("📝 All Assignment Grades")
+st.subheader("All Assignment Grades")
 
 if not grades:
     st.info("No grade data found.")

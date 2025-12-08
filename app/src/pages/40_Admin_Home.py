@@ -61,7 +61,7 @@ st.markdown(
 st.divider()
 
 # Quick Stats
-st.subheader("📊 System Overview")
+st.subheader("System Overview")
 
 col1, col2, col3, col4 = st.columns(4)
 
