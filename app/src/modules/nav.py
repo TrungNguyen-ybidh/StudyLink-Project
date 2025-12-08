@@ -9,7 +9,12 @@ def SideBarLinks(show_home=True):
     Call this function at the top of each page to display consistent navigation.
     """
     
-    st.sidebar.markdown("## 📚 StudyLink")
+    # Display logo in sidebar
+    try:
+        st.sidebar.image("assets/logo.png", use_container_width=True)
+    except FileNotFoundError:
+        # Fallback if logo not found
+        st.sidebar.markdown("## 📚 StudyLink")
     
     # Home link
     if show_home:
@@ -40,10 +45,13 @@ def SideBarLinks(show_home=True):
     
     elif role == 'Student':
         st.sidebar.markdown("### 🎓 Student Portal")
-        st.sidebar.page_link("pages/10_Student_Home.py", label="🏠 Student Home")
-        st.sidebar.page_link("pages/11_Calendar.py", label="📅 Calendar")
-        st.sidebar.page_link("pages/12_Grades.py", label="📝 Grades")
-        st.sidebar.page_link("pages/13_Study_Plan.py", label="📚 Study Plan")
+        st.sidebar.page_link("pages/19_Student_homepage.py", label="🏠 Student Home")
+        st.sidebar.page_link("pages/20_Student_calendar.py", label="📅 Calendar")
+        st.sidebar.page_link("pages/21_Student_reminder.py", label="⏰ Reminder")
+        st.sidebar.page_link("pages/22_Student_grades.py", label="📊 Grades")
+        st.sidebar.page_link("pages/23_Student_courses.py", label="📝 Courses")
+        st.sidebar.page_link("pages/24_Student_events.py", label="🎭 Events")
+        st.sidebar.page_link("pages/25_Student_workload.py", label="📈 Workload")
     
     elif role == 'Advisor':
         st.sidebar.markdown("### 👨‍🏫 Advisor Portal")
@@ -69,7 +77,12 @@ def HomeNav():
     """
     Simple navigation for home page - just shows login options.
     """
-    st.sidebar.markdown("## 📚 StudyLink")
+    # Display logo in sidebar
+    try:
+        st.sidebar.image("assets/logo.png", use_container_width=True)
+    except FileNotFoundError:
+        # Fallback if logo not found
+        st.sidebar.markdown("## 📚 StudyLink")
     st.sidebar.markdown("Please select a role to login.")
 
 

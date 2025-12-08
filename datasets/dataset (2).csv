@@ -1,0 +1,11 @@
+name,category,source
+Stress Data,wellness,wearable_device
+Sleep Data,academic,self_reported
+Study Data,wellness,wearable_device
+Study Data,engagement,self_reported
+Stress Data,engagement,self_reported
+Study Data,academic,self_reported
+Sleep Data,engagement,student_upload
+Sleep Data,wellness,self_reported
+Sleep Data,metrics,student_upload
+Sleep Data,academic,student_upload

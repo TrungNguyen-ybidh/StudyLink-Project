@@ -1,5 +1,6 @@
 """
 Routes for metric data management, corrections, and error tracking
+Location: api/backend/studylink/data_analyst/metric_routes.py
 User Stories: 1.1, 1.2, 1.3, 1.4
 """
 
@@ -18,16 +19,13 @@ metrics = Blueprint('metrics', __name__)
 def get_metrics():
     """
     1.1/1.2 - Retrieve metric data with optional filtering
-    Supports filtering by studentID, category, metricType, date range
     """
-    current_app.logger.info('GET /metrics route')
+    current_app.logger.info('GET /data/metrics route')
     cursor = db.get_db().cursor()
     
     student_id = request.args.get('studentID', None)
     category = request.args.get('category', None)
     metric_type = request.args.get('metricType', None)
-    start_date = request.args.get('startDate', None)
-    end_date = request.args.get('endDate', None)
     
     query = '''
         SELECT
@@ -52,35 +50,31 @@ def get_metrics():
     if student_id:
         query += " AND m.studentID = %s"
         params.append(student_id)
-    if category:
+    if category and category != 'All':
         query += " AND m.category = %s"
         params.append(category)
-    if metric_type:
+    if metric_type and metric_type != 'All':
         query += " AND m.metricType = %s"
         params.append(metric_type)
-    if start_date:
-        query += " AND m.metricDate >= %s"
-        params.append(start_date)
-    if end_date:
-        query += " AND m.metricDate <= %s"
-        params.append(end_date)
         
     query += " ORDER BY m.metricDate DESC LIMIT 100"
     
     cursor.execute(query, params)
     theData = cursor.fetchall()
     
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+    # Convert Decimal to float for JSON
+    for row in theData:
+        if 'metricValue' in row and row['metricValue'] is not None:
+            row['metricValue'] = float(row['metricValue'])
+    
+    current_app.logger.info(f'Metrics returned {len(theData)} records')
+    return make_response(jsonify(theData), 200)
 
 
 @metrics.route('/metrics/<int:metric_id>', methods=['GET'])
 def get_metric(metric_id):
-    """
-    Get a specific metric by ID
-    """
-    current_app.logger.info(f'GET /metrics/{metric_id} route')
+    """Get a specific metric by ID"""
+    current_app.logger.info(f'GET /data/metrics/{metric_id} route')
     cursor = db.get_db().cursor()
     
     query = '''
@@ -105,21 +99,18 @@ def get_metric(metric_id):
     theData = cursor.fetchone()
     
     if not theData:
-        response = make_response(jsonify({"error": "Metric not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Metric not found"}), 404)
     
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+    if 'metricValue' in theData and theData['metricValue'] is not None:
+        theData['metricValue'] = float(theData['metricValue'])
+    
+    return make_response(jsonify(theData), 200)
 
 
 @metrics.route('/metrics', methods=['POST'])
 def create_metric():
-    """
-    1.3 - Create new metric entries from uploaded datasets
-    """
-    current_app.logger.info('POST /metrics route')
+    """1.3 - Create new metric entries"""
+    current_app.logger.info('POST /data/metrics route')
     
     data = request.json
     current_app.logger.info(f'Received data: {data}')
@@ -127,9 +118,7 @@ def create_metric():
     required_fields = ['studentID', 'category', 'metricName', 'metricValue']
     missing = [f for f in required_fields if f not in data]
     if missing:
-        response = make_response(jsonify({"error": f"Missing required fields: {', '.join(missing)}"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": f"Missing required fields: {', '.join(missing)}"}), 400)
     
     cursor = db.get_db().cursor()
     
@@ -154,48 +143,33 @@ def create_metric():
     db.get_db().commit()
     
     new_id = cursor.lastrowid
-    
-    response = make_response(jsonify({"message": "Metric created", "metricID": new_id}))
-    response.status_code = 201
-    return response
+    return make_response(jsonify({"message": "Metric created", "metricID": new_id}), 201)
 
 
 @metrics.route('/metrics/<int:metric_id>', methods=['PUT'])
 def update_metric(metric_id):
-    """
-    1.4 - Update/correct metric values
-    Appends correction timestamp to description for audit trail
-    """
-    current_app.logger.info(f'PUT /metrics/{metric_id} route')
+    """1.4 - Update/correct metric values"""
+    current_app.logger.info(f'PUT /data/metrics/{metric_id} route')
     
     data = request.json
-    
     if not data:
-        response = make_response(jsonify({"error": "No data provided"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "No data provided"}), 400)
     
     cursor = db.get_db().cursor()
     
     # Check if metric exists
-    check_query = "SELECT metricID, description FROM metric WHERE metricID = %s"
-    cursor.execute(check_query, (metric_id,))
+    cursor.execute("SELECT metricID, description FROM metric WHERE metricID = %s", (metric_id,))
     existing = cursor.fetchone()
     
     if not existing:
-        response = make_response(jsonify({"error": "Metric not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Metric not found"}), 404)
     
-    # Build update with correction note
     updates = []
     params = []
     
     if 'metricValue' in data:
         updates.append("metricValue = %s")
         params.append(data['metricValue'])
-        
-        # Append correction note to description
         old_desc = existing['description'] or ''
         new_desc = f"{old_desc} [CORRECTED]"
         updates.append("description = %s")
@@ -209,9 +183,7 @@ def update_metric(metric_id):
         params.append(data['privacyLevel'])
         
     if not updates:
-        response = make_response(jsonify({"error": "No valid fields to update"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "No valid fields to update"}), 400)
         
     params.append(metric_id)
     query = f"UPDATE metric SET {', '.join(updates)} WHERE metricID = %s"
@@ -219,36 +191,23 @@ def update_metric(metric_id):
     cursor.execute(query, params)
     db.get_db().commit()
     
-    response = make_response(jsonify({"message": "Metric updated"}))
-    response.status_code = 200
-    return response
+    return make_response(jsonify({"message": "Metric updated"}), 200)
 
 
 @metrics.route('/metrics/<int:metric_id>', methods=['DELETE'])
 def delete_metric(metric_id):
-    """
-    1.4 - Remove erroneous metric entries
-    """
-    current_app.logger.info(f'DELETE /metrics/{metric_id} route')
+    """1.4 - Remove erroneous metric entries"""
+    current_app.logger.info(f'DELETE /data/metrics/{metric_id} route')
     cursor = db.get_db().cursor()
     
-    # Check if metric exists
-    check_query = "SELECT metricID FROM metric WHERE metricID = %s"
-    cursor.execute(check_query, (metric_id,))
-    
+    cursor.execute("SELECT metricID FROM metric WHERE metricID = %s", (metric_id,))
     if not cursor.fetchone():
-        response = make_response(jsonify({"error": "Metric not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Metric not found"}), 404)
     
-    # Perform delete
-    delete_query = "DELETE FROM metric WHERE metricID = %s"
-    cursor.execute(delete_query, (metric_id,))
+    cursor.execute("DELETE FROM metric WHERE metricID = %s", (metric_id,))
     db.get_db().commit()
     
-    response = make_response(jsonify({"message": "Metric deleted"}))
-    response.status_code = 200
-    return response
+    return make_response(jsonify({"message": "Metric deleted"}), 200)
 
 
 # ============================================================================
@@ -257,15 +216,9 @@ def delete_metric(metric_id):
 
 @metrics.route('/data-errors', methods=['GET'])
 def get_data_errors():
-    """
-    1.4 - Retrieve data error logs with optional filtering
-    """
-    current_app.logger.info('GET /data-errors route')
+    """1.4 - Retrieve data error logs"""
+    current_app.logger.info('GET /data/data-errors route')
     cursor = db.get_db().cursor()
-    
-    error_type = request.args.get('errorType', None)
-    error_status = request.args.get('errorStatus', None)
-    admin_id = request.args.get('adminID', None)
     
     query = '''
         SELECT
@@ -274,52 +227,31 @@ def get_data_errors():
             sa.name AS adminName,
             de.detectedAt,
             de.errorType,
-            de.errorStatus,
-            ij.jobType,
-            ij.status AS jobStatus
+            de.errorStatus
         FROM DataError de
         LEFT JOIN SystemAdmin sa ON de.adminID = sa.adminID
-        LEFT JOIN ImportJobError ije ON de.errorID = ije.errorID
-        LEFT JOIN importJob ij ON ije.jobID = ij.jobID
-        WHERE 1=1
+        ORDER BY de.detectedAt DESC
+        LIMIT 100
     '''
-    params = []
     
-    if error_type:
-        query += " AND de.errorType = %s"
-        params.append(error_type)
-    if error_status:
-        query += " AND de.errorStatus = %s"
-        params.append(error_status)
-    if admin_id:
-        query += " AND de.adminID = %s"
-        params.append(admin_id)
-        
-    query += " ORDER BY de.detectedAt DESC"
-    
-    cursor.execute(query, params)
+    cursor.execute(query)
     theData = cursor.fetchall()
     
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+    current_app.logger.info(f'Data errors returned {len(theData)} records')
+    return make_response(jsonify(theData), 200)
 
 
 @metrics.route('/data-errors', methods=['POST'])
 def create_data_error():
-    """
-    1.4 - Log data errors detected during analysis
-    """
-    current_app.logger.info('POST /data-errors route')
+    """1.4 - Log data errors detected during analysis"""
+    current_app.logger.info('POST /data/data-errors route')
     
     data = request.json
     
     required_fields = ['errorID', 'adminID', 'errorType', 'errorStatus']
     missing = [f for f in required_fields if f not in data]
     if missing:
-        response = make_response(jsonify({"error": f"Missing required fields: {', '.join(missing)}"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": f"Missing required fields: {', '.join(missing)}"}), 400)
     
     cursor = db.get_db().cursor()
     
@@ -335,24 +267,17 @@ def create_data_error():
     ))
     db.get_db().commit()
     
-    response = make_response(jsonify({"message": "Data error logged"}))
-    response.status_code = 201
-    return response
+    return make_response(jsonify({"message": "Data error logged"}), 201)
 
 
 @metrics.route('/data-errors/<int:error_id>/<int:admin_id>', methods=['PUT'])
 def update_data_error(error_id, admin_id):
-    """
-    1.4 - Update error status (e.g., from 'detected' to 'corrected')
-    """
-    current_app.logger.info(f'PUT /data-errors/{error_id}/{admin_id} route')
+    """1.4 - Update error status"""
+    current_app.logger.info(f'PUT /data/data-errors/{error_id}/{admin_id} route')
     
     data = request.json
-    
     if not data or 'errorStatus' not in data:
-        response = make_response(jsonify({"error": "Missing errorStatus field"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "Missing errorStatus field"}), 400)
     
     cursor = db.get_db().cursor()
     
@@ -365,13 +290,9 @@ def update_data_error(error_id, admin_id):
     db.get_db().commit()
     
     if cursor.rowcount == 0:
-        response = make_response(jsonify({"error": "Data error not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Data error not found"}), 404)
     
-    response = make_response(jsonify({"message": "Error status updated"}))
-    response.status_code = 200
-    return response
+    return make_response(jsonify({"message": "Error status updated"}), 200)
 
 
 # ============================================================================
@@ -380,10 +301,8 @@ def update_data_error(error_id, admin_id):
 
 @metrics.route('/assignments', methods=['GET'])
 def get_assignments():
-    """
-    1.2/1.6 - Retrieve assignment data with filtering
-    """
-    current_app.logger.info('GET /assignments route')
+    """1.2/1.6 - Retrieve assignment data"""
+    current_app.logger.info('GET /data/assignments route')
     cursor = db.get_db().cursor()
     
     course_id = request.args.get('courseID', None)
@@ -413,36 +332,37 @@ def get_assignments():
     if course_id:
         query += " AND a.courseID = %s"
         params.append(course_id)
-    if status:
+    if status and status != 'All':
         query += " AND a.status = %s"
         params.append(status)
-    if assignment_type:
+    if assignment_type and assignment_type != 'All':
         query += " AND a.assignmentType = %s"
         params.append(assignment_type)
         
-    query += " ORDER BY a.assignmentDate DESC"
+    query += " ORDER BY a.assignmentDate DESC LIMIT 100"
     
     cursor.execute(query, params)
     theData = cursor.fetchall()
     
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+    # Convert Decimal to float
+    for row in theData:
+        if 'scoreReceived' in row and row['scoreReceived'] is not None:
+            row['scoreReceived'] = float(row['scoreReceived'])
+        if 'weight' in row and row['weight'] is not None:
+            row['weight'] = float(row['weight'])
+    
+    current_app.logger.info(f'Assignments returned {len(theData)} records')
+    return make_response(jsonify(theData), 200)
 
 
 @metrics.route('/assignments/<int:assignment_id>', methods=['PUT'])
 def update_assignment(assignment_id):
-    """
-    1.4 - Update assignment scores and status during corrections
-    """
-    current_app.logger.info(f'PUT /assignments/{assignment_id} route')
+    """1.4 - Update assignment scores and status"""
+    current_app.logger.info(f'PUT /data/assignments/{assignment_id} route')
     
     data = request.json
-    
     if not data:
-        response = make_response(jsonify({"error": "No data provided"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "No data provided"}), 400)
     
     cursor = db.get_db().cursor()
     
@@ -460,9 +380,7 @@ def update_assignment(assignment_id):
         params.append(data['weight'])
         
     if not updates:
-        response = make_response(jsonify({"error": "No valid fields to update"}))
-        response.status_code = 400
-        return response
+        return make_response(jsonify({"error": "No valid fields to update"}), 400)
         
     params.append(assignment_id)
     query = f"UPDATE assignment SET {', '.join(updates)} WHERE assignmentID = %s"
@@ -471,10 +389,6 @@ def update_assignment(assignment_id):
     db.get_db().commit()
     
     if cursor.rowcount == 0:
-        response = make_response(jsonify({"error": "Assignment not found"}))
-        response.status_code = 404
-        return response
+        return make_response(jsonify({"error": "Assignment not found"}), 404)
     
-    response = make_response(jsonify({"message": "Assignment updated"}))
-    response.status_code = 200
-    return response
+    return make_response(jsonify({"message": "Assignment updated"}), 200)
