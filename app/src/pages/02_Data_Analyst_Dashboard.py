@@ -27,13 +27,13 @@ if st.session_state.get('role') != 'Data Analyst':
 # API base URL - connects to Flask backend
 API_BASE = "http://web-api:4000"
 
-st.title("📊 Analytics Dashboard")
+st.title("Analytics Dashboard")
 st.caption(f"Welcome back, {st.session_state.get('user_name', 'Analyst')}!")
 
 # ============================================
 # TOP METRICS SUMMARY (User Story 1.1)
 # ============================================
-st.markdown("### 📈 Platform Overview")
+st.markdown("### Platform Overview")
 
 # Fetch aggregate summary from /analyst/dashboard/summary
 summary = None
@@ -201,7 +201,7 @@ with chart_col3:
         st.info("No dashboard data available")
 
 with chart_col4:
-    st.markdown("#### 📊 Weekly Engagement Trends")
+    st.markdown("#### Weekly Engagement Trends")
     st.caption("Student activity metrics")
     
     # Fetch engagement data from /analyst/engagement
@@ -324,7 +324,7 @@ st.divider()
 # ============================================
 # STUDENT REPORTS SECTION (User Story 1.6)
 # ============================================
-st.markdown("### 📋 Student Reports")
+st.markdown("### Student Reports")
 st.caption("View individual student reports for advisor presentations")
 
 # Fetch all student reports from /analyst/students/reports
@@ -394,14 +394,14 @@ st.divider()
 # ============================================
 # EXPORT SECTION (User Story 1.6)
 # ============================================
-st.markdown("### 📤 Export Reports")
+st.markdown("### Export Reports")
 st.caption("Generate and export reports for advisor presentations")
 
 export_col1, export_col2, export_col3 = st.columns(3)
 
 with export_col1:
     with st.container(border=True):
-        st.markdown("**📊 Dashboard Summary**")
+        st.markdown("**Dashboard Summary**")
         st.caption("Export current dashboard metrics")
         if st.button("Export Dashboard CSV", use_container_width=True):
             if dashboard_data:

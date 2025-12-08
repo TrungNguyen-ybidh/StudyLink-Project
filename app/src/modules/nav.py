@@ -9,7 +9,12 @@ def SideBarLinks(show_home=True):
     Call this function at the top of each page to display consistent navigation.
     """
     
-    st.sidebar.markdown("## 📚 StudyLink")
+    # Display logo in sidebar
+    try:
+        st.sidebar.image("assets/logo.png", use_container_width=True)
+    except FileNotFoundError:
+        # Fallback if logo not found
+        st.sidebar.markdown("## 📚 StudyLink")
     
     # Home link
     if show_home:
@@ -72,7 +77,12 @@ def HomeNav():
     """
     Simple navigation for home page - just shows login options.
     """
-    st.sidebar.markdown("## 📚 StudyLink")
+    # Display logo in sidebar
+    try:
+        st.sidebar.image("assets/logo.png", use_container_width=True)
+    except FileNotFoundError:
+        # Fallback if logo not found
+        st.sidebar.markdown("## 📚 StudyLink")
     st.sidebar.markdown("Please select a role to login.")
 
 

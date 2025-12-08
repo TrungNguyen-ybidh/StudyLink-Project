@@ -1,146 +1,365 @@
 from flask import Blueprint, jsonify, request
-import logging
 from backend.db_connection import db
-from mysql.connector import Error
 from flask import current_app
-
-
-logger = logging.getLogger(__name__)
 
 advisor_bp = Blueprint('advisor', __name__, url_prefix='/api/advisor')
 
-#GET /api/advisor
+
+# ============================================
+# GET ALL ADVISORS
+# ============================================
 @advisor_bp.route("/", methods=["GET"])
 def get_advisors():
     """Return all advisors in the system."""
-    conn = db.get_db()
-    cursor = conn.cursor()
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("""
+            SELECT advisorID, fname, lName, email, department 
+            FROM advisor
+            ORDER BY lName, fname
+        """)
+        advisors = cursor.fetchall()
+        cursor.close()
+        return jsonify(advisors), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching advisors: {e}")
+        return jsonify({"error": str(e)}), 500
 
-    cursor.execute("SELECT advisorID, fName, lName, email FROM advisor")
-    advisors = cursor.fetchall()
-    return jsonify(advisors), 200
 
-#GET /api/advisor/<advisor_id>/students
-@advisor_bp.route("/<int:advisor_id>/students", methods=["GET"])
-def get_advisor_students(advisor_id):
-    """Return all students assigned to a specific advisor."""
-    conn = db.get_db()
-    cursor = conn.cursor()
+# ============================================
+# GET ADVISOR BY ID
+# ============================================
+@advisor_bp.route("/<int:advisor_id>", methods=["GET"])
+def get_advisor(advisor_id):
+    """Return a specific advisor by ID."""
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("""
+            SELECT advisorID, fname, lName, email, department 
+            FROM advisor
+            WHERE advisorID = %s
+        """, (advisor_id,))
+        advisor = cursor.fetchone()
+        cursor.close()
+        
+        if not advisor:
+            return jsonify({"error": "Advisor not found"}), 404
+        
+        return jsonify(advisor), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching advisor: {e}")
+        return jsonify({"error": str(e)}), 500
 
-    cursor.execute("""
-        SELECT s.studentID, s.fName, s.lName, s.email
-        FROM student s
-        JOIN advisor_student ast ON s.studentID = ast.studentID
-        WHERE ast.advisorID = %s
-    """, (advisor_id,))
-    students = cursor.fetchall()
-    return jsonify(students), 200
 
-#GET /api/studylink/advisor/<advisor_id>/reports
-@advisor_bp.route("/<int:advisor_id>/reports", methods=["GET"])
-def get_advisor_reports(advisor_id):
-    """Return all reports created by a specific advisor."""
-    conn = db.get_db()
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        SELECT r.reportID, r.title, r.content, r.created_at
-        FROM report r
-        JOIN advisor_report ar ON r.reportID = ar.reportID
-        WHERE ar.advisorID = %s
-    """, (advisor_id,))
-    reports = cursor.fetchall()
-    return jsonify(reports), 200
-
+# ============================================
+# LOOKUP ADVISOR BY EMAIL
+# ============================================
 @advisor_bp.route("/lookup/<path:email>", methods=["GET"])
 def lookup_advisor(email):
     """Return advisor info by email."""
-    conn = db.get_db()
-    cursor = conn.cursor()
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("""
+            SELECT advisorID, fname, lName, email, department
+            FROM advisor
+            WHERE email = %s
+        """, (email,))
+        advisor = cursor.fetchone()
+        cursor.close()
 
-    cursor.execute("""
-        SELECT advisorID, fName, lName, email, department
-        FROM advisor
-        WHERE email = %s
-    """, (email,))
+        if not advisor:
+            return jsonify({"error": "Advisor not found"}), 404
 
-    row = cursor.fetchone()
+        return jsonify(advisor), 200
+    except Exception as e:
+        current_app.logger.error(f"Error looking up advisor: {e}")
+        return jsonify({"error": str(e)}), 500
 
-    if not row:
-        return jsonify({"error": "Advisor not found"}), 404
 
-    advisor = {
-        "advisorID": row[0],
-        "fName": row[1],
-        "lName": row[2],
-        "email": row[3],
-        "department": row[4],
-    }
+# ============================================
+# GET STUDENTS FOR AN ADVISOR
+# ============================================
+@advisor_bp.route("/<int:advisor_id>/students", methods=["GET"])
+def get_advisor_students(advisor_id):
+    """Return all students assigned to a specific advisor."""
+    try:
+        current_app.logger.info(f"Fetching students for advisor_id: {advisor_id}")
+        
+        cursor = db.get_db().cursor()
+        
+        # First, let's check what we get with a simple query
+        cursor.execute("SELECT COUNT(*) as count FROM student WHERE advisorID = %s", (advisor_id,))
+        count_result = cursor.fetchone()
+        current_app.logger.info(f"Count of students for advisor {advisor_id}: {count_result}")
+        
+        # Students are linked via student.advisorID foreign key
+        cursor.execute("""
+            SELECT 
+                s.studentID,
+                s.fName,
+                s.lName,
+                s.email,
+                s.major,
+                s.minor,
+                s.GPA,
+                s.riskFlag,
+                s.enrollmentStatus,
+                s.totalCredits,
+                s.enrollmentYear
+            FROM student s
+            WHERE s.advisorID = %s
+            ORDER BY s.lName, s.fName
+        """, (advisor_id,))
+        
+        students = cursor.fetchall()
+        current_app.logger.info(f"Fetched {len(students)} students")
+        current_app.logger.info(f"Students data: {students}")
+        
+        cursor.close()
+        
+        # Convert Decimal GPA to float for JSON
+        for student in students:
+            if student.get('GPA'):
+                student['GPA'] = float(student['GPA'])
+        
+        return jsonify(students), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching students: {e}")
+        import traceback
+        current_app.logger.error(traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
 
-    return jsonify(advisor), 200
 
-#POST /advisor/<advisor_id>/reports
+# ============================================
+# GET REPORTS FOR AN ADVISOR
+# ============================================
+@advisor_bp.route("/<int:advisor_id>/reports", methods=["GET"])
+def get_advisor_reports(advisor_id):
+    """Return all reports created by a specific advisor."""
+    try:
+        cursor = db.get_db().cursor()
+        
+        # Using advisorReport table from your schema
+        cursor.execute("""
+            SELECT 
+                r.reportID,
+                r.studentID,
+                r.advisorID,
+                r.reportDesc,
+                r.dateCreated,
+                r.filePath,
+                r.type,
+                r.description,
+                CONCAT(s.fName, ' ', s.lName) AS studentName
+            FROM advisorReport r
+            LEFT JOIN student s ON r.studentID = s.studentID
+            WHERE r.advisorID = %s
+            ORDER BY r.dateCreated DESC
+        """, (advisor_id,))
+        
+        reports = cursor.fetchall()
+        cursor.close()
+        
+        # Convert datetime to string for JSON
+        for report in reports:
+            if report.get('dateCreated'):
+                report['dateCreated'] = str(report['dateCreated'])
+        
+        return jsonify(reports), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching reports: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+# ============================================
+# GET SINGLE REPORT
+# ============================================
+@advisor_bp.route("/reports/<int:report_id>", methods=["GET"])
+def get_report(report_id):
+    """Return a specific report by ID."""
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("""
+            SELECT 
+                r.reportID,
+                r.studentID,
+                r.advisorID,
+                r.reportDesc,
+                r.dateCreated,
+                r.filePath,
+                r.type,
+                r.description,
+                CONCAT(s.fName, ' ', s.lName) AS studentName
+            FROM advisorReport r
+            LEFT JOIN student s ON r.studentID = s.studentID
+            WHERE r.reportID = %s
+        """, (report_id,))
+        
+        report = cursor.fetchone()
+        cursor.close()
+        
+        if not report:
+            return jsonify({"error": "Report not found"}), 404
+        
+        if report.get('dateCreated'):
+            report['dateCreated'] = str(report['dateCreated'])
+        
+        return jsonify(report), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching report: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+# ============================================
+# CREATE NEW REPORT
+# ============================================
 @advisor_bp.route("/<int:advisor_id>/reports", methods=["POST"])
 def create_advisor_report(advisor_id):
-    data = request.get_json()
-    title = data.get('title')
-    content = data.get('content')
+    """Create a new report for a student."""
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        student_id = data.get('studentID')
+        report_desc = data.get('reportDesc')
+        report_type = data.get('type', 'meeting_note')
+        description = data.get('description', '')
+        file_path = data.get('filePath', '')
 
-    if not title or not content:
-        return jsonify({"error": "Title and content are required"}), 400
+        if not student_id:
+            return jsonify({"error": "studentID is required"}), 400
 
-    conn = db.get_db()
-    cursor = conn.cursor()
+        cursor = db.get_db().cursor()
 
-    # INSERT new report
-    cursor.execute("""
-        INSERT INTO report (title, content, created_at)
-        VALUES (%s, %s, NOW())
-    """, (title, content))
+        # Insert new report
+        cursor.execute("""
+            INSERT INTO advisorReport 
+                (studentID, advisorID, reportDesc, filePath, type, description)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (student_id, advisor_id, report_desc, file_path, report_type, description))
 
-    # Get MySQL auto-increment ID
-    report_id = cursor.lastrowid
+        report_id = cursor.lastrowid
+        db.get_db().commit()
+        cursor.close()
 
-    # Link advisor to report
-    cursor.execute("""
-        INSERT INTO advisor_report (advisorID, reportID)
-        VALUES (%s, %s)
-    """, (advisor_id, report_id))
+        return jsonify({
+            "message": "Report created successfully",
+            "reportID": report_id
+        }), 201
+        
+    except Exception as e:
+        current_app.logger.error(f"Error creating report: {e}")
+        return jsonify({"error": str(e)}), 500
 
-    conn.commit()
 
-    return jsonify({"message": "Report created", "reportID": report_id}), 201
-
-#PUT /advisor/reports/<report_id>
+# ============================================
+# UPDATE REPORT
+# ============================================
 @advisor_bp.route("/reports/<int:report_id>", methods=["PUT"])
 def update_advisor_report(report_id):
-    data = request.get_json()
-    title = data.get('title')
-    content = data.get('content')
+    """Update an existing report."""
+    try:
+        data = request.get_json()
+        
+        cursor = db.get_db().cursor()
+        
+        # Check if report exists
+        cursor.execute("SELECT * FROM advisorReport WHERE reportID = %s", (report_id,))
+        if not cursor.fetchone():
+            cursor.close()
+            return jsonify({"error": "Report not found"}), 404
+        
+        # Build update query dynamically
+        allowed_fields = ['reportDesc', 'type', 'description', 'filePath']
+        update_fields = []
+        params = []
+        
+        for field in allowed_fields:
+            if field in data:
+                update_fields.append(f"{field} = %s")
+                params.append(data[field])
+        
+        if not update_fields:
+            return jsonify({"error": "No valid fields to update"}), 400
+        
+        params.append(report_id)
+        
+        cursor.execute(f"""
+            UPDATE advisorReport 
+            SET {', '.join(update_fields)}
+            WHERE reportID = %s
+        """, params)
+        
+        db.get_db().commit()
+        cursor.close()
+        
+        return jsonify({"message": "Report updated successfully"}), 200
+        
+    except Exception as e:
+        current_app.logger.error(f"Error updating report: {e}")
+        return jsonify({"error": str(e)}), 500
 
-    if not title and not content:
-        return jsonify({"error": "At least one of title or content must be provided"}), 400
 
-    conn = db.get_db()
-    cursor = conn.cursor()
-
-    if title:
-        cursor.execute("UPDATE report SET title = %s WHERE reportID = %s", (title, report_id))
-    if content:
-        cursor.execute("UPDATE report SET content = %s WHERE reportID = %s", (content, report_id))
-
-    conn.commit()
-    return jsonify({"message": "Report updated"}), 200 
-
-#DELETE /advisor/reports/<report_id>
+# ============================================
+# DELETE REPORT
+# ============================================
 @advisor_bp.route("/reports/<int:report_id>", methods=["DELETE"])
 def delete_advisor_report(report_id):
-    conn = db.get_db()
-    cursor = conn.cursor()
+    """Delete a report."""
+    try:
+        cursor = db.get_db().cursor()
+        
+        # Check if report exists
+        cursor.execute("SELECT * FROM advisorReport WHERE reportID = %s", (report_id,))
+        if not cursor.fetchone():
+            cursor.close()
+            return jsonify({"error": "Report not found"}), 404
+        
+        cursor.execute("DELETE FROM advisorReport WHERE reportID = %s", (report_id,))
+        db.get_db().commit()
+        cursor.close()
+        
+        return jsonify({"message": "Report deleted successfully"}), 200
+        
+    except Exception as e:
+        current_app.logger.error(f"Error deleting report: {e}")
+        return jsonify({"error": str(e)}), 500
 
-    cursor.execute("DELETE FROM advisor_report WHERE reportID = %s", (report_id,))
-    cursor.execute("DELETE FROM report WHERE reportID = %s", (report_id,))
 
-    conn.commit()
-    return jsonify({"message": "Report deleted"}), 200
-
+# ============================================
+# GET ALL REPORTS FOR A STUDENT
+# ============================================
+@advisor_bp.route("/student/<int:student_id>/reports", methods=["GET"])
+def get_student_reports(student_id):
+    """Return all reports for a specific student."""
+    try:
+        cursor = db.get_db().cursor()
+        
+        cursor.execute("""
+            SELECT 
+                r.reportID,
+                r.studentID,
+                r.advisorID,
+                r.reportDesc,
+                r.dateCreated,
+                r.filePath,
+                r.type,
+                r.description,
+                CONCAT(a.fname, ' ', a.lName) AS advisorName
+            FROM advisorReport r
+            LEFT JOIN advisor a ON r.advisorID = a.advisorID
+            WHERE r.studentID = %s
+            ORDER BY r.dateCreated DESC
+        """, (student_id,))
+        
+        reports = cursor.fetchall()
+        cursor.close()
+        
+        for report in reports:
+            if report.get('dateCreated'):
+                report['dateCreated'] = str(report['dateCreated'])
+        
+        return jsonify(reports), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching student reports: {e}")
+        return jsonify({"error": str(e)}), 500

@@ -26,17 +26,17 @@ if st.session_state.get('role') != 'Data Analyst':
 # metrics blueprint is registered with /data prefix
 API_BASE = "http://web-api:4000"
 
-st.title("🔧 Data Quality Tools")
+st.title("Data Quality Tools")
 st.caption("User Story 1.4 - Fix, correct, and maintain data integrity")
 
 # Tabs for different functionalities
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Metrics Editor", "⚠️ Error Tracking", "📝 Assignments", "📋 Audit Log"])
+tab1, tab2, tab3, tab4 = st.tabs(["Metrics Editor", "Error Tracking", "Assignments", "Audit Log"])
 
 # ============================================
 # TAB 1: Metrics Editor (User Story 1.4)
 # ============================================
 with tab1:
-    st.subheader("📊 Metrics Editor")
+    st.subheader("Metrics Editor")
     st.markdown("Search, view, and correct metric entries to ensure data accuracy.")
     
     # Search filters
@@ -60,7 +60,7 @@ with tab1:
         )
     
     with col4:
-        if st.button("🔍 Search Metrics", use_container_width=True):
+        if st.button("Search Metrics", use_container_width=True):
             st.session_state['search_metrics'] = True
     
     # Fetch metrics from GET /data/metrics
@@ -133,7 +133,7 @@ with tab1:
                             key="new_privacy_level"
                         )
                     
-                    submit_edit = st.form_submit_button("💾 Save Changes", use_container_width=True)
+                    submit_edit = st.form_submit_button("Save Changes", use_container_width=True)
                     
                     if submit_edit:
                         if not new_value:
@@ -152,7 +152,7 @@ with tab1:
                                 )
                                 
                                 if response.status_code == 200:
-                                    st.success(f"✅ Metric {edit_metric_id} updated successfully!")
+                                    st.success(f"Metric {edit_metric_id} updated successfully!")
                                     st.rerun()
                                 else:
                                     error_msg = response.json().get('error', 'Unknown error') if response.text else f"Status {response.status_code}"
@@ -165,18 +165,18 @@ with tab1:
             # Delete metric option
             st.markdown("---")
             st.markdown("#### Delete Erroneous Metric")
-            st.warning("⚠️ Deletion is permanent. Only delete metrics that cannot be corrected.")
+            st.warning("Deletion is permanent. Only delete metrics that cannot be corrected.")
             
             col1, col2 = st.columns([2, 1])
             with col1:
                 delete_metric_id = st.selectbox("Select Metric to Delete", metric_ids, key="delete_metric_select")
             with col2:
-                if st.button("🗑️ Delete Metric", use_container_width=True, type="secondary"):
+                if st.button("Delete Metric", use_container_width=True, type="secondary"):
                     if delete_metric_id:
                         try:
                             response = requests.delete(f"{API_BASE}/data/metrics/{delete_metric_id}", timeout=5)
                             if response.status_code == 200:
-                                st.success(f"✅ Metric {delete_metric_id} deleted")
+                                st.success(f"Metric {delete_metric_id} deleted")
                                 st.rerun()
                             else:
                                 error_msg = response.json().get('error', 'Unknown error') if response.text else f"Status {response.status_code}"
@@ -206,7 +206,7 @@ with tab1:
                 new_course_id = st.number_input("Course ID (optional)", min_value=0, step=1, key="new_course_id")
                 new_unit = st.text_input("Unit", placeholder="e.g., hours", key="new_unit")
             
-            submit_create = st.form_submit_button("➕ Create Metric", use_container_width=True)
+            submit_create = st.form_submit_button("Create Metric", use_container_width=True)
             
             if submit_create:
                 if not new_metric_name or not new_metric_value:
@@ -225,7 +225,7 @@ with tab1:
                         
                         if response.status_code in [200, 201]:
                             result = response.json()
-                            st.success(f"✅ Metric created with ID: {result.get('metricID')}")
+                            st.success(f"Metric created with ID: {result.get('metricID')}")
                             st.rerun()
                         else:
                             error_msg = response.json().get('error', 'Unknown error') if response.text else f"Status {response.status_code}"
@@ -239,7 +239,7 @@ with tab1:
 # TAB 2: Error Tracking (User Story 1.4)
 # ============================================
 with tab2:
-    st.subheader("⚠️ Data Error Tracking")
+    st.subheader("Data Error Tracking")
     st.markdown("Track, report, and resolve data quality issues.")
     
     # Fetch data errors from GET /data/data-errors
@@ -310,7 +310,7 @@ with tab2:
                 key="new_error_status"
             )
         
-        submit_error = st.form_submit_button("📝 Report Error", use_container_width=True)
+        submit_error = st.form_submit_button("Report Error", use_container_width=True)
         
         if submit_error:
             try:
@@ -323,7 +323,7 @@ with tab2:
                 response = requests.post(f"{API_BASE}/data/data-errors", json=payload, timeout=5)
                 
                 if response.status_code in [200, 201]:
-                    st.success("✅ Error reported successfully!")
+                    st.success("Error reported successfully!")
                     st.rerun()
                 else:
                     error_msg = response.json().get('error', 'Unknown error') if response.text else f"Status {response.status_code}"
@@ -352,7 +352,7 @@ with tab2:
             with col2:
                 new_status = st.selectbox("New Status", ["Resolved", "Corrected", "Closed"], key="resolve_status")
             
-            if st.button("✅ Update Status", use_container_width=True):
+            if st.button("Update Status", use_container_width=True):
                 if resolve_error_key:
                     error_id, admin_id = error_options[resolve_error_key]
                     try:
@@ -362,7 +362,7 @@ with tab2:
                             timeout=5
                         )
                         if response.status_code == 200:
-                            st.success(f"✅ Error {error_id} status updated to {new_status}")
+                            st.success(f"Error {error_id} status updated to {new_status}")
                             st.rerun()
                         else:
                             error_msg = response.json().get('error', 'Unknown error') if response.text else f"Status {response.status_code}"
@@ -378,7 +378,7 @@ with tab2:
 # TAB 3: Assignments (User Stories 1.2, 1.4, 1.6)
 # ============================================
 with tab3:
-    st.subheader("📝 Assignment Management")
+    st.subheader("Assignment Management")
     st.markdown("View and update assignment data")
     
     # Filters
@@ -402,7 +402,7 @@ with tab3:
         )
     
     with col4:
-        if st.button("🔍 Search Assignments", use_container_width=True, key="search_assignments"):
+        if st.button("Search Assignments", use_container_width=True, key="search_assignments"):
             st.session_state['search_assignments'] = True
     
     # Fetch assignments from GET /data/assignments
@@ -459,7 +459,7 @@ with tab3:
                     with col2:
                         new_weight = st.number_input("Weight (%)", min_value=0.0, max_value=100.0, step=1.0, key="new_assignment_weight")
                     
-                    submit_assignment = st.form_submit_button("💾 Update Assignment", use_container_width=True)
+                    submit_assignment = st.form_submit_button("Update Assignment", use_container_width=True)
                     
                     if submit_assignment:
                         try:
@@ -479,7 +479,7 @@ with tab3:
                                 )
                                 
                                 if response.status_code == 200:
-                                    st.success(f"✅ Assignment {edit_assignment_id} updated!")
+                                    st.success(f"Assignment {edit_assignment_id} updated!")
                                     st.rerun()
                                 else:
                                     error_msg = response.json().get('error', 'Unknown error') if response.text else f"Status {response.status_code}"
@@ -500,7 +500,7 @@ with tab3:
 # TAB 4: Audit Log
 # ============================================
 with tab4:
-    st.subheader("📋 Audit Log")
+    st.subheader("Audit Log")
     st.markdown("Track all data corrections and modifications for compliance.")
     
     st.info("The audit log tracks all changes made through this interface. Corrections are automatically logged in the metric description field with [CORRECTED] tags.")
@@ -512,7 +512,7 @@ with tab4:
     with col2:
         end_date = st.date_input("To Date", value=datetime.now(), key="audit_end")
     with col3:
-        if st.button("🔍 Filter", use_container_width=True, key="filter_audit"):
+        if st.button("Filter", use_container_width=True, key="filter_audit"):
             st.session_state['filter_audit'] = True
     
     # Fetch metrics that have been corrected (contain [CORRECTED] in description)

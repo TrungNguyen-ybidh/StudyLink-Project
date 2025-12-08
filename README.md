@@ -1,8 +1,43 @@
-# Fall 2025 CS 3200 Project Template
+# 📚 StudyLink - Smart Study Planning System
 
-This is a template repo for Dr. Fontenot's Fall 2025 CS 3200 Course Project. 
+**Team Name:** OurSQL  
+**Product/Project Name:** StudyLink
 
-It includes most of the infrastructure setup (containers), sample databases, and example UI pages. Explore it fully and ask questions!
+**Team Members:**
+- Trung Nguyen
+- Tam Vu
+- Bennett Franciosi
+- Alastaire Balin
+- Alex Zou
+
+---
+
+**StudyLink** is a data-driven study planning and management system designed to optimize student academic performance by integrating calendar data, sleep patterns, class workload, and academic metrics. The system provides role-based access for students, advisors, data analysts, and system administrators.
+
+## Project Overview
+
+StudyLink helps students manage their academic life more effectively by:
+- **📅 Calendar Integration**: Sync with external calendars to track events and deadlines
+- **😴 Sleep Tracking**: Monitor sleep patterns and their impact on academic performance
+- **📊 Grade Analytics**: Track grades, assignments, and academic progress
+- **⏱️ Time Tracking**: Monitor study hours and workload distribution
+- **📈 Data-Driven Insights**: Provide analytics and reports for students and advisors
+
+### Key Features
+
+- **Student Portal**: View calendar, manage reminders, track grades, monitor courses, and analyze workload
+- **Advisor Portal**: Access student reports, track student progress, and manage advisor-student relationships
+- **Data Analyst Dashboard**: Analyze student engagement trends, manage datasets, and generate comprehensive reports
+- **System Administration**: Manage course catalogs, calendar sync settings, and system quality reports
+
+### User Roles
+
+The application supports four distinct user personas:
+
+1. **🎓 Student**: Access personal calendar, reminders, grades, courses, events, and workload analytics
+2. **👨‍🏫 Advisor**: View assigned students, generate reports, and track student progress
+3. **📊 Data Analyst**: Analyze student data, manage datasets, track engagement metrics, and generate reports
+4. **⚙️ System Admin**: Manage system-wide settings, course catalogs, calendar connections, and operational reports
 
 ## Prerequisites
 
@@ -25,24 +60,92 @@ It includes most of the infrastructure setup (containers), sample databases, and
   - You may use some other Python/code editor.  However, Course staff will only support VS Code. 
 
 
-## Structure of the Repo
+## Project Structure
 
-- This repository is organized into five main directories:
-  - `./app` - the Streamlit app
-  - `./api` - the Flask REST API
-  - `./database-files` - SQL scripts to initialize the MySQL database
-  - `./datasets` - folder for storing datasets
+This repository is organized into the following directories:
 
-- The repo also contains a `docker-compose.yaml` file that is used to set up the Docker containers for the front end app, the REST API, and MySQL database. 
+- **`./app`** - Streamlit frontend application
+  - `./app/src` - Main application source code
+  - `./app/src/pages` - Streamlit pages organized by user role
+  - `./app/src/modules` - Shared modules (navigation, utilities)
+- **`./api`** - Flask REST API backend
+  - `./api/backend` - Backend source code
+  - `./api/backend/studylink` - StudyLink-specific routes organized by persona
+    - `data_analyst/` - Data analyst routes (dashboard, metrics, datasets)
+    - `advisor/` - Advisor routes
+    - `student/` - Student routes
+    - `System_Admin/` - System administrator routes
+- **`./database-files`** - SQL scripts to initialize the MySQL database
+  - `studylink_db.sql` - Main database schema and initial data
+- **`./datasets`** - CSV datasets for data import and testing
 
-## Suggestion for Learning the Project Code Base
+The project uses Docker Compose to orchestrate three containers:
+- **Streamlit App** (port 8501) - Frontend web application
+- **Flask API** (port 4000) - REST API backend
+- **MySQL Database** (port 3200) - Database server 
 
-If you are not familiar with web app development, this code base might be confusing. But don't worry, we'll get through it together. Here are some suggestions for learning the code base:
+## Quick Start Guide
 
-1. Start by exploring the `./app` directory. This is where the Streamlit app is located. The Streamlit app is a Python-based web app that is used to interact with the user. It's a great way to build a simple web app without having to learn a lot of web development.
-1. Next, explore the `./api` directory. This is where the Flask REST API is located. The REST API is used to interact with the database and perform other server-side tasks. You might also consider this the "application logic" or "business logic" layer of your app. 
-1. Finally, explore the `./database-files` directory. This is where the SQL scripts are located that will be used to initialize the MySQL database.
-1. Bonus: If you want to have a totally separate copy of the Template Repo on your laptop that you can use to explore and try things without messing up your team repo, see *Setting Up a Personal Testing Repo (Optional)* section below. 
+### Starting the Docker Containers
+
+1. **Set up environment variables**:
+   - Navigate to the `api` folder
+   - Copy `.env.template` to `.env` (if it doesn't exist)
+   - Update the `.env` file with your database credentials
+
+2. **Start all containers**:
+   ```bash
+   docker compose up -d
+   ```
+   This will start all three services (app, api, db) in the background.
+
+3. **Access the application**:
+   - **Streamlit App**: Open your browser and navigate to `http://localhost:8501`
+   - **Flask API**: API endpoints are available at `http://localhost:4000`
+   - **MySQL Database**: Connect using port `3200` (host: `localhost`)
+
+4. **View container logs**:
+   ```bash
+   docker compose logs -f [service_name]
+   ```
+   Replace `[service_name]` with `app`, `api`, or `db` to view specific service logs.
+
+5. **Stop containers**:
+   ```bash
+   docker compose stop        # Stop containers (keeps data)
+   docker compose down        # Stop and remove containers
+   docker compose down -v     # Stop, remove containers, and delete volumes
+   ```
+
+### Common Docker Commands
+
+- **Start specific service**: `docker compose up [service_name] -d`
+  - Example: `docker compose up db -d` (starts only the database)
+- **Restart services**: `docker compose restart`
+- **View running containers**: `docker compose ps`
+- **Rebuild containers** (after code changes): `docker compose up --build -d`
+
+### First-Time Setup
+
+When the MySQL container is created for the first time, it automatically executes all `.sql` files in the `./database-files` folder in alphabetical order. The `studylink_db.sql` file will:
+- Create the database schema
+- Set up all tables with relationships
+- Insert initial sample data
+
+**Important**: If you modify SQL files, you must recreate the database container:
+```bash
+docker compose down db -v && docker compose up db -d
+```
+
+## Learning the Codebase
+
+If you're new to web app development, here's a suggested learning path:
+
+1. **Frontend (`./app`)**: Start with `app/src/Home.py` to understand the landing page and role selection. Then explore the pages in `app/src/pages/` organized by role (01-05: Data Analyst, 11-12: Advisor, 19-25: Student, 40-43: Admin).
+
+2. **Backend (`./api`)**: Explore `api/backend/rest_entry.py` to see how the Flask app is initialized. Then check the route files in `api/backend/studylink/` organized by persona.
+
+3. **Database (`./database-files`)**: Review `studylink_db.sql` to understand the database schema, table relationships, and sample data structure. 
 
 ## Setting Up the Repos
 <details>
@@ -87,47 +190,107 @@ If you are not familiar with web app development, this code base might be confus
 
 **Note:** You can also use the Docker Desktop GUI to start and stop the containers after the first initial run.
 
-## Important Tips
+## Development Tips
 
-1. In general, any changes you make to the api code base (REST API) or the Streamlit app code should be *hot reloaded* when the files are saved.  This means that the changes should be immediately available.  
-   1. Don't forget to hit click the **Always Rerun** button in the browser tab of the Streamlit app for it to reload with changes. 
-   1. Sometimes, a bug in the code will shut the containers down.  If this is the case, try and fix the bug in the code.  Then you can restart the `web-app` container in Docker Desktop or restart all the containers with `docker compose restart` (no *-d* flag). 
-1. The MySQL Container is different. 
-   1. When the MySQL container is ***created*** the first time, it will execute any `.sql` files in the `./database-files` folder. **Important:** it will execute them in alphabetical order.  
-   1. The MySQL Container's log files are your friend! Remember, you can access them in Docker Desktop by going to the MySQL Container, and clicking on the `Logs` tab.  If there are errors in your .sql files as it is trying to run them, there will be a message in the logs. You can search 🔍 for `Error` to find them more quickly. 
-   1. If you need to update anything in any of your SQL files, you **MUST** recreate the MySQL container (rather than just stopping and restarting it).  You can recreate the MySQL container by using the following command: `docker compose down db -v && docker compose up db -d`. 
-      1. `docker compose down db -v` stops and deletes the MySQL container and the volume attached to it. 
-      1. `docker compose up db -d` will create a new db container and re-run the files in the `database-files` folder. 
+### Hot Reloading
 
-## Handling User Role Access and Control
+- **Streamlit App**: Changes to files in `./app/src` are automatically reloaded. If changes don't appear, click the **Always Rerun** button in the Streamlit browser interface.
+- **Flask API**: Changes to files in `./api` are automatically reloaded. Check the API logs to confirm the server has restarted.
 
-In most applications, when a user logs in, they assume a particular role in the app. For instance, when one logs in to a stock price prediction app, they may be a single investor, a portfolio manager, or a corporate executive (of a publicly traded company). Each of those _roles_ will likely present some similar features as well as some different features when compared to the other roles. So, how do you accomplish this in Streamlit? This is sometimes called Role-based Access Control, or **RBAC** for short.
+### Debugging
 
-The code in this project demonstrates how to implement a simple RBAC system in Streamlit but without actually using user authentication (usernames and passwords). The Streamlit pages from the original template repo are split up among 3 roles - Political Strategist, USAID Worker, and a System Administrator role (this is used for any sort of system tasks such as re-training ML model, etc.). It also demonstrates how to deploy an ML model.
+- **Container Logs**: Use `docker compose logs -f [service_name]` to view real-time logs
+- **Database Logs**: Check MySQL container logs in Docker Desktop for SQL errors. Search for "Error" to quickly find issues.
+- **API Logs**: Flask logs include request/response information and error traces
+- **Streamlit Errors**: Errors appear in both the browser interface and container logs
 
-Wrapping your head around this will take a little time and exploration of this code base. Some highlights are below.
+### Database Management
 
-### Getting Started with the RBAC
+- **Initial Setup**: The MySQL container executes all `.sql` files in `./database-files` in **alphabetical order** when first created.
+- **Updating Schema**: If you modify SQL files, you **MUST** recreate the database container:
+  ```bash
+  docker compose down db -v && docker compose up db -d
+  ```
+  This deletes the old database volume and creates a fresh one with updated schema.
+- **Data Persistence**: Database data persists in a Docker volume. Use `docker compose down -v` to completely remove all data.
 
-1. We need to turn off the standard panel of links on the left side of the Streamlit app. This is done through the `app/src/.streamlit/config.toml` file. So check that out. We are turning it off so we can control directly what links are shown.
-1. Then I created a new python module in `app/src/modules/nav.py`. When you look at the file, you will se that there are functions for basically each page of the application. The `st.sidebar.page_link(...)` adds a single link to the sidebar. We have a separate function for each page so that we can organize the links/pages by role.
-1. Next, check out the `app/src/Home.py` file. Notice that there are 3 buttons added to the page and when one is clicked, it redirects via `st.switch_page(...)` to that Roles Home page in `app/src/pages`. But before the redirect, I set a few different variables in the Streamlit `session_state` object to track role, first name of the user, and that the user is now authenticated.
-1. Notice near the top of `app/src/Home.py` and all other pages, there is a call to `SideBarLinks(...)` from the `app/src/nav.py` module. This is the function that will use the role set in `session_state` to determine what links to show the user in the sidebar.
-1. The pages are organized by Role. Pages that start with a `0` are related to the _Political Strategist_ role. Pages that start with a `1` are related to the _USAID worker_ role. And, pages that start with a `2` are related to The _System Administrator_ role.
+### Troubleshooting
+
+- **Containers won't start**: Check logs with `docker compose logs` to identify errors
+- **Port conflicts**: Ensure ports 8501 (Streamlit), 4000 (API), and 3200 (MySQL) are not in use
+- **Database connection errors**: Verify `.env` file exists in `./api` folder with correct credentials
+- **Code changes not appearing**: Restart the specific container: `docker compose restart [service_name]` 
+
+## Role-Based Access Control (RBAC)
+
+StudyLink implements a simple RBAC system using Streamlit's session state. Users select their role on the home page, which determines what features and pages they can access.
+
+### How RBAC Works in StudyLink
+
+1. **Role Selection**: On the home page (`app/src/Home.py`), users click a button to select their role (Student, Advisor, Data Analyst, or System Admin).
+
+2. **Session State**: The selected role, user name, and authentication status are stored in Streamlit's `session_state` object.
+
+3. **Navigation**: The `SideBarLinks()` function in `app/src/modules/nav.py` reads the user's role from session state and displays only the relevant navigation links in the sidebar.
+
+4. **Page Organization**: Pages are organized by role using numeric prefixes:
+   - **01-05**: Data Analyst pages (Dashboard, Dataset Management, Data Quality Tools)
+   - **11-12**: Advisor pages (Students, Reports)
+   - **19-25**: Student pages (Home, Calendar, Reminders, Grades, Courses, Events, Workload)
+   - **40-43**: System Admin pages (Home, Course Catalog, Calendar Sync, Quality Reports)
+
+### Key Files for RBAC
+
+- `app/src/Home.py` - Landing page with role selection
+- `app/src/modules/nav.py` - Navigation logic based on user role
+- `app/src/.streamlit/config.toml` - Streamlit configuration (sidebar customization)
+- `app/src/pages/*.py` - Individual pages organized by role prefix
 
 
-## (Completely Optional) Incorporating ML Models into your Project
+## API Endpoints
 
-_Note_: This project only contains the infrastructure for a hypothetical ML model.
+The Flask REST API provides endpoints organized by persona:
 
-1. Collect and preprocess necessary datasets for your ML models.
-1. Build, train, and test your ML model in a Jupyter Notebook.
-   - You can store your datasets in the `datasets` folder. You can also store your Jupyter Notebook in the `ml-src` folder.
-1. Once your team is happy with the model's performance, convert your Jupyter Notebook code for the ML model to a pure Python script.
-   - You can include the `training` and `testing` functionality as well as the `prediction` functionality.
-   - Develop and test this pure Python script first in the `ml-src` folder.
-   - You may or may not need to include data cleaning, though.
-1. Review the `api/backend/ml_models` module. In this folder,
-   - We've put a sample (read _fake_) ML model in the `model01.py` file. The `predict` function will be called by the Flask REST API to perform '_real-time_' prediction based on model parameter values that are stored in the database. **Important**: you would never want to hard code the model parameter weights directly in the prediction function.
-1. The prediction route for the REST API is in `api/backend/customers/customer_routes.py`. Basically, it accepts two URL parameters and passes them to the `prediction` function in the `ml_models` module. The `prediction` route/function packages up the value(s) it receives from the model's `predict` function and send its back to Streamlit as JSON.
-1. Back in streamlit, check out `app/src/pages/11_Prediction.py`. Here, I create two numeric input fields. When the button is pressed, it makes a request to the REST API URL `/c/prediction/.../...` function and passes the values from the two inputs as URL parameters. It gets back the results from the route and displays them. Nothing fancy here.
+### Data Analyst Endpoints (`/analyst/*`)
+- `GET /analyst/dashboard` - Dashboard summary with study time, sleep, and GPA data
+- `GET /analyst/dashboard/summary` - Aggregate statistics across all students
+- `GET /analyst/engagement` - Daily and weekly engagement trends
+- `GET /analyst/students/<id>/report` - Comprehensive student report
+- `GET /analyst/students/reports` - All student reports for export
+
+### Metrics & Data Endpoints (`/data/*`)
+- `GET /data/metrics` - Retrieve metrics with optional filtering
+- `POST /data/metrics` - Create new metric entries
+- `PUT /data/metrics/<id>` - Update/correct metric values
+- `DELETE /data/metrics/<id>` - Remove erroneous metrics
+- `GET /data/assignments` - Retrieve assignment data
+- `GET /data/data-errors` - Retrieve data error logs
+
+### Dataset Endpoints (`/datasets/*`)
+- `GET /datasets` - List all datasets with metadata
+- `POST /datasets` - Create new dataset record
+- `PUT /datasets/<id>` - Update dataset metadata
+- `PUT /datasets/<id>/archive` - Archive a dataset
+- `DELETE /datasets/<id>` - Delete archived dataset
+
+See the route files in `api/backend/studylink/` for complete endpoint documentation.
+
+## Technology Stack
+
+- **Frontend**: Streamlit (Python web framework)
+- **Backend**: Flask (Python REST API framework)
+- **Database**: MySQL 9
+- **Containerization**: Docker & Docker Compose
+- **Data Visualization**: Plotly, Pandas
+
+## Contributing
+
+This is a course project repository. For development:
+1. Create a feature branch
+2. Make your changes
+3. Test locally using Docker
+4. Submit a pull request
+
+## License
+
+This project is part of CS 3200 coursework.

@@ -2016,3 +2016,6 @@ INSERT INTO CourseSelectionStudent (studentID, courseID) VALUES
 (4, 22),
 (34, 25),
 (4, 20);
+
+-- Assign 10 students to Advisor 1 (Jack Crash)
+UPDATE student SET advisorID = 1 WHERE studentID IN (1,2,3,4,5,6,7,8,9,10);

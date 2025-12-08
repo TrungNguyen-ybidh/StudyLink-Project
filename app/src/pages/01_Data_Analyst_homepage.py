@@ -38,7 +38,7 @@ st.markdown("""
 
 st.markdown(f"""
 <div class="analyst-header">
-    <h1>📊 Welcome, {st.session_state.get('user_name', 'Data Analyst')}!</h1>
+    <h1>Welcome, {st.session_state.get('user_name', 'Data Analyst')}!</h1>
     <p style="font-size: 1.2rem; opacity: 0.9;">
         StudyLink Data Analytics Platform
     </p>
@@ -126,7 +126,7 @@ student_reports = fetch_student_reports()
 # ============================================
 # QUICK STATS OVERVIEW WITH REAL DATA
 # ============================================
-st.markdown("### 📈 Quick Overview")
+st.markdown("### Quick Overview")
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -189,14 +189,14 @@ with col4:
             delta_color="off")
 
 if not has_data:
-    st.warning("📡 Unable to connect to API. Make sure the backend is running on `web-api:4000`.")
+    st.warning("Unable to connect to API. Make sure the backend is running on `web-api:4000`.")
 
 st.divider()
 
 # ============================================
 # ADDITIONAL STATS ROW
 # ============================================
-st.markdown("### 📊 Database Statistics")
+st.markdown("### Database Statistics")
 
 stat_col1, stat_col2, stat_col3, stat_col4 = st.columns(4)
 
@@ -244,13 +244,13 @@ st.divider()
 # ============================================
 # NAVIGATION CARDS
 # ============================================
-st.markdown("### 🧭 Quick Navigation")
+st.markdown("### Quick Navigation")
 
 nav_col1, nav_col2 = st.columns(2)
 
 with nav_col1:
     with st.container(border=True):
-        st.markdown("### 📊 Analytics Dashboard")
+        st.markdown("### Analytics Dashboard")
         st.markdown("*User Stories 1.1, 1.2, 1.6*")
         st.markdown("""
         - View study time, sleep, and GPA summaries
@@ -263,7 +263,7 @@ with nav_col1:
 
 with nav_col2:
     with st.container(border=True):
-        st.markdown("### 📁 Dataset Management")
+        st.markdown("### Dataset Management")
         st.markdown("*User Stories 1.3, 1.5*")
         st.markdown("""
         - Upload new CSV datasets
@@ -278,7 +278,7 @@ nav_col3, nav_col4 = st.columns(2)
 
 with nav_col3:
     with st.container(border=True):
-        st.markdown("### 🔧 Data Quality Tools")
+        st.markdown("### Data Quality Tools")
         st.markdown("*User Story 1.4*")
         st.markdown("""
         - Fix incorrect metric entries
@@ -291,7 +291,7 @@ with nav_col3:
 
 with nav_col4:
     with st.container(border=True):
-        st.markdown("### 📄 Student Reports")
+        st.markdown("### Student Reports")
         st.markdown("*User Story 1.6*")
         st.markdown("""
         - Generate comprehensive student reports
@@ -307,7 +307,7 @@ st.divider()
 # ============================================
 # RECENT ACTIVITY
 # ============================================
-st.markdown("### 🕐 Recent Activity")
+st.markdown("### Recent Activity")
 
 activity_data = []
 
@@ -352,7 +352,7 @@ st.divider()
 st.markdown("---")
 col1, col2, col3 = st.columns([1, 1, 2])
 with col1:
-    if st.button("🔄 Refresh Data", use_container_width=True):
+    if st.button("Refresh Data", use_container_width=True):
         st.cache_data.clear()
         st.rerun()
 with col3:

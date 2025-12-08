@@ -26,11 +26,11 @@ if st.session_state.get('role') != 'Data Analyst':
 # Note: datasets blueprint has no prefix, routes start with /datasets
 API_BASE = "http://web-api:4000"
 
-st.title("📁 CSV Data Manager")
+st.title("CSV Data Manager")
 st.caption("Upload, validate, and manage your dataset entries")
 
 # Tabs for different functionalities
-tab1, tab2, tab3 = st.tabs(["📤 Upload Dataset", "📋 View Datasets", "🗄️ Archive Management"])
+tab1, tab2, tab3 = st.tabs(["Upload Dataset", "View Datasets", "Archive Management"])
 
 # ============================================
 # TAB 1: Upload New CSV Dataset (User Story 1.3)
@@ -152,7 +152,7 @@ with tab1:
     # Upload button
     st.markdown("---")
     
-    if st.button("📤 Upload Dataset", type="primary", use_container_width=True):
+    if st.button("Upload Dataset", type="primary", use_container_width=True):
         if not dataset_name:
             st.error("Please provide a dataset name")
         elif uploaded_file is None:
@@ -172,16 +172,16 @@ with tab1:
                     if response.status_code in [200, 201]:
                         result = response.json()
                         data_id = result.get('dataID')
-                        st.success(f"✅ Dataset '{dataset_name}' created successfully! (ID: {data_id})")
+                        st.success(f"Dataset '{dataset_name}' created successfully! (ID: {data_id})")
                         
                         # Process CSV and create metrics
                         if uploaded_file is not None:
                             df = pd.read_csv(uploaded_file)
-                            st.info(f"📊 Processing {len(df)} rows from uploaded file...")
+                            st.info(f"Processing {len(df)} rows from uploaded file...")
                             
                             # Here you would iterate through rows and create metric records
                             # This is a placeholder for the actual implementation
-                            st.success("✅ File processed successfully!")
+                            st.success("File processed successfully!")
                         
                         st.balloons()
                     else:
@@ -199,7 +199,7 @@ with tab1:
 # TAB 2: View Datasets (User Story 1.3, 1.5)
 # ============================================
 with tab2:
-    st.markdown("### 📋 Dataset Library")
+    st.markdown("### Dataset Library")
     st.caption("View and manage all uploaded datasets")
     
     # Filters
@@ -332,7 +332,7 @@ with tab2:
 # TAB 3: Archive Management (User Story 1.5)
 # ============================================
 with tab3:
-    st.markdown("### 🗄️ Archive Management")
+    st.markdown("### Archive Management")
     st.caption("User Story 1.5 - Archive old datasets to keep dashboards clean")
     
     # Archive section
@@ -376,13 +376,13 @@ with tab3:
                     key="archive_reason"
                 )
                 
-                if st.button("🗄️ Archive Dataset", use_container_width=True):
+                if st.button("Archive Dataset", use_container_width=True):
                     if dataset_to_archive:
                         data_id = archive_options[dataset_to_archive]
                         try:
                             response = requests.put(f"{API_BASE}/datasets/{data_id}/archive", timeout=5)
                             if response.status_code == 200:
-                                st.success(f"✅ Dataset archived successfully!")
+                                st.success(f"Dataset archived successfully!")
                                 st.rerun()
                             else:
                                 error_msg = response.json().get('error', 'Unknown error') if response.text else f"Status {response.status_code}"
@@ -394,7 +394,7 @@ with tab3:
     
     with col_delete:
         st.markdown("#### Delete Archived Dataset")
-        st.warning("⚠️ Permanent deletion - only for archived datasets older than retention period")
+        st.warning("Permanent deletion - only for archived datasets older than retention period")
         
         with st.container(border=True):
             # Fetch archived datasets
@@ -425,7 +425,7 @@ with tab3:
                 
                 confirm_delete = st.checkbox("I understand this action cannot be undone", key="confirm_delete")
                 
-                if st.button("🗑️ Permanently Delete", type="secondary", use_container_width=True):
+                if st.button("Permanently Delete", type="secondary", use_container_width=True):
                     if not confirm_delete:
                         st.error("Please confirm deletion by checking the box above")
                     elif dataset_to_delete:
@@ -433,7 +433,7 @@ with tab3:
                         try:
                             response = requests.delete(f"{API_BASE}/datasets/{data_id}", timeout=5)
                             if response.status_code == 200:
-                                st.success("✅ Dataset permanently deleted")
+                                st.success("Dataset permanently deleted")
                                 st.rerun()
                             elif response.status_code == 400:
                                 st.error("Only archived datasets can be deleted. Archive first.")
@@ -448,7 +448,7 @@ with tab3:
     st.markdown("---")
     
     # Archive Statistics
-    st.markdown("#### 📊 Archive Statistics")
+    st.markdown("#### Archive Statistics")
     
     # Calculate stats from actual data
     all_datasets = []

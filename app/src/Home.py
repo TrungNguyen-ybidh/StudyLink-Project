@@ -205,7 +205,7 @@ st.markdown("""
     /* ============================================= */
     
     .main-title {
-        font-size: 3.5rem;
+        font-size: 4rem;
         font-weight: 800;
         background: linear-gradient(135deg, #1E88E5 0%, #7C4DFF 100%);
         -webkit-background-clip: text;
@@ -216,7 +216,7 @@ st.markdown("""
     }
     
     .tagline {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         color: #444;
         text-align: center;
         margin-bottom: 1.5rem;
@@ -224,7 +224,7 @@ st.markdown("""
     }
     
     .section-header {
-        font-size: 1.8rem;
+        font-size: 2.1rem;
         font-weight: 600;
         color: #222;
         text-align: center;
@@ -232,7 +232,7 @@ st.markdown("""
     }
     
     .section-subheader {
-        font-size: 1rem;
+        font-size: 1.2rem;
         color: #555;
         text-align: center;
         margin-bottom: 2rem;
@@ -243,9 +243,9 @@ st.markdown("""
         display: inline-block;
         background: rgba(227, 242, 253, 0.8);
         color: #1565C0;
-        padding: 0.4rem 1rem;
+        padding: 0.5rem 1.2rem;
         border-radius: 20px;
-        font-size: 0.85rem;
+        font-size: 1rem;
         margin: 0.2rem;
         backdrop-filter: blur(5px);
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -255,9 +255,18 @@ st.markdown("""
     .footer {
         text-align: center;
         color: #666;
-        font-size: 0.85rem;
+        font-size: 1rem;
         padding: 2rem 0;
         margin-top: 3rem;
+    }
+    
+    /* Increase general text sizes */
+    .stMarkdown {
+        font-size: 1.05rem;
+    }
+    
+    .stCaption {
+        font-size: 1rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -319,9 +328,9 @@ if ss.authenticated:
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.info(f"🎯 You're logged in as **{ss.role}**. Use the sidebar to navigate to your dashboard.")
+        st.info(f"You're logged in as **{ss.role}**. Use the sidebar to navigate to your dashboard.")
         
-        if st.button("🚪 Logout", use_container_width=True):
+        if st.button("Logout", use_container_width=True):
             ss.authenticated = False
             ss.role = None
             ss.user_name = None
@@ -336,7 +345,7 @@ else:
     with col_center:
         st.markdown("""
         <div style="text-align: center; padding: 0 1rem;">
-            <p style="font-size: 1.15rem; color: #333; line-height: 1.8; margin-bottom: 1.5rem;">
+            <p style="font-size: 1.3rem; color: #333; line-height: 1.8; margin-bottom: 1.5rem;">
                 StudyLink is a smart, data-driven planner designed to optimize your daily study schedule 
                 by integrating data from your <strong>calendar</strong>, <strong>sleep patterns</strong>, 
                 and <strong>class workload</strong>. Say goodbye to inefficient time management and 
@@ -360,59 +369,51 @@ else:
     # =========================================================================
     # KEY FEATURES SECTION
     # =========================================================================
-    st.markdown('<h2 class="section-header">✨ Key Features</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Key Features</h2>', unsafe_allow_html=True)
     st.markdown('<p class="section-subheader">Everything you need to study smarter, not harder</p>', unsafe_allow_html=True)
     
     feat_col1, feat_col2, feat_col3, feat_col4 = st.columns(4)
     
     with feat_col1:
         with st.container(border=True):
-            st.markdown("### 📅")
-            st.markdown("**Centralized Calendar**")
+            st.markdown("### Centralized Calendar")
             st.caption("All your assignments, exams, club meetings, and work shifts in one place")
     
     with feat_col2:
         with st.container(border=True):
-            st.markdown("### 🧠")
-            st.markdown("**Smart Optimization**")
+            st.markdown("### Smart Optimization")
             st.caption("AI-powered study plans that adapt to your schedule and energy levels")
     
     with feat_col3:
         with st.container(border=True):
-            st.markdown("### 🔔")
-            st.markdown("**Smart Reminders**")
+            st.markdown("### Smart Reminders")
             st.caption("Never miss a deadline with intelligent notifications and alerts")
     
     with feat_col4:
         with st.container(border=True):
-            st.markdown("### 📊")
-            st.markdown("**Progress Analytics**")
+            st.markdown("### Progress Analytics")
             st.caption("Track your study habits, sleep, and grades with visual insights")
     
     feat_col5, feat_col6, feat_col7, feat_col8 = st.columns(4)
     
     with feat_col5:
         with st.container(border=True):
-            st.markdown("### 😴")
-            st.markdown("**Sleep Integration**")
+            st.markdown("### Sleep Integration")
             st.caption("Balance rest and productivity based on your sleep patterns")
     
     with feat_col6:
         with st.container(border=True):
-            st.markdown("### 🎯")
-            st.markdown("**Grade Calculator**")
+            st.markdown("### Grade Calculator")
             st.caption("Know exactly what you need to achieve your target GPA")
     
     with feat_col7:
         with st.container(border=True):
-            st.markdown("### 👥")
-            st.markdown("**Advisor Connect**")
+            st.markdown("### Advisor Connect")
             st.caption("Stay connected with your academic advisor for support")
     
     with feat_col8:
         with st.container(border=True):
-            st.markdown("### 🛡️")
-            st.markdown("**Risk Alerts**")
+            st.markdown("### Risk Alerts")
             st.caption("Early warning system to catch academic issues before they grow")
     
     st.divider()
@@ -420,26 +421,26 @@ else:
     # =========================================================================
     # HOW IT WORKS SECTION
     # =========================================================================
-    st.markdown('<h2 class="section-header">🔄 How It Works</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">How It Works</h2>', unsafe_allow_html=True)
     st.markdown('<p class="section-subheader">Three simple steps to transform your study habits</p>', unsafe_allow_html=True)
     
     step_col1, step_col2, step_col3 = st.columns(3)
     
     with step_col1:
         with st.container(border=True):
-            st.markdown("### Step 1️⃣")
+            st.markdown("### Step 1")
             st.markdown("**Connect Your Data**")
             st.write("Link your calendar, import your class schedule, and set up sleep tracking.")
     
     with step_col2:
         with st.container(border=True):
-            st.markdown("### Step 2️⃣")
+            st.markdown("### Step 2")
             st.markdown("**Get Your Plan**")
             st.write("Our algorithm creates an optimized study schedule tailored just for you.")
     
     with step_col3:
         with st.container(border=True):
-            st.markdown("### Step 3️⃣")
+            st.markdown("### Step 3")
             st.markdown("**Track & Improve**")
             st.write("Monitor progress and watch your grades improve as StudyLink adapts.")
     
@@ -448,7 +449,7 @@ else:
     # =========================================================================
     # LOGIN SECTION
     # =========================================================================
-    st.markdown('<h2 class="section-header">🚀 Get Started</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header">Get Started</h2>', unsafe_allow_html=True)
     st.markdown('<p class="section-subheader">Select your role and choose a user to continue</p>', unsafe_allow_html=True)
     
     role_col1, role_col2 = st.columns(2)
@@ -458,9 +459,9 @@ else:
             st.markdown("### 🎓 Student")
             st.markdown("*For students seeking to improve study habits*")
             st.markdown("""
-            - 📅 View centralized calendar with all deadlines
-            - 📊 Track grades and calculate outcomes
-            - 😴 Get workload analysis with rest suggestions
+            - View centralized calendar with all deadlines
+            - Track grades and calculate outcomes
+            - Get workload analysis with rest suggestions
             """)        
             student_users = {
                 "Maya Johnson": {
@@ -486,9 +487,9 @@ else:
             st.markdown("### 👨‍🏫 Academic Advisor")
             st.markdown("*For advisors supporting student success*")
             st.markdown("""
-            - 👥 Monitor all advisee study activity
-            - 🚨 Identify at-risk students early
-            - 📝 Maintain meeting notes and follow-ups
+            - Monitor all advisee study activity
+            - Identify at-risk students early
+            - Maintain meeting notes and follow-ups
             """)
             
             advisor_users = {
@@ -511,9 +512,9 @@ else:
             st.markdown("### 📊 Data Analyst")
             st.markdown("*For analysts monitoring platform effectiveness*")
             st.markdown("""
-            - 📈 View dashboards with study/sleep/GPA trends
-            - 📁 Manage and archive datasets
-            - 🔧 Fix data quality issues
+            - View dashboards with study/sleep/GPA trends
+            - Manage and archive datasets
+            - Fix data quality issues
             """)
             
             analyst_users = {
@@ -534,9 +535,9 @@ else:
             st.markdown("### ⚙️ System Administrator")
             st.markdown("*For admins managing the platform*")
             st.markdown("""
-            - 🔗 Manage calendar connections and syncs
-            - 📥 Import sleep and grade data files
-            - 🩺 Run system health checks
+            - Manage calendar connections and syncs
+            - Import sleep and grade data files
+            - Run system health checks
             """)
             
             admin_users = {
@@ -560,19 +561,19 @@ st.markdown("---")
 foot_col1, foot_col2, foot_col3 = st.columns(3)
 
 with foot_col1:
-    st.markdown("**📚 StudyLink**")
+    st.markdown("**StudyLink**")
     st.caption("Smart Study Planning")
 
 with foot_col2:
-    st.markdown("**👥 Team OurSQL**")
+    st.markdown("**Team OurSQL**")
     st.caption("Bennett, Alex, Alastaire, Tam, Trung")
 
 with foot_col3:
-    st.markdown("**🏫 Northeastern University**")
+    st.markdown("**Northeastern University**")
     st.caption("CS 3200 - Fall 2025")
 
 st.markdown("""
-<div style="text-align: center; color: #666; font-size: 0.8rem; margin-top: 1rem;">
-    © 2025 StudyLink | Built with ❤️ using Streamlit, Flask, and MySQL
+<div style="text-align: center; color: #666; font-size: 0.95rem; margin-top: 1rem;">
+    © 2025 StudyLink | Built with Streamlit, Flask, and MySQL
 </div>
 """, unsafe_allow_html=True)
