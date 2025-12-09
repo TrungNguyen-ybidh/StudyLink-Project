@@ -211,15 +211,16 @@ else:
                 """, unsafe_allow_html=True)
             
             with col3:
-                st.write("")  # Spacing
-                btn_col1, btn_col2 = st.columns(2)
-                with btn_col1:
+                btns = st.columns([1, 1], gap="small")
+
+                with btns[0]:
                     if st.button("✏️", key=f"edit_{event_id}", help="Edit event"):
                         st.session_state["edit_event_id"] = event_id
                         st.session_state["edit_event_data"] = event
                         st.rerun()
-                with btn_col2:
-                    if st.button("Delete", key=f"delete_{event_id}", help="Delete event"):
+
+                with btns[1]:
+                    if st.button("🗑️", key=f"delete_{event_id}", help="Delete event"):
                         res = delete_event(event_id)
                         if res.status_code == 200:
                             st.success("Event deleted!")
@@ -227,6 +228,7 @@ else:
                             st.rerun()
                         else:
                             st.error(f"Delete failed: {res.text}")
+
         
         st.write("")  # Spacing
 

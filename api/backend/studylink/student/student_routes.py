@@ -13,7 +13,7 @@ calendar = Blueprint("calendar", __name__)
 def get_student_calendar():
     """Get calendar items for a specific student or all students."""
     try:
-        cursor = db.get_db().cursor(dictionary=True)
+        cursor = db.get_db().cursor()
         student_id = request.args.get('studentID')
 
         # Base query for assignments

@@ -200,18 +200,21 @@ else:
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            total_hrs = latest.get('totalStudyHrs', 0) or 0
+            total_hrs = float(latest.get('totalStudyHrs') or 0)
             st.metric("Total Study Hours", f"{total_hrs:.1f} hrs")
+
         with col2:
-            avg_hrs = latest.get('avgStudyHrs', 0) or 0
+            avg_hrs = float(latest.get('avgStudyHrs') or 0)
             st.metric("Avg Study/Day", f"{avg_hrs:.1f} hrs")
+
         with col3:
-            avg_sleep = latest.get('avgSleep', 0) or 0
+            avg_sleep = float(latest.get('avgSleep') or 0)
             st.metric("Avg Sleep", f"{avg_sleep:.1f} hrs")
+
         with col4:
-            gpa = latest.get('GPA', 0) or 0
+            gpa = float(latest.get('GPA') or 0)
             st.metric("Current GPA", f"{gpa:.2f}")
-        
+
         st.write("")
     
     # Historical data
@@ -220,10 +223,10 @@ else:
     for s in summary:
         period_start = s.get('periodStart', 'N/A')
         period_end = s.get('periodEnd', 'N/A')
-        total_hrs = s.get('totalStudyHrs', 0) or 0
-        avg_hrs = s.get('avgStudyHrs', 0) or 0
-        avg_sleep = s.get('avgSleep', 0) or 0
-        gpa = s.get('GPA', 0) or 0
+        total_hrs = float(s.get('totalStudyHrs') or 0)
+        avg_hrs = float(s.get('avgStudyHrs') or 0)
+        avg_sleep = float(s.get('avgSleep') or 0)
+        gpa = float(s.get('GPA') or 0)
         fname = s.get('fName', '')
         lname = s.get('lName', '')
         

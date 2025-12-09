@@ -170,6 +170,9 @@ else:
         
         with st.container():
             col1, col2, col3 = st.columns([5, 2, 1])
+
+            icon = "📝" if item_type == "assignment" else "📅"
+            
             with col1:
                 st.markdown(f"""
                 <div style="border-left:4px solid {color}; padding-left:10px;">
